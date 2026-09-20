@@ -5,10 +5,10 @@ Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 688
 Depends: glibc-repo, glibc
 Filename: repo/dists/stable/main/binary-aarch64/antigravity-cli_1.1.27-0_termux_aarch64.deb
-Size: 235744
-MD5sum: 59e07bde54989e8adb0aafb87188d19e
-SHA1: 5d25cbe20a7188efa60b44a664513d9626fb43d8
-SHA256: fa1377a5e57187fd4f5b237e6e71a4c62a87e9ce6f45ae8c37dd9b7c54f8ab14
+Size: 235480
+MD5sum: 40de9afe3586f7d1c44a3bbddfc7366f
+SHA1: 7d06b7a00258487917edead56d2ed13d23361b4a
+SHA256: 14d8e4d5b655b15b6b9920ec5e63eaca31316c359d0e118c2715ecb8364e64d7
 Section: devel
 Priority: optional
 Homepage: https://antigravity.google/cli
@@ -24,10 +24,10 @@ Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 275364
 Depends: python, ca-certificates, proot
 Filename: repo/dists/stable/main/binary-aarch64/muse-code_1.3.0.r3401.1-1_termux_aarch64.deb
-Size: 65549352
-MD5sum: 6ab5695aa512290b1bd274266c5a92c2
-SHA1: 6ffaa556b62230050d11bf81520c6840b05d109f
-SHA256: d6e1b333a06f808eba5db6918d83ac231f578663789545f45972294f180282c4
+Size: 65548836
+MD5sum: a8105c637548096479d28c08add2dbd9
+SHA1: a3d3f3ed01e74dc17f88dc52b323679727cabe72
+SHA256: 0d5ba02bb877ea8e29710127527559f1cece12df3a0a37e524adeed0a0196143
 Section: devel
 Priority: optional
 Homepage: https://dev.meta.ai
@@ -42,10 +42,10 @@ Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 153036
 Depends: glibc-repo, glibc
 Filename: repo/dists/stable/main/binary-aarch64/oh-my-pi_18.1.7-0_termux_aarch64.deb
-Size: 70232380
-MD5sum: 01e861200605dc461117cabe8950b0f9
-SHA1: ed2e83dc8278c267e70964f6a4c268ef56efa9eb
-SHA256: a2e741356ee33e1c58de97192f968c63573296d3a3db43d936e4da1246c56bb8
+Size: 70233876
+MD5sum: 3e6ccd2badf684d8ff00d5ac88fc8c89
+SHA1: 11e46e265e889aebb63e4c29bb5050ee168e48c0
+SHA256: 0240113d77d684eb141081bfc042673d4ff796f5172a47b13adb7b1d60f8580a
 Section: devel
 Priority: optional
 Homepage: https://omp.sh
@@ -61,10 +61,10 @@ Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 174020
 Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
 Filename: repo/dists/stable/main/binary-aarch64/opencode_1.18.3-0_termux_aarch64.deb
-Size: 40593656
-MD5sum: 1682f38908fd8f0b7181db9e654132e6
-SHA1: ba3d38393dd09b507293b354ab46d8e620ef7bb2
-SHA256: 6c1c983c50a7c90dd18af1e2d8c1f4c96fe4ab1fea83af8ec2ef4c41adf42096
+Size: 40593376
+MD5sum: c66f2ea9a9fd7ed6aa7be9373e94388e
+SHA1: 3b43dcee2264e6a07c3a7626c03c2df33ba9aa42
+SHA256: 051694c947c1b726255b331c57d941e77274f45999bf5f27ecdef430c9ca8066
 Section: devel
 Priority: optional
 Homepage: https://github.com/anomalyco/opencode

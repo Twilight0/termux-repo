@@ -6,10 +6,10 @@ Installed-Size: 306476
 Depends: python, ca-certificates, proot
 Suggests: qemu-user-x86-64
 Filename: repo/dists/stable/main/binary-x86_64/muse-code_1.3.0.r3401.1-1_termux_x86_64.deb
-Size: 73015276
-MD5sum: acd1fbec89c245747c130d0107903786
-SHA1: 246ec4b652bd61d00c05899913096d38b833063e
-SHA256: 988c094d64136e37bd353774f70809011c1938d0f2589ec97715070ed6690089
+Size: 73014656
+MD5sum: 8787ad7e144c23dbf49a03da0b68a7d1
+SHA1: 9b01765df18320b72722dfea87369472daeed550
+SHA256: f1daa316bc50ad23ed584d637a5c72b4b4f0f550f85282634187e61520316741
 Section: devel
 Priority: optional
 Homepage: https://dev.meta.ai
