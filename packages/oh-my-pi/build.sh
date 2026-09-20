@@ -35,6 +35,14 @@ curl -fSL "https://github.com/can1357/oh-my-pi/releases/download/v${VERSION}/omp
 
 chmod 755 "${BUILD_DIR}/omp.bin"
 
+# Strip debug symbols to reduce size (essential for GitHub's 100MB limit)
+echo "Stripping binary..."
+if [ "$ARCH" = "aarch64" ]; then
+    aarch64-linux-gnu-strip "${BUILD_DIR}/omp.bin" 2>/dev/null || true
+else
+    strip "${BUILD_DIR}/omp.bin" 2>/dev/null || true
+fi
+
 install -Dm755 "${BUILD_DIR}/omp.bin" "${PKG_DIR}/${PREFIX}/lib/oh-my-pi/omp.bin"
 install -Dm755 "${BUILD_DIR}/omp_helper" "${PKG_DIR}/${PREFIX}/bin/omp"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/omp"

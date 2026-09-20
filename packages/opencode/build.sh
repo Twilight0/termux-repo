@@ -47,6 +47,14 @@ if [ ! -f "$UPSTREAM_BIN" ]; then
     exit 1
 fi
 
+# Strip debug symbols to reduce size
+echo "Stripping binary..."
+if [ "$ARCH" = "aarch64" ]; then
+    aarch64-linux-gnu-strip "$UPSTREAM_BIN" 2>/dev/null || true
+else
+    strip "$UPSTREAM_BIN" 2>/dev/null || true
+fi
+
 install -Dm755 "$UPSTREAM_BIN" "${PKG_DIR}/${PREFIX}/lib/opencode/opencode-bin"
 install -Dm755 "${BUILD_DIR}/opencode_helper" "${PKG_DIR}/${PREFIX}/bin/opencode"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/opencode"

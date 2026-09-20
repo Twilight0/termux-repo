@@ -58,6 +58,14 @@ if [ ! -f "$AGY_BIN" ]; then
     exit 1
 fi
 
+# Strip debug symbols to reduce size
+echo "Stripping binary..."
+if [ "$ARCH" = "aarch64" ]; then
+    aarch64-linux-gnu-strip "$AGY_BIN" 2>/dev/null || true
+else
+    strip "$AGY_BIN" 2>/dev/null || true
+fi
+
 install -Dm755 "$AGY_BIN" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/agy.bin"
 install -Dm755 "${BUILD_DIR}/agy_helper" "${PKG_DIR}/${PREFIX}/bin/agy"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/agy"
