@@ -3,24 +3,24 @@ set -e
 
 DIST="stable"
 COMP="main"
-REPO_URL="https://github.com/Twilight0/termux-repo/releases/download/latest"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 DEBS_DIR="${REPO_DIR}/debs"
-OUT_DIR="${REPO_DIR}/repo"
 
-mkdir -p "$OUT_DIR/dists/${DIST}/${COMP}"
+cd "$REPO_DIR"
+mkdir -p "dists/${DIST}/${COMP}" "pool/${COMP}"
 
-# Copy debs into arch-specific dirs
+# Copy debs into pool + arch dirs
 for deb in "$DEBS_DIR"/*.deb; do
     arch=$(dpkg-deb -f "$deb" Architecture)
-    mkdir -p "$OUT_DIR/dists/${DIST}/${COMP}/binary-${arch}"
-    cp "$deb" "$OUT_DIR/dists/${DIST}/${COMP}/binary-${arch}/"
+    mkdir -p "dists/${DIST}/${COMP}/binary-${arch}"
+    cp "$deb" "dists/${DIST}/${COMP}/binary-${arch}/"
+    cp "$deb" "pool/${COMP}/"
 done
 
 # Generate Packages + Packages.xz per arch
-for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
+for arch_dir in "dists/${DIST}/${COMP}"/binary-*; do
     arch=$(basename "$arch_dir" | sed 's/binary-//')
     echo "Generating Packages for ${arch}..."
     PKG_FILE="${arch_dir}/Packages"
@@ -30,7 +30,6 @@ for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
     for deb in "$arch_dir"/*.deb; do
         [ -f "$deb" ] || continue
         deb_name=$(basename "$deb")
-        # Use dpkg-deb -f for reliable field extraction
         pkg=$(dpkg-deb -f "$deb" Package)
         ver=$(dpkg-deb -f "$deb" Version)
         desc=$(dpkg-deb -f "$deb" Description)
@@ -43,62 +42,40 @@ for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
         md5=$(md5sum "$deb" | cut -d' ' -f1)
         sha1=$(sha1sum "$deb" | cut -d' ' -f1)
         sha256=$(sha256sum "$deb" | cut -d' ' -f1)
-        filename="${REPO_URL}/${deb_name}"
 
-        if [ "$first" -eq 1 ]; then
-            first=0
-        else
-            printf '\n' >> "$PKG_FILE"
-        fi
+        [ "$first" -eq 1 ] && first=0 || printf '\n' >> "$PKG_FILE"
 
-        cat >> "$PKG_FILE" <<PKGEOF
-Package: ${pkg}
-Version: ${ver}
-Architecture: ${arch}
-Maintainer: ${maint}
-Installed-Size: $(( size / 1024 ))
-Depends: ${depends}
-Section: ${section}
-Priority: ${priority}
-Homepage: ${homepage}
-Description: ${desc}
-Filename: ${filename}
-Size: ${size}
-MD5sum: ${md5}
-SHA1: ${sha1}
-SHA256: ${sha256}
-PKGEOF
+        printf 'Package: %s\nVersion: %s\nArchitecture: %s\nMaintainer: %s\nInstalled-Size: %s\nDepends: %s\nSection: %s\nPriority: %s\nHomepage: %s\nDescription: %s\nFilename: %s/%s\nSize: %s\nMD5sum: %s\nSHA1: %s\nSHA256: %s\n' \
+            "$pkg" "$ver" "$arch" "$maint" "$((size/1024))" "$depends" "$section" "$priority" "$homepage" "$desc" "$COMP" "$deb_name" "$size" "$md5" "$sha1" "$sha256" \
+            >> "$PKG_FILE"
     done
     xz -9kf "$PKG_FILE"
 done
 
-# Generate Release file
-RELEASE_FILE="$OUT_DIR/dists/${DIST}/Release"
-ARCHS=$(ls -d "$OUT_DIR/dists/${DIST}/${COMP}"/binary-* | xargs -I{} basename {} | sed 's/binary-//' | sort | tr '\n' ' ')
-
-cat > "$RELEASE_FILE" <<RELEOF
-Origin: Twilight
-Label: termux-repo
-Codename: ${DIST}
-Architectures: ${ARCHS}
-Components: ${COMP}
-Description: Twilight custom termux repository
-Suite: ${DIST}
-Date: $(date -Ru)
-SHA256:
-RELEOF
-
-for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
-    arch=$(basename "$arch_dir" | sed 's/binary-//')
-    for f in Packages Packages.xz; do
-        filepath="${arch_dir}/${f}"
-        if [ -f "$filepath" ]; then
-            hash=$(sha256sum "$filepath" | cut -d' ' -f1)
-            size=$(stat -c%s "$filepath")
-            echo " ${hash} ${size} ${COMP}/binary-${arch}/${f}" >> "$RELEASE_FILE"
-        fi
+# Generate Release
+ARCHS=$(ls -d "dists/${DIST}/${COMP}"/binary-* | xargs -I{} basename {} | sed 's/binary-//' | sort | tr '\n' ' ')
+{
+    echo "Origin: Twilight"
+    echo "Label: termux-repo"
+    echo "Codename: ${DIST}"
+    echo "Architectures: ${ARCHS}"
+    echo "Components: ${COMP}"
+    echo "Description: Twilight custom termux repository"
+    echo "Suite: ${DIST}"
+    echo "Date: $(date -Ru)"
+    echo "SHA256:"
+    for arch_dir in "dists/${DIST}/${COMP}"/binary-*; do
+        arch=$(basename "$arch_dir" | sed 's/binary-//')
+        for f in Packages Packages.xz; do
+            filepath="${arch_dir}/${f}"
+            if [ -f "$filepath" ]; then
+                hash=$(sha256sum "$filepath" | cut -d' ' -f1)
+                fsize=$(stat -c%s "$filepath")
+                echo " ${hash} ${fsize} ${COMP}/binary-${arch}/${f}"
+            fi
+        done
     done
-done
+} > "dists/${DIST}/Release"
 
-echo "Repository metadata generated:"
-find "$OUT_DIR" -type f | sort
+echo "Repository generated:"
+find dists/ pool/ -type f | sort

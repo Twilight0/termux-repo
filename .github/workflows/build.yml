@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu
+          sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu upx-ucl
 
       - name: Create output directory
         run: mkdir -p debs
@@ -59,40 +59,47 @@ jobs:
       - name: Build oh-my-pi (x86_64)
         run: bash packages/oh-my-pi/build.sh x86_64
 
+      - name: Compress large debs with upx if needed
+        run: |
+          for deb in debs/*.deb; do
+            size=$(stat -c%s "$deb")
+            if [ "$size" -gt 95000000 ]; then
+              echo "Compressing $(basename $deb) ($(( size / 1048576 ))MB) with upx..."
+              tmpdir=$(mktemp -d)
+              dpkg-deb -x "$deb" "$tmpdir"
+              find "$tmpdir" -type f -executable | while read bin; do
+                if file "$bin" | grep -q "ELF"; then
+                  upx --best --lzma "$bin" 2>/dev/null || true
+                fi
+              done
+              control_dir="$tmpdir/DEBIAN"
+              mkdir -p "$control_dir"
+              dpkg-deb -e "$deb" "$control_dir"
+              dpkg-deb -Zxz --build --root-owner-group "$tmpdir" "$deb"
+              new_size=$(stat -c%s "$deb")
+              echo "  Reduced to $(( new_size / 1048576 ))MB"
+              rm -rf "$tmpdir"
+            fi
+          done
+
       - name: List built packages
         run: ls -lh debs/
 
-      - name: Generate APT repository metadata
+      - name: Generate APT repository
         run: bash scripts/generate-repo.sh
 
-      - name: Deploy debs to GitHub Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e
-
-          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
-
-          gh release create latest \
-            --title "Latest Build" \
-            --notes "Automated build from $(git rev-parse --short HEAD)" \
-            --target main
-
-          gh release upload latest debs/*.deb --clobber
-
-          echo "Release created:"
-          gh release view latest --repo ${{ github.repository }}
-
-      - name: Deploy metadata to gh-pages
+      - name: Deploy to gh-pages
         run: |
           set -e
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Save scripts before switching branches
-          mkdir -p /tmp/scripts
-          cp install.sh uninstall.sh /tmp/scripts/
+          # Save scripts + new repo content
+          mkdir -p /tmp/deploy
+          cp install.sh uninstall.sh /tmp/deploy/
+          cp -r dists pool /tmp/deploy/
+          touch /tmp/deploy/.nojekyll
 
           if git fetch origin gh-pages --depth=1 2>/dev/null; then
             git checkout gh-pages
@@ -105,23 +112,12 @@ jobs:
             git push origin gh-pages
           fi
 
-          git rm -rf dists/ 2>/dev/null || true
+          git rm -rf . 2>/dev/null || true
+          cp -r /tmp/deploy/* .
+          cp /tmp/deploy/.nojekyll .
 
-          # Copy only metadata, skip .deb files (those are on Releases)
-          mkdir -p dists/stable/main
-          for arch_dir in repo/dists/stable/main/binary-*; do
-            arch=$(basename "$arch_dir")
-            mkdir -p "dists/stable/main/${arch}"
-            cp "$arch_dir"/Packages* "dists/stable/main/${arch}/"
-          done
-          cp repo/dists/stable/Release dists/stable/
-
-          # Copy install/uninstall scripts
-          cp /tmp/scripts/install.sh /tmp/scripts/uninstall.sh ./
-          touch .nojekyll
-
-          git add dists/ .nojekyll install.sh uninstall.sh
-          git commit -m "Deploy repo metadata $(date -u +%Y-%m-%d)" || true
+          git add -A
+          git commit -m "Deploy $(date -u +%Y-%m-%d)" || true
           git push origin gh-pages
 
           echo "gh-pages deploy complete!"
