@@ -114,7 +114,10 @@ jobs:
 
           touch .nojekyll
 
-          git add dists/ .nojekyll
+          # Copy install/uninstall scripts
+          cp install.sh uninstall.sh ./
+
+          git add dists/ .nojekyll install.sh uninstall.sh
           git commit -m "Deploy repo metadata $(date -u +%Y-%m-%d)" || true
           git push origin gh-pages
 
