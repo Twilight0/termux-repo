@@ -90,6 +90,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Save scripts before switching branches
+          mkdir -p /tmp/scripts
+          cp install.sh uninstall.sh /tmp/scripts/
+
           if git fetch origin gh-pages --depth=1 2>/dev/null; then
             git checkout gh-pages
           else
@@ -112,10 +116,9 @@ jobs:
           done
           cp repo/dists/stable/Release dists/stable/
 
-          touch .nojekyll
-
           # Copy install/uninstall scripts
-          cp install.sh uninstall.sh ./
+          cp /tmp/scripts/install.sh /tmp/scripts/uninstall.sh ./
+          touch .nojekyll
 
           git add dists/ .nojekyll install.sh uninstall.sh
           git commit -m "Deploy repo metadata $(date -u +%Y-%m-%d)" || true
