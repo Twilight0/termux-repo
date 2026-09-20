@@ -101,6 +101,10 @@ jobs:
           cp -r dists pool /tmp/deploy/
           touch /tmp/deploy/.nojekyll
 
+          # Clean working tree before switching branches
+          git checkout -- . 2>/dev/null || true
+          git clean -fd 2>/dev/null || true
+
           if git fetch origin gh-pages --depth=1 2>/dev/null; then
             git checkout gh-pages
           else
