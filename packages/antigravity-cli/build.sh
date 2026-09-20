@@ -24,11 +24,12 @@ echo "=== Building antigravity-cli ${DEB_VERSION} (${ARCH}) ==="
 
 BUILD_DIR="$(mktemp -d)"
 PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
-mkdir -p "${PKG_DIR}/DEBIAN" "${PKG_DIR}/${PREFIX}/bin" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
+LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
+BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
+mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
 
 echo "Compiling bootstrapper (${ARCH})..."
 $CC -static -O2 -o "${BUILD_DIR}/agy_helper" "$SCRIPT_DIR/helper/agy.c"
-install -Dm755 "${BUILD_DIR}/agy_helper" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/agy_helper"
 
 echo "Downloading antigravity-cli ${VERSION}..."
 curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/antigravity-termux-standalone.tar.gz" \
@@ -48,24 +49,11 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
 
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-# Find all binaries in the tarball (exclude the helper we just compiled)
-BINS=()
-while IFS= read -r -d '' f; do
-    BINS+=("$f")
-done < <(find "$BUILD_DIR" -maxdepth 1 -type f ! -name '*.tar.gz' ! -name 'agy_helper' -print0)
-
-if [ ${#BINS[@]} -eq 0 ]; then
-    echo "Error: could not find any binaries" >&2
-    rm -rf "$BUILD_DIR"
-    exit 1
-fi
-
-echo "Found binaries: ${BINS[*]}"
-
-for bin_path in "${BINS[@]}"; do
+# Install each tarball binary with .bin suffix + wrapper
+for bin_path in "${BUILD_DIR}"/agy "${BUILD_DIR}"/agy.va39; do
+    [ -f "$bin_path" ] || continue
     bin_name="$(basename "$bin_path")"
 
-    # Strip debug symbols
     echo "Stripping ${bin_name}..."
     if [ "$ARCH" = "aarch64" ]; then
         aarch64-linux-gnu-strip "$bin_path" 2>/dev/null || true
@@ -73,24 +61,22 @@ for bin_path in "${BINS[@]}"; do
         strip "$bin_path" 2>/dev/null || true
     fi
 
-    # Install binary
-    install -Dm755 "$bin_path" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/${bin_name}.bin"
+    install -Dm755 "$bin_path" "${LIB_DIR}/${bin_name}.bin"
 
-    # Create wrapper script for this binary
-    wrapper="${PKG_DIR}/${PREFIX}/bin/${bin_name}"
-    this_dir="\$(dirname "\$0")"
-    cat > "$wrapper" << 'WRAPEOF'
+    cat > "${BIN_DIR}/${bin_name}" << 'WRAPEOF'
 #!/bin/sh
 exec "$(dirname "$0")/../lib/antigravity-cli/agy_helper" BIN_PLACEHOLDER "$@"
 WRAPEOF
-    sed -i "s|BIN_PLACEHOLDER|${bin_name}|" "$wrapper"
-    chmod 755 "$wrapper"
+    sed -i "s|BIN_PLACEHOLDER|${bin_name}|" "${BIN_DIR}/${bin_name}"
+    chmod 755 "${BIN_DIR}/${bin_name}"
 done
 
-# Also install the VA39 patch script
-if [ -f "$SCRIPT_DIR/helper/patch_va39.py" ]; then
-    install -Dm755 "$SCRIPT_DIR/helper/patch_va39.py" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/patch_va39.py"
-fi
+# Install helper (the C bootstrapper)
+install -Dm755 "${BUILD_DIR}/agy_helper" "${LIB_DIR}/agy_helper"
+
+# Install the VA39 patch script
+[ -f "$SCRIPT_DIR/helper/patch_va39.py" ] && \
+    install -Dm755 "$SCRIPT_DIR/helper/patch_va39.py" "${LIB_DIR}/patch_va39.py"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
