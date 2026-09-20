@@ -1,18 +1,15 @@
-Package: wrangler
-Version: 4.123.0-0
+Package: 
+Version: 
 Architecture: all
-Maintainer: Twilight <twilight@aliveos.org>
-Depends: nodejs, npm
-Filename: repo/dists/stable/main/binary-all/wrangler_4.123.0-0_all.deb
+Maintainer: 
+Installed-Size: 1
+Depends: 
+Section: 
+Priority: 
+Homepage: 
+Description: 
+Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/wrangler_4.123.0-0_all.deb
 Size: 1484
-MD5sum: ead29daa53bb72d9be6c982b18b86be3
-SHA1: 381c70caa99c550053062181509355a635184a26
-SHA256: 646f8b4b107edf646cf65b3dde395e7b00fe9ce5f37fbd81b287c3d9ff65dc90
-Section: devel
-Priority: optional
-Homepage: https://developers.cloudflare.com/workers/wrangler/
-Description: Cloudflare Workers CLI
- Cloudflare Workers command-line tooling. Cloud API commands only
- (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
- is not supported on Termux as workerd does not ship Android binaries.
-
+MD5sum: 87e321a967737b8c2f655d83b4834ea2
+SHA1: 6b8d339e6f1816b4e3ce3cabd9b7492ab2c10054
+SHA256: 4d203e84461f251fe517909ea861448e253b430b5ea18877386bd7e2d196bd75

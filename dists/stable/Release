@@ -1,35 +1,14 @@
+Origin: Twilight
+Label: termux-repo
 Codename: stable
-Version: 1
 Architectures: aarch64 all x86_64 
 Components: main
 Description: Twilight custom termux repository
 Suite: stable
-Date: Sun, 20 Sep 2026 16:20:01 +0000
-MD5Sum:
- 82bdabe890eadeebecb64bee72f4750f 2823 main/binary-aarch64/Packages
- 336b5c03c2cf1b4c0d9692b4f190c821 1340 main/binary-aarch64/Packages.xz
- fcfe71d289a904e4627094b0b143d35e 702 main/binary-all/Packages
- ca1c982067288ab0cc04f37847623877 572 main/binary-all/Packages.xz
- 12c9d73330cac50abe7b7a575e102dc2 2141 main/binary-x86_64/Packages
- 5d9b3cfaa4b71871b3e85cb235725236 1128 main/binary-x86_64/Packages.xz
-SHA1:
- cd873ee3b66ab75a90f4363f629e91a633473c6f 2823 main/binary-aarch64/Packages
- d5377f452a073ad381f11b4f46aad0dbc22f6a1a 1340 main/binary-aarch64/Packages.xz
- 34e7ced7915b7f0ae48cf14ec59371065d0aac97 702 main/binary-all/Packages
- dc046902831152992fa25af1f269e529daf3e4f2 572 main/binary-all/Packages.xz
- 7e20e9bc4a1763347af4703598f0d4f2cf9f294c 2141 main/binary-x86_64/Packages
- 821f05be5ddb5f8962c3b95696ba1b5ddf49e65b 1128 main/binary-x86_64/Packages.xz
-SHA256:
- 0da2b85cb46bd830a46571778ef61a6f7db45be32d147334fd4be45cd54c8770 2823 main/binary-aarch64/Packages
- 1137b1b4d5ef2cbd8a0eb3351762602b682cb31658468c9ecfa6beed1704d218 1340 main/binary-aarch64/Packages.xz
- ae0ca310468920625f7a77eac102bf22d2ab907866370910349cf4ec3af27744 702 main/binary-all/Packages
- e301da94b971de20e50b723ba40f63a68091928ce41c2935077171f4f4fb5812 572 main/binary-all/Packages.xz
- c48a7bc4a799c90378e202faac0d369ad4efb8a21f4988898596993149d68a84 2141 main/binary-x86_64/Packages
- 4de6f7afc5ec38265b6267de5350bdede7a79e6ca7ca5ce734e8fce2f3bb3a09 1128 main/binary-x86_64/Packages.xz
-SHA512:
- 341098adb2d34945cb8655028f2b830b9e1d31a4ccc4e7aab1f3964ac29149be90b8f8ea6e84e8f0499731eeb0796014881d72232d7a9daa8a75fe9f363271cf 2823 main/binary-aarch64/Packages
- 6c962a2ca753f64325d90ae5374d858b1c5b4feda471486bc3a33fb5d8a9c8a6eb52673b01c166f259b3113c338c83edbb58cab31a528e5c81dbfb4055f9a613 1340 main/binary-aarch64/Packages.xz
- 83503b66fa2ac2597c1b3145f7a4e8cd00cf37db757534c019e964cec7ab7a400da3fd6d455ad5c388f0b8229e2c480abc153fb80dca65ddad73a512b1d59d12 702 main/binary-all/Packages
- af0fc08592cda3fbdf8f357bb3dd526982af39d4d91a0d952b97a8f21ce69f9cd48cdd9ee4cb0e1988c73d8e2f030488087437896f75c99fa7c76de20fbd9222 572 main/binary-all/Packages.xz
- 30a630e361ae23ed85c033f03c3230748262c2d0b2fd1a4257b928a6c20ba183cc62135cd8fa336826071c2febac9e1ce2f18a112680cee0ce6d487114cbe769 2141 main/binary-x86_64/Packages
- 427784432cfb6c6e500f454138f483b4e8a7629782e290d8e5082b79b556dcaade8cd908057aeb2d57ef926a95e5d8f6295e464ac2ec67085c00b9fe9f213b56 1128 main/binary-x86_64/Packages.xz
+Date: Sun, 20 Sep 2026 16:28:19 +0000
+ a4830a44722933ce2fc034a4f918d9e3579c8311571e2978715843031f583c3f 1702 main/binary-aarch64/Packages
+ b0b1042acd28d7875d8d115a91feb1037e268e11c13cec82716c46bfd680b2c4 740 main/binary-aarch64/Packages.xz
+ 27250b678f7f8380bdcf362e991a6a5901203fe36e5421c36d9f090a763f45ba 400 main/binary-all/Packages
+ 52b00477211ce277af81535204bf416a16886b9bea4819e0183be910289c003b 384 main/binary-all/Packages.xz
+ 1f0058500de0992bc158067b23a78b7417aea810b7a1edbc4330cb2cf39169f7 1696 main/binary-x86_64/Packages
+ eb585f0ca27471d1973df30859273d803719b65e53945856b3c9a5e01d2f8fd2 752 main/binary-x86_64/Packages.xz
