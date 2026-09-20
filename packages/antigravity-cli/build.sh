@@ -77,10 +77,12 @@ for bin_path in "${BINS[@]}"; do
 
     # Create wrapper script for this binary
     wrapper="${PKG_DIR}/${PREFIX}/bin/${bin_name}"
-    cat > "$wrapper" << WRAPEOF
+    this_dir="\$(dirname "\$0")"
+    cat > "$wrapper" << 'WRAPEOF'
 #!/bin/sh
-exec "$(dirname "\$0")/../lib/antigravity-cli/agy_helper" "${bin_name}" "\$@"
+exec "$(dirname "$0")/../lib/antigravity-cli/agy_helper" BIN_PLACEHOLDER "$@"
 WRAPEOF
+    sed -i "s|BIN_PLACEHOLDER|${bin_name}|" "$wrapper"
     chmod 755 "$wrapper"
 done
 
