@@ -120,7 +120,7 @@ jobs:
           cp -r /tmp/deploy/* .
           cp /tmp/deploy/.nojekyll .
 
-          git add -A
+          git add .nojekyll install.sh uninstall.sh dists/ pool/
           git commit -m "Deploy $(date -u +%Y-%m-%d)" || true
           git push origin gh-pages
 

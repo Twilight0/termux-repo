@@ -22,6 +22,7 @@
 
 #define LIB_PATH "/data/data/com.termux/files/usr/glibc/lib"
 #define BIN_NAME "omp.bin"
+#define OMP_LIB "/data/data/com.termux/files/usr/lib/oh-my-pi"
 
 int main(int argc, char **argv) {
     unsetenv("LD_PRELOAD");
@@ -36,9 +37,8 @@ int main(int argc, char **argv) {
     if (len == -1) return 1;
     exec_path[len] = '\0';
 
-    char *dir = dirname(exec_path);
     char real_bin[PATH_MAX];
-    snprintf(real_bin, sizeof(real_bin), "%s/" BIN_NAME, dir);
+    snprintf(real_bin, sizeof(real_bin), "%s/" BIN_NAME, OMP_LIB);
 
     char **new_argv = malloc((argc + 4) * sizeof(char *));
     if (!new_argv) return 1;
