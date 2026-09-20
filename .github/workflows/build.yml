@@ -58,11 +58,9 @@ jobs:
       - name: Build antigravity-cli (x86_64)
         run: bash packages/antigravity-cli/build.sh x86_64
 
-      # --- oh-my-pi (glibc, both architectures) ---
+      # --- oh-my-pi (glibc, aarch64 only — x86_64 binary exceeds GitHub 100MB limit) ---
       - name: Build oh-my-pi (aarch64)
         run: bash packages/oh-my-pi/build.sh aarch64
-      - name: Build oh-my-pi (x86_64)
-        run: bash packages/oh-my-pi/build.sh x86_64
 
       - name: List built packages
         run: ls -lh debs/
