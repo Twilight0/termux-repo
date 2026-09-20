@@ -49,12 +49,19 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
 
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-# Install each tarball binary with .bin suffix + wrapper
-for bin_path in "${BUILD_DIR}"/agy "${BUILD_DIR}"/agy.va39; do
-    [ -f "$bin_path" ] || continue
-    bin_name="$(basename "$bin_path")"
+# Find the actual binaries (may be in a subdirectory)
+AGY_BIN="$(find "$BUILD_DIR" -name 'agy' -type f ! -name 'agy_helper' ! -name '*.tar.gz' | head -1)"
+AGY_VA39="$(find "$BUILD_DIR" -name 'agy.va39' -type f | head -1)"
 
-    echo "Stripping ${bin_name}..."
+echo "Found: agy=${AGY_BIN:-none} agy.va39=${AGY_VA39:-none}"
+
+# Install each binary with .bin suffix + wrapper
+for bin_spec in "agy:${AGY_BIN}" "agy.va39:${AGY_VA39}"; do
+    bin_name="${bin_spec%%:*}"
+    bin_path="${bin_spec#*:}"
+    [ -f "$bin_path" ] || continue
+
+    echo "Stripping ${bin_name} ($(stat -c%s "$bin_path") bytes)..."
     if [ "$ARCH" = "aarch64" ]; then
         aarch64-linux-gnu-strip "$bin_path" 2>/dev/null || true
     else
