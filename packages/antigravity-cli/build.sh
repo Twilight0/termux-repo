@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# antigravity-cli: Pre-patched VA39 binary with C bootstrapper
+# antigravity-cli: Pre-patched VA39 binary
+# The upstream 'agy' binary is a native Bionic bootstrapper that
+# self-invokes glibc to run 'agy.va39'. Both must be in the same bin/ dir.
 # Usage: build.sh [aarch64|x86_64]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -28,9 +30,6 @@ LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
 BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
 mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
 
-echo "Compiling bootstrapper (${ARCH})..."
-$CC -static -O2 -o "${BUILD_DIR}/agy_helper" "$SCRIPT_DIR/helper/agy.c"
-
 echo "Downloading antigravity-cli ${VERSION}..."
 curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/antigravity-termux-standalone.tar.gz" \
     -o "${BUILD_DIR}/agy.tar.gz" 2>/dev/null || {
@@ -49,37 +48,14 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
 
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-# Find the actual binaries (may be in a subdirectory)
 AGY_BIN="$(find "$BUILD_DIR" -name 'agy' -type f ! -name 'agy_helper' ! -name '*.tar.gz' | head -1)"
 AGY_VA39="$(find "$BUILD_DIR" -name 'agy.va39' -type f | head -1)"
 
 echo "Found: agy=${AGY_BIN:-none} agy.va39=${AGY_VA39:-none}"
 
-# Install each binary with .bin suffix + wrapper
-for bin_spec in "agy:${AGY_BIN}" "agy.va39:${AGY_VA39}"; do
-    bin_name="${bin_spec%%:*}"
-    bin_path="${bin_spec#*:}"
-    [ -f "$bin_path" ] || continue
-
-    echo "Stripping ${bin_name} ($(stat -c%s "$bin_path") bytes)..."
-    if [ "$ARCH" = "aarch64" ]; then
-        aarch64-linux-gnu-strip "$bin_path" 2>/dev/null || true
-    else
-        strip "$bin_path" 2>/dev/null || true
-    fi
-
-    install -Dm755 "$bin_path" "${LIB_DIR}/${bin_name}.bin"
-
-    cat > "${BIN_DIR}/${bin_name}" << 'WRAPEOF'
-#!/bin/sh
-exec "$(dirname "$0")/../lib/antigravity-cli/agy_helper" BIN_PLACEHOLDER "$@"
-WRAPEOF
-    sed -i "s|BIN_PLACEHOLDER|${bin_name}|" "${BIN_DIR}/${bin_name}"
-    chmod 755 "${BIN_DIR}/${bin_name}"
-done
-
-# Install helper (the C bootstrapper)
-install -Dm755 "${BUILD_DIR}/agy_helper" "${LIB_DIR}/agy_helper"
+# Install both directly into bin/ (agy bootstrapper finds agy.va39 via dirname)
+install -Dm755 "$AGY_BIN" "${BIN_DIR}/agy"
+install -Dm755 "$AGY_VA39" "${BIN_DIR}/agy.va39"
 
 # Install the VA39 patch script
 [ -f "$SCRIPT_DIR/helper/patch_va39.py" ] && \
