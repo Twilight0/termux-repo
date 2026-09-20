@@ -5,7 +5,7 @@ set -euo pipefail
 # Builds debs for aarch64 and x86_64
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 

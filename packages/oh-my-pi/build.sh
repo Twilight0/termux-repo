@@ -4,7 +4,7 @@ set -euo pipefail
 # oh-my-pi: Glibc-linked binary with C bootstrapper
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
