@@ -4,16 +4,16 @@ Architectures: all
 Components: main
 Description: Twilight custom termux repository
 Suite: stable
-Date: Sun, 20 Sep 2026 15:31:11 +0000
+Date: Sun, 20 Sep 2026 15:33:44 +0000
 MD5Sum:
- dbcdabf0ba6ad1e02e2074b712be9a4e 702 main/binary-all/Packages
- e1946820de085f3d742c69da584f308e 568 main/binary-all/Packages.xz
+ f0266479281feca49a21aa1f2d0835e4 702 main/binary-all/Packages
+ b7a284275d53da99de73c8080bcf72de 572 main/binary-all/Packages.xz
 SHA1:
- b4de1c51d1b4e8a3728ac4392d1e9690dec9e5d1 702 main/binary-all/Packages
- 95c18644c724c5d0a29b7767da6800f16b1ac377 568 main/binary-all/Packages.xz
+ 132fe5e1d308d9ffe684df103dd73b77af90061c 702 main/binary-all/Packages
+ a6380898cd770f544ff755baa15abbe1405128be 572 main/binary-all/Packages.xz
 SHA256:
- 3ec1c84cfe275f94133dd48157009352f87f32b032b817837447e1bbcf51b4c2 702 main/binary-all/Packages
- 7ef1a022aece9030ea96bc85426a6f0d6d751fce796a49480b927e1249bde55c 568 main/binary-all/Packages.xz
+ ec7db1fbbf343fcd464dd8fbcb6c289396b8a456ca0338bda785e7316e80b6f1 702 main/binary-all/Packages
+ 56d0ec25b8711b2e522c82673f14474aeb5fde11646e17708e79246a73acf565 572 main/binary-all/Packages.xz
 SHA512:
- 4cd3bbee26902d2e21ef2f21d2c451b9aecae44ef9163f915f3b02e9ee8d5f3d3ac1049f64f51cdd7169459db00c227e80ddff2948f638accf74d53b2541f1c6 702 main/binary-all/Packages
- 2b1afb0628fc0f7420c217acfdce01acdee7d8b0c3a69f639575de2159df194c99ec470ca6158c4053af12e6127ec3c75b912ba4681a992cfa0c339a9207ce78 568 main/binary-all/Packages.xz
+ 9456fe7feeb8331d18e852f2d0fe6ddb4d6720a1edbed1c0ad67db7b152c3277b977f6b186dd7fdbe5aeddea8fc7235a7765900312682a53119989e2ba4efb32 702 main/binary-all/Packages
+ b50778c7cd7ab467c41b5286c2b6356b0638ebd2197de2978a61d6f418b14e97a3f53bf6926f620b68fab65b59f564eff449a49c5e7b22cb0d0d795a7f9d5037 572 main/binary-all/Packages.xz
