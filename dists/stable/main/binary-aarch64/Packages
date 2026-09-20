@@ -1,63 +1,73 @@
-Package: 
-Version: 
+Package: antigravity-cli
+Version: 1.1.27-0
 Architecture: aarch64
-Maintainer: 
+Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 229
-Depends: 
-Section: 
-Priority: 
-Homepage: 
-Description: 
+Depends: glibc-repo, glibc
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google/cli
+Description: Google Antigravity CLI - AI coding agent
+ Antigravity CLI brings multi-step reasoning, multi-file editing, tool
+ calling, and persistent history to your terminal. VA39-patched for
+ Android/Termux compatibility.
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/antigravity-cli_1.1.27-0_termux_aarch64.deb
-Size: 235196
-MD5sum: 626ba7f2cdbc0400e20d309d9c4cfca8
-SHA1: aa8bb27f94f14070026f63e156d8094918e86cbf
-SHA256: 1d3203d64fd53179a52e6eac20874acea31fcbc3b140cac03ac4722cf0f5fa77
+Size: 235192
+MD5sum: 6ea17bcdec1c3340e7507a75bad6da7e
+SHA1: 6e56c5462d3b94aa97d85b27a0e3fc220f84efa4
+SHA256: 56d4a64223e33eb693c8c711fa1e474ae4ca9c54da684ca70d76280a5d48d690
 
-Package: 
-Version: 
+Package: muse-code
+Version: 1.3.0.r3401.1-1
 Architecture: aarch64
-Maintainer: 
-Installed-Size: 64012
-Depends: 
-Section: 
-Priority: 
-Homepage: 
-Description: 
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 64013
+Depends: python, ca-certificates, proot
+Section: devel
+Priority: optional
+Homepage: https://dev.meta.ai
+Description: Terminal-based AI coding agent powered by Meta's Muse Spark
+ Packed with AVX2 legacy fallback, interactive curses TUI session picker,
+ and multi-agent MCP configuration management.
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/muse-code_1.3.0.r3401.1-1_termux_aarch64.deb
-Size: 65548852
-MD5sum: 834ee3818d70e7b54bfd02d99438c173
-SHA1: 3e7c20158f3896c94f0346fd9e78a217a1fedd96
-SHA256: b9100d209cd34ce6ae62daf83ef110676b18a3a9dd2f04e9702bfeae96b591a2
+Size: 65549404
+MD5sum: 3754c47527c3e252e924ab14529f9d09
+SHA1: 72239ffc9b0590a511085fbb833ce64688062298
+SHA256: 205f2f92d1580ff7981d68739a14eb07525062ec76837cc2e0602f49ffddb087
 
-Package: 
-Version: 
+Package: oh-my-pi
+Version: 18.1.7-0
 Architecture: aarch64
-Maintainer: 
+Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 68576
-Depends: 
-Section: 
-Priority: 
-Homepage: 
-Description: 
+Depends: glibc-repo, glibc
+Section: devel
+Priority: optional
+Homepage: https://omp.sh
+Description: Oh-My-Pi - a coding agent with the IDE wired in
+ Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
+ agents, commands, and tools with a single command. Uses glibc bridge
+ for Termux compatibility.
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/oh-my-pi_18.1.7-0_termux_aarch64.deb
-Size: 70222628
-MD5sum: b003153f99aa00f3b850341bba272314
-SHA1: feb03f2c4af84cd713b6a3131a8730a299d3e2a3
-SHA256: 450f86a30ee344b49ac618bb9cfd7baabecb6185a421775674b8dee214b5225b
+Size: 70221992
+MD5sum: 531a03f918afec7936a563557154bf89
+SHA1: 352943af33c02e749fd87069fb89bffd6014a121
+SHA256: 54d9ad7b23b17aba9f2eb9b2b4d323bee1eb3ec1edd90944998376bb786a513c
 
-Package: 
-Version: 
+Package: opencode
+Version: 1.18.3-0
 Architecture: aarch64
-Maintainer: 
+Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 39635
-Depends: 
-Section: 
-Priority: 
-Homepage: 
-Description: 
+Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
+Section: devel
+Priority: optional
+Homepage: https://github.com/anomalyco/opencode
+Description: AI-powered coding assistant for the terminal
+ OpenCode is an interactive AI coding assistant that runs in your terminal.
+ Uses glibc bridge for Termux compatibility.
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/opencode_1.18.3-0_termux_aarch64.deb
-Size: 40587104
-MD5sum: b823c1f319540b0028dc193e4501f5ef
-SHA1: 0a8a0f61af47fa8cc0902229a571119980a3b20b
-SHA256: 3e724d87c2825ee277c99b8a2c7565611cca4510598797d5f2422d50aeb902db
+Size: 40586888
+MD5sum: fc7270e7d4e20502767df6a5a4ddfbc3
+SHA1: 5012f6b5591c27542f30f7b097d2695e9995231d
+SHA256: 621076e19458d127045fc08c4ac588a3d5cdd960639829ca7a1cca96db53a704
