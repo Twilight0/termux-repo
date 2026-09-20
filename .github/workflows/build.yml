@@ -7,17 +7,12 @@ on:
     - cron: '0 0 * * 0'  # weekly on Sunday
   workflow_dispatch:
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+permissions:
+  contents: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
 
     steps:
       - name: Checkout code
@@ -34,7 +29,7 @@ jobs:
           sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu
 
       - name: Create output directories
-        run: mkdir -p debs repo
+        run: mkdir -p debs
 
       # --- wrangler (architecture-independent) ---
       - name: Build wrangler
@@ -52,81 +47,169 @@ jobs:
       - name: Build opencode (x86_64)
         run: bash packages/opencode/build.sh x86_64
 
-      # --- antigravity-cli (glibc + VA39 patch, both architectures) ---
+      # --- antigravity-cli (glibc, both architectures) ---
       - name: Build antigravity-cli (aarch64)
         run: bash packages/antigravity-cli/build.sh aarch64
       - name: Build antigravity-cli (x86_64)
         run: bash packages/antigravity-cli/build.sh x86_64
 
-      # --- oh-my-pi (glibc, aarch64 only — x86_64 binary exceeds GitHub 100MB limit) ---
+      # --- oh-my-pi (glibc, both architectures) ---
       - name: Build oh-my-pi (aarch64)
         run: bash packages/oh-my-pi/build.sh aarch64
+      - name: Build oh-my-pi (x86_64)
+        run: bash packages/oh-my-pi/build.sh x86_64
 
       - name: List built packages
         run: ls -lh debs/
 
-      - name: Generate APT repository
+      - name: Generate APT repository metadata
         run: |
           set -e
           DIST="stable"
           COMP="main"
-          REPO_BASE="repo/dists/${DIST}/${COMP}"
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/latest"
 
-          # Copy debs into arch-specific directories
+          mkdir -p "repo/dists/${DIST}/${COMP}"
+
+          # Copy debs into repo structure for Packages generation
           for deb in debs/*.deb; do
             arch=$(dpkg-deb -f "$deb" Architecture)
-            mkdir -p "${REPO_BASE}/binary-${arch}"
-            cp "$deb" "${REPO_BASE}/binary-${arch}/"
+            mkdir -p "repo/dists/${DIST}/${COMP}/binary-${arch}"
+            cp "$deb" "repo/dists/${DIST}/${COMP}/binary-${arch}/"
           done
 
-          # Generate Packages + Packages.xz for each arch
-          find "${REPO_BASE}" -mindepth 1 -maxdepth 1 -type d | while read arch_dir; do
+          for arch_dir in repo/dists/${DIST}/${COMP}/binary-*; do
             arch=$(basename "$arch_dir" | sed 's/binary-//')
             echo "Generating Packages for ${arch}..."
-            dpkg-scanpackages "${arch_dir}" /dev/null 2>/dev/null > "${arch_dir}/Packages"
-            xz -9kf "${arch_dir}/Packages"
+            cd "$arch_dir"
+
+            first=1
+            for deb in *.deb; do
+              control=$(dpkg-deb -I "$deb")
+              pkg=$(echo "$control" | grep '^Package:' | awk '{print $2}')
+              ver=$(echo "$control" | grep '^Version:' | awk '{print $2}')
+              desc=$(echo "$control" | grep '^Description:' | sed 's/^Description: //')
+              depends=$(echo "$control" | grep '^Depends:' | sed 's/^Depends: //')
+              maint=$(echo "$control" | grep '^Maintainer:' | sed 's/^Maintainer: //')
+              section=$(echo "$control" | grep '^Section:' | awk '{print $2}')
+              priority=$(echo "$control" | grep '^Priority:' | awk '{print $2}')
+              homepage=$(echo "$control" | grep '^Homepage:' | sed 's/^Homepage: //')
+              size=$(stat -c%s "$deb")
+              md5=$(md5sum "$deb" | cut -d' ' -f1)
+              sha1=$(sha1sum "$deb" | cut -d' ' -f1)
+              sha256=$(sha256sum "$deb" | cut -d' ' -f1)
+              # Filename: deb filename only — release assets are flat
+              filename="${RELEASE_URL}/${deb}"
+
+              if [ "$first" -eq 1 ]; then
+                first=0
+              else
+                echo "" >> Packages
+              fi
+
+              cat >> Packages <<PKGENTRY
+          Package: ${pkg}
+          Version: ${ver}
+          Architecture: ${arch}
+          Maintainer: ${maint}
+          Installed-Size: $(($(stat -c%s "$deb") / 1024))
+          Depends: ${depends}
+          Section: ${section}
+          Priority: ${priority}
+          Homepage: ${homepage}
+          Description: ${desc}
+         Filename: ${filename}
+          Size: ${size}
+          MD5sum: ${md5}
+          SHA1: ${sha1}
+          SHA256: ${sha256}
+          PKGENTRY
+            done
+            sed -i 's/^          //' Packages
+            xz -9kf Packages
+            cd -
           done
 
           # Generate Release file
           RELEASE="repo/dists/${DIST}/Release"
-          cat > "${RELEASE}" << EOF
-          Codename: ${DIST}
-          Version: 1
-          Architectures: $(ls -d ${REPO_BASE}/binary-* | xargs -I{} basename {} | sed 's/binary-//' | tr '\n' ' ')
-          Components: ${COMP}
-          Description: Twilight custom termux repository
-          Suite: ${DIST}
-          Date: $(date -Ru)
-          EOF
+          {
+            echo "Origin: Twilight"
+            echo "Label: termux-repo"
+            echo "Codename: ${DIST}"
+            echo "Architectures: $(ls -d repo/dists/${DIST}/${COMP}/binary-* | xargs -I{} basename {} | sed 's/binary-//' | sort | tr '\n' ' ')"
+            echo "Components: ${COMP}"
+            echo "Description: Twilight custom termux repository"
+            echo "Suite: ${DIST}"
+            echo "Date: $(date -Ru)"
 
-          # Remove leading spaces (heredoc indentation)
-          sed -i 's/^          //' "${RELEASE}"
-
-          # Append checksums
-          for f in $(find "${REPO_BASE}" -name 'Packages*' -type f | sort); do
-            relpath=$(echo "$f" | sed 's|^repo/dists/[^/]*/||')
-            for algo in md5sum sha1sum sha256sum sha512sum; do
-              hash=$(${algo} "$f" | cut -d' ' -f1)
-              size=$(stat -c%s "$f")
-              label=$(echo ${algo} | tr '[:lower:]' '[:upper:]' | sed 's/SUM//')
-              [ "${label}" = "MD5" ] && label="MD5Sum"
-              echo " ${hash} ${size} ${relpath}" >> "${RELEASE}.tmp.${label}"
+            for arch_dir in repo/dists/${DIST}/${COMP}/binary-*; do
+              arch=$(basename "$arch_dir" | sed 's/binary-//')
+              for f in Packages Packages.xz; do
+                filepath="${arch_dir}/${f}"
+                if [ -f "$filepath" ]; then
+                  hash=$(sha256sum "$filepath" | cut -d' ' -f1)
+                  size=$(stat -c%s "$filepath")
+                  echo " ${hash} ${size} ${COMP}/binary-${arch}/${f}"
+                fi
+              done
             done
-          done
+          } > "${RELEASE}"
 
-          for label in MD5Sum SHA1 SHA256 SHA512; do
-            echo "${label}:" >> "${RELEASE}"
-            cat "${RELEASE}.tmp.${label}" >> "${RELEASE}" 2>/dev/null || true
-            rm -f "${RELEASE}.tmp.${label}"
-          done
+          echo "Repository metadata generated:"
+          find repo/ -type f | sort
 
-          echo "Repository generated:"
-          find repo/dists -type f | head -30
+      - name: Deploy debs to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./repo
-          keep_files: false
+          # Delete old 'latest' release
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+
+          # Create new 'latest' release
+          gh release create latest \
+            --title "Latest Build" \
+            --notes "Automated build from $(git rev-parse --short HEAD)" \
+            --target main
+
+          # Upload all debs (2GB per file limit on releases)
+          echo "Uploading debs to release..."
+          gh release upload latest debs/*.deb --clobber
+
+          echo "Release created!"
+          gh release view latest --repo ${{ github.repository }}
+
+      - name: Deploy metadata to gh-pages
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Prepare gh-pages branch
+          if git fetch origin gh-pages --depth=1 2>/dev/null; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . 2>/dev/null || true
+            touch .nojekyll
+            git add .nojekyll
+            git commit -m "Init gh-pages"
+            git push origin gh-pages
+          fi
+
+          # Clear old metadata
+          git rm -rf dists/ 2>/dev/null || true
+
+          # Copy new metadata
+          cp -r repo/dists .
+
+          # Ensure .nojekyll exists
+          touch .nojekyll
+
+          git add dists/ .nojekyll
+          git commit -m "Deploy repo metadata $(date -u +%Y-%m-%d)" || true
+          git push origin gh-pages
+
+          echo "gh-pages deploy complete!"

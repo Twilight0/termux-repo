@@ -2,6 +2,7 @@
 set -e
 
 REPO_URL="https://twilight0.github.io/termux-repo"
+RELEASE_URL="https://github.com/Twilight0/termux-repo/releases/download/latest"
 SOURCES_FILE="$PREFIX/etc/apt/sources.list.d/twilight0-repo.list"
 
 echo "Adding Twilight0 custom repository..."
