@@ -11,8 +11,8 @@ Description: Cloudflare Workers CLI
  Cloudflare Workers command-line tooling. Cloud API commands only
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
-Filename: main/wrangler_4.123.0-0_all.deb
-Size: 1484
-MD5sum: be4c4c13fc6c8dd7f5af7d60f9e91ace
-SHA1: 637921382e8692761d32d488abc6e559bfab44c1
-SHA256: 52861f196b54ed06b1a40839b9d9ca597bb23e8d193323812882f8eba410ced2
+Filename: pool/main/wrangler_4.123.0-0_all.deb
+Size: 1488
+MD5sum: d9ecfc684118b733158f778d3f9ad3b5
+SHA1: 775774fc1f48d99b66f498dfa0eeadb134393b3b
+SHA256: 4a6d1c12a851ec16824627b1c05914b9a8ab5037df300975fe10a7e7f48e2ed8
