@@ -28,6 +28,7 @@ mkdir -p "${PKG_DIR}/DEBIAN" "${PKG_DIR}/${PREFIX}/bin" "${PKG_DIR}/${PREFIX}/li
 
 echo "Compiling bootstrapper (${ARCH})..."
 $CC -static -O2 -o "${BUILD_DIR}/agy_helper" "$SCRIPT_DIR/helper/agy.c"
+install -Dm755 "${BUILD_DIR}/agy_helper" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/agy_helper"
 
 echo "Downloading antigravity-cli ${VERSION}..."
 curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/antigravity-termux-standalone.tar.gz" \
@@ -47,11 +48,11 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
 
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-# Find all binaries in the tarball
+# Find all binaries in the tarball (exclude the helper we just compiled)
 BINS=()
 while IFS= read -r -d '' f; do
     BINS+=("$f")
-done < <(find "$BUILD_DIR" -maxdepth 1 -type f ! -name '*.tar.gz' -print0)
+done < <(find "$BUILD_DIR" -maxdepth 1 -type f ! -name '*.tar.gz' ! -name 'agy_helper' -print0)
 
 if [ ${#BINS[@]} -eq 0 ]; then
     echo "Error: could not find any binaries" >&2
