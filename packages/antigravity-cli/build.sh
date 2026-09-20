@@ -47,28 +47,47 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
 
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy' -type f | head -1)"
-if [ -z "$AGY_BIN" ]; then
-    AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy*' -type f ! -name '*.tar.gz' | head -1)"
-fi
+# Find all binaries in the tarball
+BINS=()
+while IFS= read -r -d '' f; do
+    BINS+=("$f")
+done < <(find "$BUILD_DIR" -maxdepth 1 -type f ! -name '*.tar.gz' -print0)
 
-if [ ! -f "$AGY_BIN" ]; then
-    echo "Error: could not find antigravity-cli binary" >&2
+if [ ${#BINS[@]} -eq 0 ]; then
+    echo "Error: could not find any binaries" >&2
     rm -rf "$BUILD_DIR"
     exit 1
 fi
 
-# Strip debug symbols to reduce size
-echo "Stripping binary..."
-if [ "$ARCH" = "aarch64" ]; then
-    aarch64-linux-gnu-strip "$AGY_BIN" 2>/dev/null || true
-else
-    strip "$AGY_BIN" 2>/dev/null || true
-fi
+echo "Found binaries: ${BINS[*]}"
 
-install -Dm755 "$AGY_BIN" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/agy.bin"
-install -Dm755 "${BUILD_DIR}/agy_helper" "${PKG_DIR}/${PREFIX}/bin/agy"
-chmod 755 "${PKG_DIR}/${PREFIX}/bin/agy"
+for bin_path in "${BINS[@]}"; do
+    bin_name="$(basename "$bin_path")"
+
+    # Strip debug symbols
+    echo "Stripping ${bin_name}..."
+    if [ "$ARCH" = "aarch64" ]; then
+        aarch64-linux-gnu-strip "$bin_path" 2>/dev/null || true
+    else
+        strip "$bin_path" 2>/dev/null || true
+    fi
+
+    # Install binary
+    install -Dm755 "$bin_path" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/${bin_name}.bin"
+
+    # Create wrapper script for this binary
+    wrapper="${PKG_DIR}/${PREFIX}/bin/${bin_name}"
+    cat > "$wrapper" << WRAPEOF
+#!/bin/sh
+exec "$(dirname "\$0")/../lib/antigravity-cli/agy_helper" "${bin_name}" "\$@"
+WRAPEOF
+    chmod 755 "$wrapper"
+done
+
+# Also install the VA39 patch script
+if [ -f "$SCRIPT_DIR/helper/patch_va39.py" ]; then
+    install -Dm755 "$SCRIPT_DIR/helper/patch_va39.py" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/patch_va39.py"
+fi
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
