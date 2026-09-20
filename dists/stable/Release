@@ -1,19 +1,35 @@
 Codename: stable
 Version: 1
-Architectures: all 
+Architectures: aarch64 all x86_64 
 Components: main
 Description: Twilight custom termux repository
 Suite: stable
-Date: Sun, 20 Sep 2026 15:33:44 +0000
+Date: Sun, 20 Sep 2026 15:38:24 +0000
 MD5Sum:
- f0266479281feca49a21aa1f2d0835e4 702 main/binary-all/Packages
- b7a284275d53da99de73c8080bcf72de 572 main/binary-all/Packages.xz
+ 932fa4e5c1f0330a464faa473a4f5a44 2823 main/binary-aarch64/Packages
+ 1c0feb4878cde84e2e440a13cedfebe7 1336 main/binary-aarch64/Packages.xz
+ c610922d399db47e77cab0d3126974ef 702 main/binary-all/Packages
+ 2734a4fd3ae0106e4831dc67a9ed6a44 572 main/binary-all/Packages.xz
+ 7ac4537aa17f6b5e281de964f5438e33 725 main/binary-x86_64/Packages
+ 074b18e46500f895df98814d4fd8cf88 608 main/binary-x86_64/Packages.xz
 SHA1:
- 132fe5e1d308d9ffe684df103dd73b77af90061c 702 main/binary-all/Packages
- a6380898cd770f544ff755baa15abbe1405128be 572 main/binary-all/Packages.xz
+ 014486c3e10cf003af36dd78ca26cec5b2d256d0 2823 main/binary-aarch64/Packages
+ 8919eddbabd8242270ead44568ce56b4c639e2b7 1336 main/binary-aarch64/Packages.xz
+ de4a36b001fbb46e04b3a2a41861be304c9597df 702 main/binary-all/Packages
+ 1d0fd66d286cc8aa43c21fdc72c7149d331a1f51 572 main/binary-all/Packages.xz
+ a320e0218d087f4a1f6b4c57b4f43ffbbdb70c9a 725 main/binary-x86_64/Packages
+ 5efd747358a85585f7a76119ec18eb4e46f3c3c1 608 main/binary-x86_64/Packages.xz
 SHA256:
- ec7db1fbbf343fcd464dd8fbcb6c289396b8a456ca0338bda785e7316e80b6f1 702 main/binary-all/Packages
- 56d0ec25b8711b2e522c82673f14474aeb5fde11646e17708e79246a73acf565 572 main/binary-all/Packages.xz
+ 83492e5cc2604321fe8e52287cf727f93b4659b4f0a81604352238feb86a05c1 2823 main/binary-aarch64/Packages
+ be9da73f33d7d269deec822243b2fe06896d3688660634fe77adbab8842d5978 1336 main/binary-aarch64/Packages.xz
+ 43a5f4f0aec4b1ca13bda84be7e461989681ff17d238013dd1de0e671956ba9e 702 main/binary-all/Packages
+ dc76d883d55bceb90833e907994f529fff879b873fb70cea73482603c4adac95 572 main/binary-all/Packages.xz
+ 1acffb78e38a5f4fb032b6a6921e08a8858cc6d33b0d85bdd947d3275ea76d75 725 main/binary-x86_64/Packages
+ 54f7258d2559170a454425120a638854f8cd6b755f71c1e0b1633ffdb24b0365 608 main/binary-x86_64/Packages.xz
 SHA512:
- 9456fe7feeb8331d18e852f2d0fe6ddb4d6720a1edbed1c0ad67db7b152c3277b977f6b186dd7fdbe5aeddea8fc7235a7765900312682a53119989e2ba4efb32 702 main/binary-all/Packages
- b50778c7cd7ab467c41b5286c2b6356b0638ebd2197de2978a61d6f418b14e97a3f53bf6926f620b68fab65b59f564eff449a49c5e7b22cb0d0d795a7f9d5037 572 main/binary-all/Packages.xz
+ a4523e4323a9b9b2b6ff1a4079e5314f92e641e675c5f6e0111ac9731e5844e1dba4d57e57de2c0b362360bd41254c7486db51b69200bccbde27214aef8910f8 2823 main/binary-aarch64/Packages
+ cd7541ee14d8507050d3dbb8344e28801dd22ea072eeaaed34b244a95c206ef827d0b996fdaba887719fc585233aae1cd526db829633489e4acf08886509ee84 1336 main/binary-aarch64/Packages.xz
+ 2a54524ae41a5c34f54effc18bc5ee9a12590be5459859e974ab4332d1655c00a5f3b9f4cd8d006406e7f2ac2589b0289a38ab1514f3e1ad1c4d1d22dd7607ac 702 main/binary-all/Packages
+ 80e3df7b7f108aab3345254b1d5280df6ec9b7163fd6d4bef1727bb511d0350ebc11c5222dea3574ad1beaa4113e8ceb682e5642c63b5bd7b24916174f2173d1 572 main/binary-all/Packages.xz
+ 3fa05dad65b5023713cd4a64025dece283a6541cbae5791e1a2ce1fd3f51194be740293144c6f3f0035ccc14b7b1f003c61d0c588f3f56f1079cb65791e09a37 725 main/binary-x86_64/Packages
+ 66a5dc13ba0c6032e87c094ce3ded2bc767a0ee0011f15dbfedef83f4dbbb25a070ac76129014dce99fab011eca38545bfcbbb888004388a48dfd24047f79aba 608 main/binary-x86_64/Packages.xz
