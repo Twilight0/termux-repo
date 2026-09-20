@@ -1,27 +1,19 @@
-Codename: termux
+Codename: stable
 Version: 1
-Architectures: all
-Description: stable repository
-Suite: stable
-Date: Sun, 20 Sep 2026 15:21:47 UTC
+Architectures: all 
 Components: main
+Description: Twilight custom termux repository
+Suite: stable
+Date: Sun, 20 Sep 2026 15:31:11 +0000
 MD5Sum:
- 8b39b60751df18c253500c1a54732c85 834 main/binary-all/Packages
- e3c8ec194cd9776ae70aaddf44818184 644 main/binary-all/Packages.xz
- 8dc5aea5b03dff8595f096f9e368e888 32 main/Contents-all.xz
- d41d8cd98f00b204e9800998ecf8427e 0 main/Contents-all
+ dbcdabf0ba6ad1e02e2074b712be9a4e 702 main/binary-all/Packages
+ e1946820de085f3d742c69da584f308e 568 main/binary-all/Packages.xz
 SHA1:
- 0f70438466eba682a35ee1d278cf4c79c6e11941 834 main/binary-all/Packages
- d8208f24f7c4a2993d9c42717804e41b1b62e87f 644 main/binary-all/Packages.xz
- 9746882f4236fa1c3a8f86be2f1d9c46680c0b10 32 main/Contents-all.xz
- da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/Contents-all
+ b4de1c51d1b4e8a3728ac4392d1e9690dec9e5d1 702 main/binary-all/Packages
+ 95c18644c724c5d0a29b7767da6800f16b1ac377 568 main/binary-all/Packages.xz
 SHA256:
- 14e84aa10b81e190ba970be2c2f24f53dfbe7777c15d1f3366f4b839394ecb33 834 main/binary-all/Packages
- 52b84979ab9ee7bed4f630d6bcca2832a57a58c1629705831f1c3c96199abb50 644 main/binary-all/Packages.xz
- 0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275 32 main/Contents-all.xz
- e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/Contents-all
+ 3ec1c84cfe275f94133dd48157009352f87f32b032b817837447e1bbcf51b4c2 702 main/binary-all/Packages
+ 7ef1a022aece9030ea96bc85426a6f0d6d751fce796a49480b927e1249bde55c 568 main/binary-all/Packages.xz
 SHA512:
- c49cd685cc848307ba715c8b9568cd492386ecb8bb7f4ecc9a32624a8f57ea490872691215cd96faa7d847dea4cfb0866cafd6634f85bb5ee73d46fff7f6291c 834 main/binary-all/Packages
- 6cbb09c558ad511154961d7643c8c5258571cacf80e61b8650da5b389d8a99d66d29b4ae9c36262fba6c0508fdf5d4406c6ebfcb419582bb0c7a418f8b9d4663 644 main/binary-all/Packages.xz
- 034b32f1138322638c7a5b7949a3b184c6a4cdfd003360a496c08c56c2cc645c94fbe9cdf9d84c963af6dda6c442717cd61d7e1cecf7024bd463f6f5196c5527 32 main/Contents-all.xz
- cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e 0 main/Contents-all
+ 4cd3bbee26902d2e21ef2f21d2c451b9aecae44ef9163f915f3b02e9ee8d5f3d3ac1049f64f51cdd7169459db00c227e80ddff2948f638accf74d53b2541f1c6 702 main/binary-all/Packages
+ 2b1afb0628fc0f7420c217acfdce01acdee7d8b0c3a69f639575de2159df194c99ec470ca6158c4053af12e6127ec3c75b912ba4681a992cfa0c339a9207ce78 568 main/binary-all/Packages.xz
