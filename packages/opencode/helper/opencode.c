@@ -2,7 +2,8 @@
  * opencode_helper.c - Glibc bootstrapper for OpenCode on Termux
  *
  * Bridges Android Bionic to glibc-linked OpenCode binary.
- * Cross-compile: aarch64-linux-gnu-gcc -static -o opencode_helper opencode.c
+ * Compile: gcc -static -o opencode_helper opencode.c          (native)
+ *    or:   aarch64-linux-gnu-gcc -static -o opencode_helper opencode.c  (cross)
  */
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,6 +11,17 @@
 #include <libgen.h>
 #include <limits.h>
 #include <stdio.h>
+
+#if defined(__x86_64__)
+#define LD_LOADER "/data/data/com.termux/files/usr/glibc/lib/ld-linux-x86-64.so.2"
+#elif defined(__aarch64__)
+#define LD_LOADER "/data/data/com.termux/files/usr/glibc/lib/ld-linux-aarch64.so.1"
+#else
+#error "Unsupported architecture"
+#endif
+
+#define LIB_PATH "/data/data/com.termux/files/usr/glibc/lib"
+#define BIN_NAME "opencode-bin"
 
 int main(int argc, char **argv) {
     unsetenv("LD_PRELOAD");
@@ -23,25 +35,21 @@ int main(int argc, char **argv) {
     if (len == -1) return 1;
     exec_path[len] = '\0';
 
-    char *loader  = "/data/data/com.termux/files/usr/glibc/lib/ld-linux-aarch64.so.1";
-    char lib_path[] = "/data/data/com.termux/files/usr/glibc/lib";
-
-    /* Binary lives next to this helper in the same data dir */
     char *dir = dirname(exec_path);
     char real_bin[PATH_MAX];
-    snprintf(real_bin, sizeof(real_bin), "%s/opencode-bin", dir);
+    snprintf(real_bin, sizeof(real_bin), "%s/" BIN_NAME, dir);
 
     char **new_argv = malloc((argc + 4) * sizeof(char *));
     if (!new_argv) return 1;
-    new_argv[0] = loader;
+    new_argv[0] = LD_LOADER;
     new_argv[1] = "--library-path";
-    new_argv[2] = lib_path;
+    new_argv[2] = LIB_PATH;
     new_argv[3] = real_bin;
     for (int i = 1; i < argc; i++)
         new_argv[i + 3] = argv[i];
     new_argv[argc + 3] = NULL;
 
-    execv(loader, new_argv);
+    execv(LD_LOADER, new_argv);
     perror("execv");
     free(new_argv);
     return 1;

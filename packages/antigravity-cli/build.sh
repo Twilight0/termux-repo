@@ -2,18 +2,23 @@
 set -euo pipefail
 
 # antigravity-cli: Pre-patched VA39 binary with C bootstrapper
-# Uses wallentx/antigravity-cli-termux pre-built release
+# Usage: build.sh [aarch64|x86_64]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
-# Version info - tracks wallentx releases
 VERSION="${AGY_VERSION:-1.1.27}"
 DEB_VERSION="${VERSION}-0"
 PREFIX="data/data/com.termux/files/usr"
-ARCH="aarch64"
+ARCH="${1:-aarch64}"
+
+case "$ARCH" in
+    aarch64) CC="aarch64-linux-gnu-gcc"; AGY_ARCH="arm64" ;;
+    x86_64)  CC="gcc";                   AGY_ARCH="x64" ;;
+    *) echo "Usage: $0 [aarch64|x86_64]" >&2; exit 1 ;;
+esac
 
 echo "=== Building antigravity-cli ${DEB_VERSION} (${ARCH}) ==="
 
@@ -21,18 +26,14 @@ BUILD_DIR="$(mktemp -d)"
 PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
 mkdir -p "${PKG_DIR}/DEBIAN" "${PKG_DIR}/${PREFIX}/bin" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
 
-# Cross-compile the C bootstrapper (static, no deps)
-echo "Compiling bootstrapper..."
-aarch64-linux-gnu-gcc -static -O2 -o "${BUILD_DIR}/agy_helper" \
-    "$SCRIPT_DIR/helper/agy.c"
+echo "Compiling bootstrapper (${ARCH})..."
+$CC -static -O2 -o "${BUILD_DIR}/agy_helper" "$SCRIPT_DIR/helper/agy.c"
 
-# Download pre-patched release from wallentx
 echo "Downloading antigravity-cli ${VERSION}..."
 curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/antigravity-termux-standalone.tar.gz" \
     -o "${BUILD_DIR}/agy.tar.gz" 2>/dev/null || {
-    # Fallback: download from Google's auto-updater manifest and patch
-    echo "Pre-built release not found, downloading official binary and patching..."
-    MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_arm64.json"
+    echo "Pre-built release not found, downloading from Google's manifest..."
+    MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_${AGY_ARCH}.json"
     manifest_json="$(curl -fsSL "$MANIFEST_URL")"
     url="$(echo "$manifest_json" | sed -n 's/.*"url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
     if [ -n "$url" ]; then
@@ -44,10 +45,8 @@ curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/
     fi
 }
 
-# Extract tarball
 tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
 
-# Find the binary (prefer agy over agy.va39 for Termux)
 AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy' -type f | head -1)"
 if [ -z "$AGY_BIN" ]; then
     AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy*' -type f ! -name '*.tar.gz' | head -1)"
@@ -59,7 +58,6 @@ if [ ! -f "$AGY_BIN" ]; then
     exit 1
 fi
 
-# Install files
 install -Dm755 "$AGY_BIN" "${PKG_DIR}/${PREFIX}/lib/antigravity-cli/agy.bin"
 install -Dm755 "${BUILD_DIR}/agy_helper" "${PKG_DIR}/${PREFIX}/bin/agy"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/agy"

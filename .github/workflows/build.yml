@@ -46,17 +46,23 @@ jobs:
       - name: Build muse-code (x86_64)
         run: bash packages/muse-code/build.sh x86_64
 
-      # --- opencode (aarch64, glibc) ---
-      - name: Build opencode
-        run: bash packages/opencode/build.sh
+      # --- opencode (glibc, both architectures) ---
+      - name: Build opencode (aarch64)
+        run: bash packages/opencode/build.sh aarch64
+      - name: Build opencode (x86_64)
+        run: bash packages/opencode/build.sh x86_64
 
-      # --- antigravity-cli (aarch64, glibc + VA39 patch) ---
-      - name: Build antigravity-cli
-        run: bash packages/antigravity-cli/build.sh
+      # --- antigravity-cli (glibc + VA39 patch, both architectures) ---
+      - name: Build antigravity-cli (aarch64)
+        run: bash packages/antigravity-cli/build.sh aarch64
+      - name: Build antigravity-cli (x86_64)
+        run: bash packages/antigravity-cli/build.sh x86_64
 
-      # --- oh-my-pi (aarch64, glibc) ---
-      - name: Build oh-my-pi
-        run: bash packages/oh-my-pi/build.sh
+      # --- oh-my-pi (glibc, both architectures) ---
+      - name: Build oh-my-pi (aarch64)
+        run: bash packages/oh-my-pi/build.sh aarch64
+      - name: Build oh-my-pi (x86_64)
+        run: bash packages/oh-my-pi/build.sh x86_64
 
       - name: List built packages
         run: ls -lh debs/
