@@ -9,55 +9,55 @@ Priority:
 Homepage: 
 Description: 
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/antigravity-cli_1.1.27-0_termux_aarch64.deb
-Size: 235136
-MD5sum: a997d2dc432190b815ca92bc408fd1fc
-SHA1: 080e1287ba2ec773cbe21d0f805b7cdcd7d5d0cd
-SHA256: ef6a03f945fb79ef5b6de3c57c0d450df1f183f19d5020810aecfa75a1bc5fa1
+Size: 235196
+MD5sum: 626ba7f2cdbc0400e20d309d9c4cfca8
+SHA1: aa8bb27f94f14070026f63e156d8094918e86cbf
+SHA256: 1d3203d64fd53179a52e6eac20874acea31fcbc3b140cac03ac4722cf0f5fa77
 
 Package: 
 Version: 
 Architecture: aarch64
 Maintainer: 
-Installed-Size: 64013
+Installed-Size: 64012
 Depends: 
 Section: 
 Priority: 
 Homepage: 
 Description: 
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/muse-code_1.3.0.r3401.1-1_termux_aarch64.deb
-Size: 65549792
-MD5sum: 64a91c83857ccc416c2e827ef93cca44
-SHA1: c19e41f5f298b002e1a4a40b3570cd1cd7ef1da4
-SHA256: 02e089990335ded0e116055e810176f88286319ffda5ceacbcd2df543be78511
+Size: 65548852
+MD5sum: 834ee3818d70e7b54bfd02d99438c173
+SHA1: 3e7c20158f3896c94f0346fd9e78a217a1fedd96
+SHA256: b9100d209cd34ce6ae62daf83ef110676b18a3a9dd2f04e9702bfeae96b591a2
 
 Package: 
 Version: 
 Architecture: aarch64
 Maintainer: 
-Installed-Size: 68573
+Installed-Size: 68576
 Depends: 
 Section: 
 Priority: 
 Homepage: 
 Description: 
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/oh-my-pi_18.1.7-0_termux_aarch64.deb
-Size: 70219136
-MD5sum: cd78a21088fb6196742e2f8b660f8846
-SHA1: 25c6e44596f93e5d339375f9a39b64583ed9b0d8
-SHA256: 667d3465ee0ac221d0b68528cc9b63752d7a5bde3f95a5e7cf6ab568d0e9fb9f
+Size: 70222628
+MD5sum: b003153f99aa00f3b850341bba272314
+SHA1: feb03f2c4af84cd713b6a3131a8730a299d3e2a3
+SHA256: 450f86a30ee344b49ac618bb9cfd7baabecb6185a421775674b8dee214b5225b
 
 Package: 
 Version: 
 Architecture: aarch64
 Maintainer: 
-Installed-Size: 39636
+Installed-Size: 39635
 Depends: 
 Section: 
 Priority: 
 Homepage: 
 Description: 
 Filename: https://github.com/Twilight0/termux-repo/releases/download/latest/opencode_1.18.3-0_termux_aarch64.deb
-Size: 40587704
-MD5sum: 6fe79a65d16e5eeee53d601e6f88e687
-SHA1: d9af8305f0285961e08c31ae29157b3edb81f826
-SHA256: 1bb10496a5a90c0ddbd9ce7c1ed0c8d921335541d97b008d6c0bb8bd04f735db
+Size: 40587104
+MD5sum: b823c1f319540b0028dc193e4501f5ef
+SHA1: 0a8a0f61af47fa8cc0902229a571119980a3b20b
+SHA256: 3e724d87c2825ee277c99b8a2c7565611cca4510598797d5f2422d50aeb902db
