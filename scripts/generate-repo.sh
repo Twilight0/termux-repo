@@ -30,15 +30,15 @@ for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
     for deb in "$arch_dir"/*.deb; do
         [ -f "$deb" ] || continue
         deb_name=$(basename "$deb")
-        control=$(dpkg-deb -I "$deb")
-        pkg=$(echo "$control" | grep '^Package:' | awk '{print $2}')
-        ver=$(echo "$control" | grep '^Version:' | awk '{print $2}')
-        desc=$(echo "$control" | grep '^Description:' | sed 's/^Description: //')
-        depends=$(echo "$control" | grep '^Depends:' | sed 's/^Depends: //')
-        maint=$(echo "$control" | grep '^Maintainer:' | sed 's/^Maintainer: //')
-        section=$(echo "$control" | grep '^Section:' | awk '{print $2}')
-        priority=$(echo "$control" | grep '^Priority:' | awk '{print $2}')
-        homepage=$(echo "$control" | grep '^Homepage:' | sed 's/^Homepage: //')
+        # Use dpkg-deb -f for reliable field extraction
+        pkg=$(dpkg-deb -f "$deb" Package)
+        ver=$(dpkg-deb -f "$deb" Version)
+        desc=$(dpkg-deb -f "$deb" Description)
+        depends=$(dpkg-deb -f "$deb" Depends)
+        maint=$(dpkg-deb -f "$deb" Maintainer)
+        section=$(dpkg-deb -f "$deb" Section)
+        priority=$(dpkg-deb -f "$deb" Priority)
+        homepage=$(dpkg-deb -f "$deb" Homepage)
         size=$(stat -c%s "$deb")
         md5=$(md5sum "$deb" | cut -d' ' -f1)
         sha1=$(sha1sum "$deb" | cut -d' ' -f1)
@@ -85,6 +85,7 @@ Components: ${COMP}
 Description: Twilight custom termux repository
 Suite: ${DIST}
 Date: $(date -Ru)
+SHA256:
 RELEOF
 
 for arch_dir in "$OUT_DIR/dists/${DIST}/${COMP}"/binary-*; do
