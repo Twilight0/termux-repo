@@ -1,3 +1,22 @@
+Package: antigravity-cli
+Version: 1.1.27-0
+Architecture: x86_64
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 848
+Depends: glibc-repo, glibc
+Filename: repo/dists/stable/main/binary-x86_64/antigravity-cli_1.1.27-0_termux_x86_64.deb
+Size: 300276
+MD5sum: 29fee0f30ad9b288037a515aef7d942a
+SHA1: 4c73fcc515dcc9b9f07a93e4e4c00a96fe50f71a
+SHA256: c3b452aa8410b268da941d77ac5fa307ccd8ea915812ae49cd8885c2f5a77ea8
+Section: devel
+Priority: optional
+Homepage: https://antigravity.google/cli
+Description: Google Antigravity CLI - AI coding agent
+ Antigravity CLI brings multi-step reasoning, multi-file editing, tool
+ calling, and persistent history to your terminal. VA39-patched for
+ Android/Termux compatibility.
+
 Package: muse-code
 Version: 1.3.0.r3401.1-1
 Architecture: x86_64
@@ -6,14 +25,32 @@ Installed-Size: 306476
 Depends: python, ca-certificates, proot
 Suggests: qemu-user-x86-64
 Filename: repo/dists/stable/main/binary-x86_64/muse-code_1.3.0.r3401.1-1_termux_x86_64.deb
-Size: 73014656
-MD5sum: 8787ad7e144c23dbf49a03da0b68a7d1
-SHA1: 9b01765df18320b72722dfea87369472daeed550
-SHA256: f1daa316bc50ad23ed584d637a5c72b4b4f0f550f85282634187e61520316741
+Size: 73013748
+MD5sum: 751c789c197b31d77f08095d246ff5b1
+SHA1: f1c84333de42fff72549abd7fc23a4109e1c0b5b
+SHA256: 4cb5e10b5fc003782f2c0e2e63b68dd68a0c3739c4c907f3f41e75daa0913854
 Section: devel
 Priority: optional
 Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  Packed with AVX2 legacy fallback, interactive curses TUI session picker,
  and multi-agent MCP configuration management.
+
+Package: opencode
+Version: 1.18.3-0
+Architecture: x86_64
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 174620
+Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
+Filename: repo/dists/stable/main/binary-x86_64/opencode_1.18.3-0_termux_x86_64.deb
+Size: 42776392
+MD5sum: 2b7da470880a1776de3995e64bef8f7a
+SHA1: 1d754727a253775d63490424f0088e0da07afd2c
+SHA256: f168efd1dea2f68176cee640f0f1032fa928824dc17b218828bb251153d4f7c8
+Section: devel
+Priority: optional
+Homepage: https://github.com/anomalyco/opencode
+Description: AI-powered coding assistant for the terminal
+ OpenCode is an interactive AI coding assistant that runs in your terminal.
+ Uses glibc bridge for Termux compatibility.
 

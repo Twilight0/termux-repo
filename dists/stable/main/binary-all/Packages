@@ -5,9 +5,9 @@ Maintainer: Twilight <twilight@aliveos.org>
 Depends: nodejs, npm
 Filename: repo/dists/stable/main/binary-all/wrangler_4.123.0-0_all.deb
 Size: 1484
-MD5sum: 2637c1fc7b6d1739f77eb0a3fa6bf7d3
-SHA1: db968f025fa2711c2f616f4c90afe907d25f98a6
-SHA256: a64e215901b9e975905e05fa100575e5fa8b115d58e60a0ad4dd2103d7702429
+MD5sum: 03f33521fb8b209ceb5d7b8151607428
+SHA1: 791516e23535df13254478beec4a5eae9de7fd64
+SHA256: 5541c44f9b6003f6b627f73a2b659b04b0e769685059b2db14b85597da94f39c
 Section: devel
 Priority: optional
 Homepage: https://developers.cloudflare.com/workers/wrangler/
