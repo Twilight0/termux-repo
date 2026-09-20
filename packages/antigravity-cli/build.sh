@@ -10,7 +10,7 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 # Version info - tracks wallentx releases
-VERSION="${AGY_VERSION:-1.4.2}"
+VERSION="${AGY_VERSION:-1.1.27}"
 DEB_VERSION="${VERSION}-0"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="aarch64"
@@ -28,29 +28,29 @@ aarch64-linux-gnu-gcc -static -O2 -o "${BUILD_DIR}/agy_helper" \
 
 # Download pre-patched release from wallentx
 echo "Downloading antigravity-cli ${VERSION}..."
-curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/agy-termux-${VERSION}-linux-arm64.tar.gz" \
+curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v${VERSION}/antigravity-termux-standalone.tar.gz" \
     -o "${BUILD_DIR}/agy.tar.gz" 2>/dev/null || {
-    # Fallback: try official install script to get the binary, then patch
+    # Fallback: download from Google's auto-updater manifest and patch
     echo "Pre-built release not found, downloading official binary and patching..."
-    curl -fSL "https://antigravity.google/cli/install.sh" -o "${BUILD_DIR}/install.sh"
-    # Download the arm64 binary directly
-    curl -fSL "https://dl.google.com/antigravity/cli/latest/linux-arm64/agy" \
-        -o "${BUILD_DIR}/agy.original"
-    # Apply VA39 patches
-    python3 "$SCRIPT_DIR/helper/patch_va39.py" \
-        "${BUILD_DIR}/agy.original" "${BUILD_DIR}/agy.bin"
+    MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_arm64.json"
+    manifest_json="$(curl -fsSL "$MANIFEST_URL")"
+    url="$(echo "$manifest_json" | sed -n 's/.*"url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+    if [ -n "$url" ]; then
+        curl -fSL "$url" -o "${BUILD_DIR}/agy.tar.gz"
+    else
+        echo "Error: could not fetch manifest" >&2
+        rm -rf "$BUILD_DIR"
+        exit 1
+    fi
 }
 
-# Extract if tarball, otherwise use patched binary
-if [ -f "${BUILD_DIR}/agy.tar.gz" ]; then
-    tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
-    # Find the patched binary
-    AGY_BIN="$(find "$BUILD_DIR" -name 'agy*' -type f -executable | head -1)"
-    if [ -z "$AGY_BIN" ]; then
-        AGY_BIN="$(find "$BUILD_DIR" -name 'agy*' -type f | head -1)"
-    fi
-else
-    AGY_BIN="${BUILD_DIR}/agy.bin"
+# Extract tarball
+tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
+
+# Find the binary (prefer agy over agy.va39 for Termux)
+AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy' -type f | head -1)"
+if [ -z "$AGY_BIN" ]; then
+    AGY_BIN="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy*' -type f ! -name '*.tar.gz' | head -1)"
 fi
 
 if [ ! -f "$AGY_BIN" ]; then
@@ -72,7 +72,7 @@ Version: ${DEB_VERSION}
 Architecture: ${ARCH}
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: ${INSTALLED_SIZE}
-Depends: glibc-repo, glibc, python
+Depends: glibc-repo, glibc
 Section: devel
 Priority: optional
 Homepage: https://antigravity.google/cli
