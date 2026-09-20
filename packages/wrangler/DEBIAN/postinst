@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+WRANGLER_VERSION="4.123.0"
+
+echo "Installing wrangler@${WRANGLER_VERSION} via npm..."
+npm install -g "wrangler@${WRANGLER_VERSION}" 2>/dev/null || {
+    echo "npm install failed, trying with --unsafe-perm..." >&2
+    npm install -g --unsafe-perm "wrangler@${WRANGLER_VERSION}"
+}
+
+# Install our wrapper that blocks 'wrangler dev'
+WRAPPER="$PREFIX/bin/wrangler-wrapper"
+cat > "$WRAPPER" << 'WRAPPER_EOF'
+#!/bin/sh
+if [ "${1:-}" = "dev" ]; then
+    echo "error: 'wrangler dev' is not supported on Termux." >&2
+    echo "The local development server requires workerd, which does not ship" >&2
+    echo "Android binaries. Use 'wrangler deploy' to deploy directly," >&2
+    echo "or 'wrangler tail' to stream logs from a deployed worker." >&2
+    exit 1
+fi
+exec node "$PREFIX/lib/node_modules/wrangler/bin/wrangler.js" "$@"
+WRAPPER_EOF
+chmod 755 "$WRAPPER"
+
+# Replace the npm-installed wrangler binary with our wrapper
+if [ -f "$PREFIX/bin/wrangler" ]; then
+    cp "$WRAPPER" "$PREFIX/bin/wrangler"
+else
+    ln -sf wrangler-wrapper "$PREFIX/bin/wrangler"
+fi
+
+echo "wrangler ${WRANGLER_VERSION} installed."
+echo "  wrangler deploy    - deploy a worker"
+echo "  wrangler tail      - stream live logs"
+echo "  wrangler pages     - manage Pages projects"
+echo "  wrangler dev       - NOT SUPPORTED (use deploy instead)"

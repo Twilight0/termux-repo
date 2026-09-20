@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# muse-session: Interactive curses TUI session picker
+# This is a placeholder. The real script is from the upstream muse-code repo.
+# See: https://github.com/Twilight0/muse-code
+exec python3 "${BASH_SOURCE[0]%/*}/../lib/muse/muse-session" "$@"

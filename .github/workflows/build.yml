@@ -1,0 +1,74 @@
+name: Build and Deploy APT Repository
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'  # weekly on Sunday
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu
+          pip3 install termux-apt-repo
+
+      - name: Create output directories
+        run: mkdir -p debs repo
+
+      # --- wrangler (architecture-independent) ---
+      - name: Build wrangler
+        run: dpkg-deb -Zxz --build packages/wrangler debs/
+
+      # --- muse-code (both architectures) ---
+      - name: Build muse-code (aarch64)
+        run: bash packages/muse-code/build.sh aarch64
+      - name: Build muse-code (x86_64)
+        run: bash packages/muse-code/build.sh x86_64
+
+      # --- opencode (aarch64, glibc) ---
+      - name: Build opencode
+        run: bash packages/opencode/build.sh
+
+      # --- antigravity-cli (aarch64, glibc + VA39 patch) ---
+      - name: Build antigravity-cli
+        run: bash packages/antigravity-cli/build.sh
+
+      # --- oh-my-pi (aarch64, glibc) ---
+      - name: Build oh-my-pi
+        run: bash packages/oh-my-pi/build.sh
+
+      - name: List built packages
+        run: ls -lh debs/
+
+      - name: Generate APT repository
+        run: termux-apt-repo debs repo stable main
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./repo
+          keep_files: false
