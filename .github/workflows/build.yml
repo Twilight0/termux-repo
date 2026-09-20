@@ -102,7 +102,16 @@ jobs:
           fi
 
           git rm -rf dists/ 2>/dev/null || true
-          cp -r repo/dists .
+
+          # Copy only metadata, skip .deb files (those are on Releases)
+          mkdir -p dists/stable/main
+          for arch_dir in repo/dists/stable/main/binary-*; do
+            arch=$(basename "$arch_dir")
+            mkdir -p "dists/stable/main/${arch}"
+            cp "$arch_dir"/Packages* "dists/stable/main/${arch}/"
+          done
+          cp repo/dists/stable/Release dists/stable/
+
           touch .nojekyll
 
           git add dists/ .nojekyll
