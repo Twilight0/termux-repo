@@ -32,7 +32,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu
-          pip3 install termux-apt-repo
 
       - name: Create output directories
         run: mkdir -p debs repo
@@ -63,7 +62,62 @@ jobs:
         run: ls -lh debs/
 
       - name: Generate APT repository
-        run: termux-apt-repo debs repo stable main
+        run: |
+          set -e
+          DIST="stable"
+          COMP="main"
+          REPO_BASE="repo/dists/${DIST}/${COMP}"
+
+          # Copy debs into arch-specific directories
+          for deb in debs/*.deb; do
+            arch=$(dpkg-deb -f "$deb" Architecture)
+            mkdir -p "${REPO_BASE}/binary-${arch}"
+            cp "$deb" "${REPO_BASE}/binary-${arch}/"
+          done
+
+          # Generate Packages + Packages.xz for each arch
+          find "${REPO_BASE}" -mindepth 1 -maxdepth 1 -type d | while read arch_dir; do
+            arch=$(basename "$arch_dir" | sed 's/binary-//')
+            echo "Generating Packages for ${arch}..."
+            dpkg-scanpackages "${arch_dir}" /dev/null 2>/dev/null > "${arch_dir}/Packages"
+            xz -9kf "${arch_dir}/Packages"
+          done
+
+          # Generate Release file
+          RELEASE="repo/dists/${DIST}/Release"
+          cat > "${RELEASE}" << EOF
+          Codename: ${DIST}
+          Version: 1
+          Architectures: $(ls -d ${REPO_BASE}/binary-* | xargs -I{} basename {} | sed 's/binary-//' | tr '\n' ' ')
+          Components: ${COMP}
+          Description: Twilight custom termux repository
+          Suite: ${DIST}
+          Date: $(date -Ru)
+          EOF
+
+          # Remove leading spaces (heredoc indentation)
+          sed -i 's/^          //' "${RELEASE}"
+
+          # Append checksums
+          for f in $(find "${REPO_BASE}" -name 'Packages*' -type f | sort); do
+            relpath=$(echo "$f" | sed 's|^repo/dists/[^/]*/||')
+            for algo in md5sum sha1sum sha256sum sha512sum; do
+              hash=$(${algo} "$f" | cut -d' ' -f1)
+              size=$(stat -c%s "$f")
+              label=$(echo ${algo} | tr '[:lower:]' '[:upper:]' | sed 's/SUM//')
+              [ "${label}" = "MD5" ] && label="MD5Sum"
+              echo " ${hash} ${size} ${relpath}" >> "${RELEASE}.tmp.${label}"
+            done
+          done
+
+          for label in MD5Sum SHA1 SHA256 SHA512; do
+            echo "${label}:" >> "${RELEASE}"
+            cat "${RELEASE}.tmp.${label}" >> "${RELEASE}" 2>/dev/null || true
+            rm -f "${RELEASE}.tmp.${label}"
+          done
+
+          echo "Repository generated:"
+          find repo/dists -type f | head -30
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
