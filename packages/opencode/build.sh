@@ -65,7 +65,7 @@ else
 fi
 
 install -Dm755 "$PATCHED_BIN" "${PKG_DIR}/${PREFIX}/lib/opencode/opencode-bin"
-install -Dm755 "${BUILD_DIR}/opencode_helper" "${PKG_DIR}/${PREFIX}/bin/opencode"
+install -Dm755 "$SCRIPT_DIR/helper/opencode.sh" "${PKG_DIR}/${PREFIX}/bin/opencode"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/opencode"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
@@ -76,7 +76,7 @@ Version: ${DEB_VERSION}
 Architecture: ${ARCH}
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: ${INSTALLED_SIZE}
-Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
+Depends: glibc-repo, glibc, proot, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
 Homepage: https://github.com/anomalyco/opencode
