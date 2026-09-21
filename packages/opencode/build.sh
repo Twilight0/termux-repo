@@ -10,7 +10,7 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 VERSION="${OPENCODE_VERSION:-1.18.3}"
-DEB_VERSION="${VERSION}-0"
+DEB_VERSION="${VERSION}-1"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"
 
