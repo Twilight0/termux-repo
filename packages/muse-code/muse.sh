@@ -58,7 +58,9 @@ if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
     done
 
     PROOT_ARGS+=("-r" "${PREFIX}/..")
-    PROOT_ARGS+=("--cwd=.")
+    PROOT_ARGS+=("-b" "${HOME}:/home")
+    PROOT_CWD="${PWD#${PREFIX}/..}"
+    PROOT_ARGS+=("--cwd=${PROOT_CWD}")
 
     export PROOT_ACTIVE=1
     export HOME="/home"
