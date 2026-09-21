@@ -13,6 +13,6 @@ Description: Cloudflare Workers CLI
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-0_all.deb
 Size: 1456
-MD5sum: 6f4d006094d8e68e1120924817d3b9c8
-SHA1: 7966fcb7c3114a10b50c4b58fb08023d2a9d3f75
-SHA256: 062d22a4a54f28528c52d679e9f4f4f8455364b4ea02b515de3feabf53812c51
+MD5sum: ea2d92ef4b333fd954318b969f11aca8
+SHA1: f7becedc2e2eda2c5f37398db4d7f3ec0722f4c7
+SHA256: 0c51abd42a4a155ebceaac43732c2931764d40d3fb75d614df1cf4a9d10dab6c
