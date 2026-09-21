@@ -15,7 +15,7 @@ ARCH="${1:-aarch64}"
 
 case "$ARCH" in
     aarch64) CC="aarch64-linux-gnu-gcc"; AGY_ARCH="arm64" ;;
-    x86_64)  CC="gcc";                   AGY_ARCH="x64" ;;
+    x86_64)  CC="gcc";                   AGY_ARCH="amd64" ;;
     *) echo "Usage: $0 [aarch64|x86_64]" >&2; exit 1 ;;
 esac
 
