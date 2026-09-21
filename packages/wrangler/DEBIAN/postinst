@@ -6,6 +6,14 @@ WRANGLER_VERSION="4.123.0"
 echo "Installing wrangler@${WRANGLER_VERSION} via npm..."
 npm install -g --ignore-scripts "wrangler@${WRANGLER_VERSION}"
 
+# Stub workerd/lib/main.js to prevent 'Unsupported platform: android arm64 LE' error on import
+WORKERD_MAIN="$PREFIX/lib/node_modules/wrangler/node_modules/workerd/lib/main.js"
+if [ -f "$WORKERD_MAIN" ]; then
+    cat > "$WORKERD_MAIN" << 'WORKERD_EOF'
+exports.binPath = "/bin/true";
+WORKERD_EOF
+fi
+
 # Install our wrapper that blocks 'wrangler dev'
 WRAPPER="$PREFIX/bin/wrangler-wrapper"
 cat > "$WRAPPER" << 'WRAPPER_EOF'
@@ -21,12 +29,9 @@ exec node "$PREFIX/lib/node_modules/wrangler/bin/wrangler.js" "$@"
 WRAPPER_EOF
 chmod 755 "$WRAPPER"
 
-# Replace the npm-installed wrangler binary with our wrapper
-if [ -f "$PREFIX/bin/wrangler" ]; then
-    cp "$WRAPPER" "$PREFIX/bin/wrangler"
-else
-    ln -sf wrangler-wrapper "$PREFIX/bin/wrangler"
-fi
+# Replace the npm-installed wrangler binary symlink with our wrapper
+rm -f "$PREFIX/bin/wrangler"
+cp "$WRAPPER" "$PREFIX/bin/wrangler"
 
 echo "wrangler ${WRANGLER_VERSION} installed."
 echo "  wrangler deploy    - deploy a worker"

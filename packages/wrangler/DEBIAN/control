@@ -1,5 +1,5 @@
 Package: wrangler
-Version: 4.123.0-1
+Version: 4.123.0-2
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Depends: nodejs-lts | nodejs
