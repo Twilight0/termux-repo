@@ -84,10 +84,17 @@ PATCHED="${BUILD_DIR}/agy_patched"
 python3 "$SCRIPT_DIR/helper/patch_va39.py" "$GOOGLE_BIN" "$PATCHED"
 chmod 755 "$PATCHED"
 
-# Step 5: Install both into bin/
-# agy (Bionic bootstrapper) finds agy.va39 in same directory via dirname
-install -Dm755 "$WALLENTX_AGY" "${BIN_DIR}/agy"
-install -Dm755 "$PATCHED" "${BIN_DIR}/agy.va39"
+# Step 5: Install both into lib/ (bootstrapper uses /proc/self/exe dirname to find agy.va39)
+install -Dm755 "$WALLENTX_AGY" "${LIB_DIR}/agy_boot"
+install -Dm755 "$PATCHED" "${LIB_DIR}/agy.va39"
+
+# Create wrapper in bin/ that disables wallentx auto-update
+cat > "${BIN_DIR}/agy" << 'EOF'
+#!/bin/sh
+export AGY_AUTO_UPDATE=0
+exec "$(dirname "$0")/../lib/antigravity-cli/agy_boot" "$@"
+EOF
+chmod 755 "${BIN_DIR}/agy"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
