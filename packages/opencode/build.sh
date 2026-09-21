@@ -10,7 +10,7 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 VERSION="${OPENCODE_VERSION:-1.18.3}"
-DEB_VERSION="${VERSION}-1"
+DEB_VERSION="${VERSION}-2"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"
 
@@ -25,9 +25,6 @@ echo "=== Building opencode ${DEB_VERSION} (${ARCH}) ==="
 BUILD_DIR="$(mktemp -d)"
 PKG_DIR="${BUILD_DIR}/opencode_${DEB_VERSION}_${ARCH}"
 mkdir -p "${PKG_DIR}/DEBIAN" "${PKG_DIR}/${PREFIX}/bin" "${PKG_DIR}/${PREFIX}/lib/opencode"
-
-echo "Compiling bootstrapper (${ARCH})..."
-$CC -static -O2 -o "${BUILD_DIR}/opencode_helper" "$SCRIPT_DIR/helper/opencode.c"
 
 TARBALL="${BUILD_DIR}/opencode.tar.gz"
 echo "Downloading opencode ${VERSION} (${UPSTREAM_ARCH})..."
@@ -47,13 +44,7 @@ if [ ! -f "$UPSTREAM_BIN" ]; then
     exit 1
 fi
 
-# Strip debug symbols to reduce size
-echo "Stripping binary..."
-if [ "$ARCH" = "aarch64" ]; then
-    aarch64-linux-gnu-strip "$UPSTREAM_BIN" 2>/dev/null || true
-else
-    strip "$UPSTREAM_BIN" 2>/dev/null || true
-fi
+# Do NOT strip: Bun single-executable bundles embed bytecode at the end; stripping truncates the application payload
 
 # Patch ARM64 faccessat2 syscall to prevent SIGSYS (Signal 31) on Android seccomp
 PATCHED_BIN="${BUILD_DIR}/opencode-patched"

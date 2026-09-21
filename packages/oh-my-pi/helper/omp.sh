@@ -5,7 +5,7 @@ unset LD_PRELOAD
 unset LD_LIBRARY_PATH
 
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
-REAL_BIN="${PREFIX}/lib/opencode/opencode-bin"
+REAL_BIN="${PREFIX}/lib/oh-my-pi/omp.bin"
 LD_LOADER="${PREFIX}/glibc/lib/ld-linux-aarch64.so.1"
 
 if [ "$(uname -m)" = "x86_64" ]; then
@@ -13,7 +13,7 @@ if [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 export SSL_CERT_FILE="${SSL_CERT_FILE:-${PREFIX}/etc/tls/cert.pem}"
-export GODEBUG="netdns=cgo,asyncpreemptoff=1"
+export TMPDIR="${TMPDIR:-${PREFIX}/tmp}"
 
 # Ensure libc.so / libm.so are ELF symlinks rather than GNU ld scripts
 if [ -f "${PREFIX}/glibc/lib/libc.so.6" ] && [ ! -L "${PREFIX}/glibc/lib/libc.so" ]; then
@@ -27,7 +27,7 @@ fi
 if [ -n "${TERMUX_VERSION:-}" ] || [ -d "/data/data/com.termux" ]; then
   if [ -z "${PROOT_ACTIVE:-}" ]; then
     if ! command -v proot >/dev/null 2>&1; then
-      echo "Error: proot is required to run opencode on Android/Termux." >&2
+      echo "Error: proot is required to run oh-my-pi on Android/Termux." >&2
       echo "Please install it with: pkg install proot" >&2
       exit 1
     fi

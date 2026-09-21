@@ -11,7 +11,7 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 VERSION="${OMP_VERSION:-18.1.7}"
-DEB_VERSION="${VERSION}-0"
+DEB_VERSION="${VERSION}-1"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"
 
@@ -27,10 +27,7 @@ BUILD_DIR="$(mktemp -d)"
 PKG_DIR="${BUILD_DIR}/oh-my-pi_${DEB_VERSION}_${ARCH}"
 mkdir -p "${PKG_DIR}/DEBIAN" "${PKG_DIR}/${PREFIX}/bin" "${PKG_DIR}/${PREFIX}/lib/oh-my-pi"
 
-echo "Compiling bootstrapper (${ARCH})..."
-$CC -static -O2 -o "${BUILD_DIR}/omp_helper" "$SCRIPT_DIR/helper/omp.c"
-
-install -Dm755 "${BUILD_DIR}/omp_helper" "${PKG_DIR}/${PREFIX}/bin/omp"
+install -Dm755 "$SCRIPT_DIR/helper/omp.sh" "${PKG_DIR}/${PREFIX}/bin/omp"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/omp"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
@@ -41,7 +38,7 @@ Version: ${DEB_VERSION}
 Architecture: ${ARCH}
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: ${INSTALLED_SIZE}
-Depends: glibc-repo, glibc, curl
+Depends: glibc-repo, glibc, proot, curl
 Section: devel
 Priority: optional
 Homepage: https://omp.sh
