@@ -94,7 +94,7 @@ Version: ${DEB_VERSION}
 Architecture: ${ARCH}
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: ${INSTALLED_SIZE}
-Depends: python, ca-certificates, glibc-repo, glibc${OPT_DEPENDS}
+Depends: python, ca-certificates, proot${OPT_DEPENDS}
 Section: devel
 Priority: optional
 Homepage: https://dev.meta.ai

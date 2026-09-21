@@ -32,19 +32,37 @@ if [[ "${1:-}" == "mcp" ]]; then
   esac
 fi
 
-# Run under glibc loader on Termux/Android
+# Run under proot on Termux/Android
 if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
   if [[ -z "${PROOT_ACTIVE:-}" ]] && ! grep -q 'TracerPid:[[:space:]]*[1-9]' /proc/self/status 2>/dev/null; then
-    unset LD_PRELOAD
-    unset LD_LIBRARY_PATH
-    export GODEBUG="netdns=cgo"
-    export SSL_CERT_FILE="${SSL_CERT_FILE:-/data/data/com.termux/files/usr/etc/tls/cert.pem}"
-    if [[ "$(uname -m)" == "aarch64" ]]; then
-      LD_LOADER="${PREFIX}/glibc/lib/ld-linux-aarch64.so.1"
-    else
-      LD_LOADER="${PREFIX}/glibc/lib/ld-linux-x86-64.so.2"
+    if ! command -v proot >/dev/null 2>&1; then
+      printf 'Error: proot is required to run Muse Code on Android/Termux.\n' >&2
+      printf 'Please install it with: pkg install proot\n' >&2
+      exit 1
     fi
-    exec "$LD_LOADER" --library-path "${PREFIX}/glibc/lib" "$REAL_BIN" "$@"
+
+    PROOT_ARGS=("--kill-on-exit")
+    PROOT_ARGS+=("-b" "/system:/system" "-b" "/vendor:/vendor" "-b" "/data:/data")
+    [[ -d /apex ]] && PROOT_ARGS+=("-b" "/apex:/apex")
+    [[ -e /linkerconfig/ld.config.txt ]] && PROOT_ARGS+=("-b" "/linkerconfig/ld.config.txt:/linkerconfig/ld.config.txt")
+    [[ -f /property_contexts ]] && PROOT_ARGS+=("-b" "/property_contexts:/property_contexts")
+    [[ -d /storage ]] && PROOT_ARGS+=("-b" "/storage:/storage")
+    [[ -d /sbin && -d /root ]] && PROOT_ARGS+=("-b" "/sbin:/sbin" "-b" "/root:/root")
+
+    PROOT_ARGS+=("-b" "${PREFIX}:/usr")
+    for d in bin etc lib share tmp var; do
+      [[ -d "${PREFIX}/${d}" ]] && PROOT_ARGS+=("-b" "${PREFIX}/${d}:/${d}")
+    done
+    for d in dev proc; do
+      [[ -d "/${d}" ]] && PROOT_ARGS+=("-b" "/${d}:/${d}")
+    done
+
+    PROOT_ARGS+=("-r" "${PREFIX}/..")
+    PROOT_ARGS+=("--cwd=.")
+
+    export PROOT_ACTIVE=1
+    export HOME="/home"
+    exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" "$@"
   fi
 fi
 
