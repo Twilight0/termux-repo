@@ -14,9 +14,14 @@ curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
 |---------|-------------|------|
 | `wrangler` | Cloudflare Workers CLI (cloud API only, no local dev) | all |
 | `muse-code` | Meta's Muse Code AI agent with session/MCP tools | aarch64, x86_64 |
-| `opencode` | AI-powered coding assistant | aarch64 |
-| `antigravity-cli` | Google Antigravity CLI (VA39-patched) | aarch64 |
-| `oh-my-pi` | Oh-My-Pi plugin manager for Pi | aarch64 |
+| `opencode` | AI-powered coding assistant | aarch64, x86_64 |
+| `antigravity-cli` | Google Antigravity CLI | aarch64, x86_64 |
+| `oh-my-pi` | Oh-My-Pi plugin manager for Pi | aarch64, x86_64 |
+
+## Documentation & Guides
+
+- [**DNS Forwarding & Caching Guide (DNS_FORWARDING.md)**](DNS_FORWARDING.md): Running AdGuard Home and dnsmasq on unrooted/rooted Android with client configuration for local and LAN devices.
+- [**Package Research & Architecture (PACKAGE_RESEARCH.md)**](PACKAGE_RESEARCH.md): Technical teardown of VA39 patching, Bun seccomp SIGSYS workarounds, workerd stubbing, and evaluations for future packages.
 
 ## Notes
 
