@@ -45,6 +45,7 @@ if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
     [[ -d /apex ]] && PROOT_ARGS+=("-b" "/apex:/apex")
     [[ -d /storage ]] && PROOT_ARGS+=("-b" "/storage:/storage")
     PROOT_ARGS+=("-b" "${PREFIX}:/usr")
+    PROOT_ARGS+=("-b" "${HOME}:/home")
     for d in bin etc lib share tmp var; do
       [[ -d "${PREFIX}/${d}" ]] && PROOT_ARGS+=("-b" "${PREFIX}/${d}:/${d}")
     done
@@ -52,7 +53,7 @@ if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
       [[ -d "/${d}" ]] && PROOT_ARGS+=("-b" "/${d}:/${d}")
     done
     PROOT_ARGS+=("-r" "${PREFIX}/..")
-    PROOT_ARGS+=("--cwd=.")
+    PROOT_ARGS+=("--cwd=/home")
     export PROOT_ACTIVE=1
     export HOME="/home"
     exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" "$@"
