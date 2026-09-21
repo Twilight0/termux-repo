@@ -9,7 +9,6 @@ and the faccessat2 syscall number.
 
 Based on analysis from:
 - https://github.com/google-antigravity/antigravity-cli/issues/64
-- wallentx/antigravity-cli-termux
 """
 import sys
 import shutil

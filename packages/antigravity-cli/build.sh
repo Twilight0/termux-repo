@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # antigravity-cli: Google's AI coding agent for Termux
-# Uses wallentx's Bionic agy bootstrapper (v1.1.27) + official Google binary
-# The Bionic agy finds agy.va39 in same dir and invokes glibc loader
+# Uses glibc dynamic loader + official Google binary
+# Supports both aarch64 and x86_64
 # Usage: build.sh [aarch64|x86_64]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -11,101 +11,96 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
-ARCH="${1:-aarch64}"
+build_antigravity_deb() {
+    local ARCH="$1"
+    local AGY_ARCH
 
-case "$ARCH" in
-    aarch64) CC="aarch64-linux-gnu-gcc"; AGY_ARCH="arm64" ;;
-    x86_64)  CC="gcc";                   AGY_ARCH="amd64" ;;
-    *) echo "Usage: $0 [aarch64|x86_64]" >&2; exit 1 ;;
-esac
+    case "$ARCH" in
+        aarch64) AGY_ARCH="arm64" ;;
+        x86_64)  AGY_ARCH="amd64" ;;
+        *) echo "Usage: $0 [aarch64|x86_64]" >&2; exit 1 ;;
+    esac
 
-echo "=== Building antigravity-cli (${ARCH}) ==="
+    echo "=== Building antigravity-cli (${ARCH}) ==="
 
-BUILD_DIR="$(mktemp -d)"
+    local BUILD_DIR
+    BUILD_DIR="$(mktemp -d)"
 
-# Step 1: Get latest version from Google's manifest
-echo "Querying latest version from Google..."
-MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_${AGY_ARCH}.json"
-manifest_json="$(curl -fsSL "$MANIFEST_URL")"
-VERSION="$(echo "$manifest_json" | sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
-DOWNLOAD_URL="$(echo "$manifest_json" | sed -n 's/.*"url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+    # Step 1: Query latest version from Google's manifest
+    echo "Querying latest version from Google for ${AGY_ARCH}..."
+    local MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_${AGY_ARCH}.json"
+    local manifest_json
+    manifest_json="$(curl -fsSL "$MANIFEST_URL")"
+    local VERSION
+    VERSION="$(echo "$manifest_json" | sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+    local DOWNLOAD_URL
+    DOWNLOAD_URL="$(echo "$manifest_json" | sed -n 's/.*"url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
 
-if [ -z "$VERSION" ] || [ -z "$DOWNLOAD_URL" ]; then
-    echo "Error: could not parse manifest" >&2
-    rm -rf "$BUILD_DIR"
-    exit 1
-fi
+    if [ -z "$VERSION" ] || [ -z "$DOWNLOAD_URL" ]; then
+        echo "Error: could not parse manifest" >&2
+        rm -rf "$BUILD_DIR"
+        exit 1
+    fi
 
-DEB_VERSION="${VERSION}-0"
-echo "Latest version: ${VERSION}"
+    local DEB_VERSION="${VERSION}-1"
+    echo "Upstream version: ${VERSION} (Debian revision: ${DEB_VERSION})"
 
-PREFIX="data/data/com.termux/files/usr"
-PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
-LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
-BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
-mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
+    local PREFIX="data/data/com.termux/files/usr"
+    local PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
+    local LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
+    local BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
+    mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
 
-# Step 2: Download wallentx Bionic bootstrapper (agy)
-echo "Downloading wallentx Bionic bootstrapper..."
-curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v1.1.27/antigravity-termux-standalone.tar.gz" \
-    -o "${BUILD_DIR}/wallentx.tar.gz" 2>/dev/null
+    # Step 2: Download official Google binary
+    echo "Downloading official Google antigravity ${VERSION} (${AGY_ARCH})..."
+    local GOOGLE_DIR="${BUILD_DIR}/google"
+    mkdir -p "$GOOGLE_DIR"
+    curl -fSL "$DOWNLOAD_URL" -o "${BUILD_DIR}/google.tar.gz"
 
-tar -xzf "${BUILD_DIR}/wallentx.tar.gz" -C "${BUILD_DIR}"
-WALLENTX_AGY="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy' -type f ! -name '*.tar.gz' | head -1)"
+    tar -xzf "${BUILD_DIR}/google.tar.gz" -C "$GOOGLE_DIR"
+    local GOOGLE_BIN
+    GOOGLE_BIN="$(find "$GOOGLE_DIR" -maxdepth 1 -type f -executable | head -1)"
 
-if [ -z "$WALLENTX_AGY" ]; then
-    echo "Error: could not find wallentx agy bootstrapper" >&2
-    rm -rf "$BUILD_DIR"
-    exit 1
-fi
+    if [ -z "$GOOGLE_BIN" ]; then
+        echo "Error: could not find Google binary" >&2
+        ls -la "$GOOGLE_DIR"
+        rm -rf "$BUILD_DIR"
+        exit 1
+    fi
 
-echo "Found wallentx bootstrapper: $(stat -c%s "$WALLENTX_AGY") bytes"
+    echo "Found Google binary: $(stat -c%s "$GOOGLE_BIN") bytes"
 
-# Step 3: Download official Google binary
-echo "Downloading official Google antigravity ${VERSION}..."
-GOOGLE_DIR="${BUILD_DIR}/google"
-mkdir -p "$GOOGLE_DIR"
-curl -fSL "$DOWNLOAD_URL" -o "${BUILD_DIR}/google.tar.gz"
+    # Step 3: Install binary
+    # On aarch64 Android, apply VA39 patch for 39-bit virtual addressing
+    # On x86_64, standard 48-bit VA applies and the official binary runs directly
+    if [ "$ARCH" = "aarch64" ]; then
+        echo "Applying VA39 patch for aarch64 Android..."
+        local PATCHED="${BUILD_DIR}/agy_patched"
+        python3 "$SCRIPT_DIR/helper/patch_va39.py" "$GOOGLE_BIN" "$PATCHED"
+        install -Dm755 "$PATCHED" "${LIB_DIR}/agy.bin"
+    else
+        echo "Installing unpatched Google binary for x86_64..."
+        install -Dm755 "$GOOGLE_BIN" "${LIB_DIR}/agy.bin"
+    fi
 
-tar -xzf "${BUILD_DIR}/google.tar.gz" -C "$GOOGLE_DIR"
-GOOGLE_BIN="$(find "$GOOGLE_DIR" -maxdepth 1 -type f -executable | head -1)"
+    # Compatibility symlinks inside LIB_DIR
+    ln -sf agy.bin "${LIB_DIR}/agy.va39"
+    ln -sf agy.bin "${LIB_DIR}/antigravity"
 
-if [ -z "$GOOGLE_BIN" ]; then
-    echo "Error: could not find Google binary" >&2
-    ls -la "$GOOGLE_DIR"
-    rm -rf "$BUILD_DIR"
-    exit 1
-fi
+    # Step 4: Install launcher wrapper script into bin/
+    install -Dm755 "$SCRIPT_DIR/helper/agy.sh" "${BIN_DIR}/agy"
+    ln -sf agy "${BIN_DIR}/antigravity"
 
-echo "Found Google binary: $(stat -c%s "$GOOGLE_BIN") bytes"
+    local INSTALLED_SIZE
+    INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
-# Step 4: Apply VA39 patch (fixes faccessat2 syscall, TCMalloc, mmap for Android)
-echo "Applying VA39 patch..."
-PATCHED="${BUILD_DIR}/agy_patched"
-python3 "$SCRIPT_DIR/helper/patch_va39.py" "$GOOGLE_BIN" "$PATCHED"
-chmod 755 "$PATCHED"
-
-# Step 5: Install both into lib/ (bootstrapper uses /proc/self/exe dirname to find agy.va39)
-install -Dm755 "$WALLENTX_AGY" "${LIB_DIR}/agy_boot"
-install -Dm755 "$PATCHED" "${LIB_DIR}/agy.va39"
-
-# Create wrapper in bin/ that disables wallentx auto-update
-cat > "${BIN_DIR}/agy" << 'EOF'
-#!/bin/sh
-export AGY_AUTO_UPDATE=0
-exec "$(dirname "$0")/../lib/antigravity-cli/agy_boot" "$@"
-EOF
-chmod 755 "${BIN_DIR}/agy"
-
-INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
-
-cat > "${PKG_DIR}/DEBIAN/control" << EOF
+    cat > "${PKG_DIR}/DEBIAN/control" << EOF
 Package: antigravity-cli
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: ${INSTALLED_SIZE}
-Depends: glibc-repo, glibc
+Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
 Homepage: https://antigravity.google/cli
@@ -114,7 +109,17 @@ Description: Google Antigravity CLI - AI coding agent
  calling, and persistent history to your terminal.
 EOF
 
-DEB_FILE="${DEBS_DIR}/antigravity-cli_${DEB_VERSION}_termux_${ARCH}.deb"
-dpkg-deb -Zxz --build --root-owner-group "$PKG_DIR" "$DEB_FILE"
-echo "Built: $DEB_FILE"
-rm -rf "$BUILD_DIR"
+    find "$PKG_DIR" -type d -exec chmod 755 {} +
+
+    local DEB_FILE="${DEBS_DIR}/antigravity-cli_${DEB_VERSION}_termux_${ARCH}.deb"
+    dpkg-deb -Zxz --build --root-owner-group "$PKG_DIR" "$DEB_FILE"
+    echo "Built: $DEB_FILE"
+    rm -rf "$BUILD_DIR"
+}
+
+if [ "${1:-}" = "aarch64" ] || [ "${1:-}" = "x86_64" ]; then
+    build_antigravity_deb "$1"
+else
+    build_antigravity_deb aarch64
+    build_antigravity_deb x86_64
+fi
