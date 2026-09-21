@@ -137,3 +137,54 @@ This document details the architectural analysis, technical challenges, solution
 - **Feasibility:** **High**
 - **Architecture:** Single Go executable.
 - **Features:** Provides Cloudflare Tunnel (remote access to local services without opening firewall ports) and a local DNS-over-HTTPS proxy (`cloudflared proxy-dns --port 5353`).
+
+---
+
+## 3. Additional Candidate Packages: Developer & AI Tools
+
+### AI/ML
+
+| Package | Description | Notes |
+|---------|-------------|-------|
+| `claude-code` | Anthropic's Claude CLI | Similar to opencode |
+| `aider` | AI pair programming, git-aware | Python/Go |
+| `ollama` | Local LLM runner | Complex on Termux, high demand |
+| `mlx` | Apple ML framework | Cross-platform TBD |
+
+### Dev Tools
+
+| Package | Description | Notes |
+|---------|-------------|-------|
+| `lazygit` | Terminal git UI | Go binary, very popular |
+| `lazydocker` | Terminal docker UI | Go binary |
+| `atuin` | Shell history sync | Encrypted, cross-machine |
+| `mise` | Polyglot version manager | asdf replacement |
+
+### Cloud/Infra
+
+| Package | Description | Notes |
+|---------|-------------|-------|
+| `rclone` | Cloud storage sync | Google Drive, S3, etc. |
+| `terraform` | Infrastructure as Code | HashiCorp binaries |
+| `flux` | GitOps CD tool | Weaveworks |
+
+### Modern CLI Utils
+
+| Package | Description | Notes |
+|---------|-------------|-------|
+| `bat` | Cat with syntax highlighting | Rust binary |
+| `fd` | Find alternative | Rust binary |
+| `ripgrep` | Grep alternative | Rust binary |
+| `delta` | Git diff pager | Rust binary |
+| `zoxide` | Smart cd | Rust binary |
+| `starship` | Cross-shell prompt | Rust binary |
+| `eza` | Modern ls | Rust binary |
+| `dust` | Disk usage | Rust binary |
+| `procs` | Modern ps | Rust binary |
+
+### Media/Content
+
+| Package | Description | Notes |
+|---------|-------------|-------|
+| `ffmpeg` | Media processing | Check if Termux version lags |
+| `yt-dlp` | Video download | Python, frequent updates |
