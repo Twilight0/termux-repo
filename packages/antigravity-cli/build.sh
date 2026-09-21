@@ -62,19 +62,16 @@ echo "Found wallentx bootstrapper: $(stat -c%s "$WALLENTX_AGY") bytes"
 
 # Step 3: Download official Google binary
 echo "Downloading official Google antigravity ${VERSION}..."
+GOOGLE_DIR="${BUILD_DIR}/google"
+mkdir -p "$GOOGLE_DIR"
 curl -fSL "$DOWNLOAD_URL" -o "${BUILD_DIR}/google.tar.gz"
 
-tar -xzf "${BUILD_DIR}/google.tar.gz" -C "${BUILD_DIR}"
-GOOGLE_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f \( -name 'antigravity' -o -name 'agy' -o -name 'cli' \) ! -name '*.tar.gz' ! -path "*/wallentx*" | head -1)"
-
-if [ -z "$GOOGLE_BIN" ]; then
-    # Fallback: take largest executable that isn't the wallentx one
-    GOOGLE_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f ! -name '*.tar.gz' ! -name 'wallentx*' -executable -printf '%s %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2)"
-fi
+tar -xzf "${BUILD_DIR}/google.tar.gz" -C "$GOOGLE_DIR"
+GOOGLE_BIN="$(find "$GOOGLE_DIR" -maxdepth 1 -type f -executable | head -1)"
 
 if [ -z "$GOOGLE_BIN" ]; then
     echo "Error: could not find Google binary" >&2
-    ls -la "$BUILD_DIR"
+    ls -la "$GOOGLE_DIR"
     rm -rf "$BUILD_DIR"
     exit 1
 fi
