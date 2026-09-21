@@ -41,8 +41,9 @@ echo "Latest version: ${VERSION}"
 
 PREFIX="data/data/com.termux/files/usr"
 PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
+LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
 BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
-mkdir -p "${PKG_DIR}/DEBIAN" "$BIN_DIR"
+mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
 
 # Step 2: Download wallentx Bionic bootstrapper (agy)
 echo "Downloading wallentx Bionic bootstrapper..."
