@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/data/data/com.termux/files/usr/bin/env bash
 set -euo pipefail
 
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
