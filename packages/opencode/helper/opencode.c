@@ -26,7 +26,7 @@
 int main(int argc, char **argv) {
     unsetenv("LD_PRELOAD");
     unsetenv("LD_LIBRARY_PATH");
-    setenv("GODEBUG", "netdns=cgo", 1);
+    setenv("GODEBUG", "netdns=cgo,asyncpreemptoff=1", 1);
     setenv("SSL_CERT_FILE",
            "/data/data/com.termux/files/usr/etc/tls/cert.pem", 1);
 

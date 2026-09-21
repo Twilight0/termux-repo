@@ -4,10 +4,7 @@ set -e
 WRANGLER_VERSION="4.123.0"
 
 echo "Installing wrangler@${WRANGLER_VERSION} via npm..."
-npm install -g "wrangler@${WRANGLER_VERSION}" 2>/dev/null || {
-    echo "npm install failed, trying with --unsafe-perm..." >&2
-    npm install -g --unsafe-perm "wrangler@${WRANGLER_VERSION}"
-}
+npm install -g --ignore-scripts "wrangler@${WRANGLER_VERSION}"
 
 # Install our wrapper that blocks 'wrangler dev'
 WRAPPER="$PREFIX/bin/wrangler-wrapper"

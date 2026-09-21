@@ -55,7 +55,16 @@ else
     strip "$UPSTREAM_BIN" 2>/dev/null || true
 fi
 
-install -Dm755 "$UPSTREAM_BIN" "${PKG_DIR}/${PREFIX}/lib/opencode/opencode-bin"
+# Patch ARM64 faccessat2 syscall to prevent SIGSYS (Signal 31) on Android seccomp
+PATCHED_BIN="${BUILD_DIR}/opencode-patched"
+if [ "$ARCH" = "aarch64" ]; then
+    echo "Patching binary for Android seccomp compatibility..."
+    python3 "$SCRIPT_DIR/helper/patch_opencode.py" "$UPSTREAM_BIN" "$PATCHED_BIN"
+else
+    cp "$UPSTREAM_BIN" "$PATCHED_BIN"
+fi
+
+install -Dm755 "$PATCHED_BIN" "${PKG_DIR}/${PREFIX}/lib/opencode/opencode-bin"
 install -Dm755 "${BUILD_DIR}/opencode_helper" "${PKG_DIR}/${PREFIX}/bin/opencode"
 chmod 755 "${PKG_DIR}/${PREFIX}/bin/opencode"
 
