@@ -2,7 +2,7 @@ Package: antigravity-cli
 Version: 1.2.7-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 44301
+Installed-Size: 44313
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -11,10 +11,10 @@ Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
 Filename: pool/main/antigravity-cli_1.2.7-1_termux_x86_64.deb
-Size: 45364916
-MD5sum: 2dbf43d1595ea208062a8aa5877348c3
-SHA1: 008ca2978827afe0d5dbbfcca7da17badddbbf81
-SHA256: c5fcd0ef2f9ad0843cff13278201b938d48cdaebbf1fab0138c40378173d0e54
+Size: 45376632
+MD5sum: 041346e31a03afeb8fb2bbf765d37e12
+SHA1: d6c1e90ea07d0197abfd9caff04a205dace2d273
+SHA256: a038f9bfe6c8e1f3ab4fa9de68d90c55949e0935699aac94becf0b69730e3497
 
 Package: muse-code
 Version: 1.3.0.r3401.1-1
@@ -29,10 +29,10 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  Packed with AVX2 legacy fallback, interactive curses TUI session picker,
  and multi-agent MCP configuration management.
 Filename: pool/main/muse-code_1.3.0.r3401.1-1_termux_x86_64.deb
-Size: 73009424
-MD5sum: 00265b287ecc83980b413f4abf5fa4fc
-SHA1: 50493226d8ed801226603a15b6767c1b14861f06
-SHA256: 0796bbe2885f84a956a3265f88fa22570e3d3d62f06331153b8f99edc9e674fa
+Size: 73009504
+MD5sum: c68b75a80833139e82b4930fa5277651
+SHA1: 6a975d5fb28cd8ee862a3d6ad3e9ef49a8a1ec84
+SHA256: e5b204e093cca3f28ca899787ccfad08903bfab95aba2d8977509768f51f0116
 
 Package: oh-my-pi
 Version: 18.1.7-1
@@ -49,15 +49,15 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  for Termux compatibility. Binary downloaded on first run.
 Filename: pool/main/oh-my-pi_18.1.7-1_termux_x86_64.deb
 Size: 2080
-MD5sum: beefce5d27c0ebf8554a164e237b9bb6
-SHA1: ab507bdbca7dd51b6af9013d6b90ff9a95a81c1b
-SHA256: a658415e7e928c14b8e7f1f1295c387ee9367516d390691a01d1a424519f3248
+MD5sum: 58ad11647963117097d4eb372ab893aa
+SHA1: 239fafe5319b78141b0fda3203610cf2bbccb531
+SHA256: 6683300724e73c45349bc8692f705cfddfd1a36d91fe0e114c3b46dc018205d8
 
 Package: opencode
 Version: 1.18.3-2
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 41480
+Installed-Size: 41481
 Depends: glibc-repo, glibc, proot, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -66,7 +66,7 @@ Description: AI-powered coding assistant for the terminal
  OpenCode is an interactive AI coding assistant that runs in your terminal.
  Uses glibc bridge for Termux compatibility.
 Filename: pool/main/opencode_1.18.3-2_termux_x86_64.deb
-Size: 42476260
-MD5sum: 6a9757fdb4c22e2b599070357edd1d0a
-SHA1: 363a6ed1b08a11670204dc687bcfc2fb7e656cb2
-SHA256: 7643806a35d1147c6e2936c1589e98c924003ec28cf25182d1cbaef13d2aff27
+Size: 42477172
+MD5sum: d82952877ebc5761502bf59a5c572890
+SHA1: 6c5f5e975233bbf975ebf01776dbc66b57da10be
+SHA256: f153beefcfba0d52c59c98dc33643fa30e7554ec82b000323c6b2f5904d3df18
