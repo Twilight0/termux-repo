@@ -4,7 +4,6 @@ set -e
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 REAL_BIN="${PREFIX}/lib/opencode/opencode-bin"
 LD_LOADER="${PREFIX}/glibc/lib/ld-linux-aarch64.so.1"
-LIB_PATH="${PREFIX}/glibc/lib"
 
 if [ "$(uname -m)" = "x86_64" ]; then
     LD_LOADER="${PREFIX}/glibc/lib/ld-linux-x86-64.so.2"
@@ -25,8 +24,8 @@ if [ -n "${TERMUX_VERSION:-}" ] || [ -d "/data/data/com.termux" ]; then
     exec proot --kill-on-exit \
       -b /system -b /vendor -b /data -b /dev -b /proc \
       -b "${PREFIX}:${PREFIX}" \
-      "$LD_LOADER" --library-path "$LIB_PATH" "$REAL_BIN" "$@"
+      "$LD_LOADER" "$REAL_BIN" "$@"
   fi
 fi
 
-exec "$LD_LOADER" --library-path "$LIB_PATH" "$REAL_BIN" "$@"
+exec "$LD_LOADER" "$REAL_BIN" "$@"
