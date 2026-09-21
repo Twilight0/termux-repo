@@ -57,14 +57,15 @@ if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
       [[ -d "/${d}" ]] && PROOT_ARGS+=("-b" "/${d}:/${d}")
     done
 
-    PROOT_ARGS+=("-r" "${PREFIX}/..")
+    PROOT_ROOT="$(cd "${PREFIX}/.." && pwd)"
+    PROOT_ARGS+=("-r" "${PROOT_ROOT}")
     PROOT_ARGS+=("-b" "${HOME}:/home")
-    PROOT_CWD="${PWD#${PREFIX}/..}"
-    PROOT_ARGS+=("--cwd=${PROOT_CWD}")
+    PROOT_CWD="${PWD#${PROOT_ROOT}}"
+    PROOT_ARGS+=("--cwd=${PROOT_CWD:-/home}")
 
     export PROOT_ACTIVE=1
     export HOME="/home"
-    exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" "$@"
+    exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" --trust-workspace "$@"
   fi
 fi
 
