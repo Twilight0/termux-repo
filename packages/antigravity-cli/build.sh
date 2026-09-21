@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# antigravity-cli: Google's official AI coding agent
-# Downloads from Google's auto-updater manifest (always latest version)
-# Uses C bootstrapper to bridge Bionic->glibc on Termux
+# antigravity-cli: Google's AI coding agent for Termux
+# Uses wallentx's Bionic agy bootstrapper (v1.1.27) + official Google binary
+# The Bionic agy finds agy.va39 in same dir and invokes glibc loader
 # Usage: build.sh [aarch64|x86_64]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -23,6 +23,7 @@ echo "=== Building antigravity-cli (${ARCH}) ==="
 
 BUILD_DIR="$(mktemp -d)"
 
+# Step 1: Get latest version from Google's manifest
 echo "Querying latest version from Google..."
 MANIFEST_URL="https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_${AGY_ARCH}.json"
 manifest_json="$(curl -fsSL "$MANIFEST_URL")"
@@ -40,50 +41,50 @@ echo "Latest version: ${VERSION}"
 
 PREFIX="data/data/com.termux/files/usr"
 PKG_DIR="${BUILD_DIR}/antigravity-cli_${DEB_VERSION}_${ARCH}"
-LIB_DIR="${PKG_DIR}/${PREFIX}/lib/antigravity-cli"
 BIN_DIR="${PKG_DIR}/${PREFIX}/bin"
-mkdir -p "${PKG_DIR}/DEBIAN" "$LIB_DIR" "$BIN_DIR"
+mkdir -p "${PKG_DIR}/DEBIAN" "$BIN_DIR"
 
-echo "Compiling bootstrapper (${ARCH})..."
-$CC -static -O2 -o "${BUILD_DIR}/agy_helper" "$SCRIPT_DIR/helper/agy.c"
+# Step 2: Download wallentx Bionic bootstrapper (agy)
+echo "Downloading wallentx Bionic bootstrapper..."
+curl -fSL "https://github.com/wallentx/antigravity-cli-termux/releases/download/v1.1.27/antigravity-termux-standalone.tar.gz" \
+    -o "${BUILD_DIR}/wallentx.tar.gz" 2>/dev/null
 
-echo "Downloading antigravity-cli ${VERSION}..."
-curl -fSL "$DOWNLOAD_URL" -o "${BUILD_DIR}/agy.tar.gz"
+tar -xzf "${BUILD_DIR}/wallentx.tar.gz" -C "${BUILD_DIR}"
+WALLENTX_AGY="$(find "$BUILD_DIR" -maxdepth 1 -name 'agy' -type f ! -name '*.tar.gz' | head -1)"
 
-tar -xzf "${BUILD_DIR}/agy.tar.gz" -C "${BUILD_DIR}"
-
-# Find the binary (may be named 'antigravity', 'agy', or something else)
-AGY_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f \( -name 'antigravity' -o -name 'agy' \) ! -name 'agy_helper' ! -name '*.tar.gz' | head -1)"
-if [ -z "$AGY_BIN" ]; then
-    # Fallback: take the largest executable in the tarball
-    AGY_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f ! -name 'agy_helper' ! -name '*.tar.gz' -executable -printf '%s %p\n' | sort -rn | head -1 | cut -d' ' -f2)"
+if [ -z "$WALLENTX_AGY" ]; then
+    echo "Error: could not find wallentx agy bootstrapper" >&2
+    rm -rf "$BUILD_DIR"
+    exit 1
 fi
 
-if [ -z "$AGY_BIN" ]; then
-    echo "Error: could not find binary in tarball" >&2
+echo "Found wallentx bootstrapper: $(stat -c%s "$WALLENTX_AGY") bytes"
+
+# Step 3: Download official Google binary
+echo "Downloading official Google antigravity ${VERSION}..."
+curl -fSL "$DOWNLOAD_URL" -o "${BUILD_DIR}/google.tar.gz"
+
+tar -xzf "${BUILD_DIR}/google.tar.gz" -C "${BUILD_DIR}"
+GOOGLE_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f \( -name 'antigravity' -o -name 'agy' -o -name 'cli' \) ! -name '*.tar.gz' ! -path "*/wallentx*" | head -1)"
+
+if [ -z "$GOOGLE_BIN" ]; then
+    # Fallback: take largest executable that isn't the wallentx one
+    GOOGLE_BIN="$(find "$BUILD_DIR" -maxdepth 2 -type f ! -name '*.tar.gz' ! -name 'wallentx*' -executable -printf '%s %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2)"
+fi
+
+if [ -z "$GOOGLE_BIN" ]; then
+    echo "Error: could not find Google binary" >&2
     ls -la "$BUILD_DIR"
     rm -rf "$BUILD_DIR"
     exit 1
 fi
 
-echo "Found: ${AGY_BIN} ($(stat -c%s "$AGY_BIN") bytes)"
+echo "Found Google binary: $(stat -c%s "$GOOGLE_BIN") bytes"
 
-# Install binary (C helper expects .bin suffix)
-install -Dm755 "$AGY_BIN" "${LIB_DIR}/antigravity.bin"
-
-# Create wrapper script
-cat > "${BIN_DIR}/agy" << 'WRAPEOF'
-#!/bin/sh
-exec "$(dirname "$0")/../lib/antigravity-cli/agy_helper" antigravity "$@"
-WRAPEOF
-chmod 755 "${BIN_DIR}/agy"
-
-# Install helper (C bootstrapper)
-install -Dm755 "${BUILD_DIR}/agy_helper" "${LIB_DIR}/agy_helper"
-
-# Install the VA39 patch script if present
-[ -f "$SCRIPT_DIR/helper/patch_va39.py" ] && \
-    install -Dm755 "$SCRIPT_DIR/helper/patch_va39.py" "${LIB_DIR}/patch_va39.py"
+# Step 4: Install both into bin/
+# agy (Bionic bootstrapper) finds agy.va39 in same directory via dirname
+install -Dm755 "$WALLENTX_AGY" "${BIN_DIR}/agy"
+install -Dm755 "$GOOGLE_BIN" "${BIN_DIR}/agy.va39"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
