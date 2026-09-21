@@ -73,8 +73,8 @@ build_muse_deb() {
 
     # Symlinks
     ln -sf muse "${PKG_DIR}/${PREFIX}/bin/muse-code"
-    ln -sf "${PREFIX}/lib/muse/muse-session" "${PKG_DIR}/${PREFIX}/bin/muse-session"
-    ln -sf "${PREFIX}/lib/muse/muse-mcp" "${PKG_DIR}/${PREFIX}/bin/muse-mcp"
+    ln -sf "/${PREFIX}/lib/muse/muse-session" "${PKG_DIR}/${PREFIX}/bin/muse-session"
+    ln -sf "/${PREFIX}/lib/muse/muse-mcp" "${PKG_DIR}/${PREFIX}/bin/muse-mcp"
 
     # Calculate installed size
     local INSTALLED_SIZE
