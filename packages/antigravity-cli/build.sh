@@ -78,10 +78,16 @@ fi
 
 echo "Found Google binary: $(stat -c%s "$GOOGLE_BIN") bytes"
 
-# Step 4: Install both into bin/
+# Step 4: Apply VA39 patch (fixes faccessat2 syscall, TCMalloc, mmap for Android)
+echo "Applying VA39 patch..."
+PATCHED="${BUILD_DIR}/agy_patched"
+python3 "$SCRIPT_DIR/helper/patch_va39.py" "$GOOGLE_BIN" "$PATCHED"
+chmod 755 "$PATCHED"
+
+# Step 5: Install both into bin/
 # agy (Bionic bootstrapper) finds agy.va39 in same directory via dirname
 install -Dm755 "$WALLENTX_AGY" "${BIN_DIR}/agy"
-install -Dm755 "$GOOGLE_BIN" "${BIN_DIR}/agy.va39"
+install -Dm755 "$PATCHED" "${BIN_DIR}/agy.va39"
 
 INSTALLED_SIZE="$(du -sk "${PKG_DIR}/${PREFIX}" | cut -f1)"
 
