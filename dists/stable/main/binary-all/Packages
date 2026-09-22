@@ -1,3 +1,23 @@
+Package: 9router
+Version: 0.5.85-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 1
+Depends: nodejs-lts | nodejs
+Section: devel
+Priority: optional
+Homepage: https://github.com/decolua/9router
+Description: Free AI coding router with smart fallback
+ Local AI model router that connects coding agents (Claude Code, Codex,
+ Cline, Muse Code, etc.) to free and paid providers via an OpenAI-compatible
+ endpoint. Features smart auto-fallback, provider health checks, and a
+ web dashboard at localhost:20128.
+Filename: pool/main/9router_0.5.85-1_all.deb
+Size: 1176
+MD5sum: 372f3d46647da3ae08fb359797b3ba14
+SHA1: 343beddb5729fdae932d33997126d36570489a90
+SHA256: ab28428e80350166e9663db7629f2f335c0395d73070c2bed4ac5ad429ddd5a3
+
 Package: wrangler
 Version: 4.123.0-2
 Architecture: all
@@ -12,7 +32,7 @@ Description: Cloudflare Workers CLI
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
-Size: 1556
-MD5sum: b21cfd5343a4ad60cb1993c99f46884f
-SHA1: 565e6b10a50b46c4b1ed770db71a2797757df92e
-SHA256: e0178e55acf3ee1f5a8d5cfdcdd6435c7f04220df3d8d8fac79fb5b2c6135d2f
+Size: 1552
+MD5sum: 8eda572d053b006f02665872340f080e
+SHA1: 47253c44cf6a546ff4521b950d5be75e3d76a7d0
+SHA256: 0a514c4f6eec88496d9db525a68a07697db02852506385e33539f5834162c357
