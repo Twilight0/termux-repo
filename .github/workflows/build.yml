@@ -35,6 +35,10 @@ jobs:
       - name: Build wrangler
         run: dpkg-deb -Zxz --build packages/wrangler debs/
 
+      # --- 9router (architecture-independent) ---
+      - name: Build 9router
+        run: dpkg-deb -Zxz --build packages/9router debs/
+
       # --- muse-code (both architectures) ---
       - name: Build muse-code (aarch64)
         run: bash packages/muse-code/build.sh aarch64

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+NINE_ROUTER_VERSION="0.5.85"
+
+echo "Installing 9router@${NINE_ROUTER_VERSION} via npm..."
+npm install -g --ignore-scripts "9router@${NINE_ROUTER_VERSION}"
+
+echo ""
+echo "9router installed."
+echo "  Run '9router' to start the dashboard at http://localhost:20128"
+echo "  Configure providers in the dashboard, then point your coding agent at:"
+echo "    http://127.0.0.1:20128/v1"
