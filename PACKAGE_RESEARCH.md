@@ -140,6 +140,30 @@ This document details the architectural analysis, technical challenges, solution
 
 ---
 
+### 6. `curl_cffi` (curl-impersonate Python binding)
+- **Feasibility:** **High**
+- **Upstream:** PyPI `curl_cffi` + in-house wheel builder `Twilight0/curl-cffi-builder` (CI cross-compiles Android `arm64-v8a` / `armeabi-v7a` / `x86_64`, iOS, manylinux, macOS, Windows + Kodi add-on; latest builder release v0.16.3).
+- **What It Is:** Python binding bundling patched curl + BoringSSL to impersonate browser TLS fingerprints. A library, not a CLI — end-user value comes through dependents, chiefly `yt-dlp --impersonate` (unlocks Cloudflare-protected pages) and scrapers facing bot checks.
+- **Wheel Coverage (verified 2026-09-23):** v0.16.3 ships Android wheels for **cp310 through cp314** (all three ABIs each), so the current Termux Python 3.14 is covered (`cp314-cp314-android_21_arm64_v8a`). Note the Android wheels are version-locked per CPython (unlike the `abi3` manylinux/macOS ones), so each Termux Python bump needs the matching builder target to exist — worth a CI check that keeps matrix and Termux in step.
+- **Packaging Plan:**
+  - Unlike the npm `all`-arch packages, this must be **arch-specific**: `postinst` pip-installs the per-arch wheel URL from the builder releases (`arm64_v8a` on `aarch64`, `x86_64` on `x86_64`).
+  - `Depends: python`; version pin must track builder releases, not PyPI.
+  - Natural companion to a future `yt-dlp` package (its `--impersonate` flag lights up only when `curl_cffi` is importable).
+
+---
+
+### 7. `yt-dlp` (video/audio downloader, latest-git tracking)
+- **Feasibility:** **High (Recommended)**
+- **Upstream:** GitHub `yt-dlp/yt-dlp`; PyPI `yt-dlp` (stable) + `yt-dlp-nightly` (auto-built master snapshots).
+- **Why Latest-Git:** Extractors break whenever sites redesign, so master is routinely weeks ahead of the last stable in working sites — users consistently ask for git-fresh builds, not release pins.
+- **Packaging Plan:**
+  - `arch=all` pure-Python package, same `postinst` pattern as `wrangler`/`9router`: `pip install yt-dlp-nightly` (tracks master with zero maintenance) — or pin stable `yt-dlp` if reproducibility is preferred.
+  - `Depends: python` (+ optional `ffmpeg` for merging; Termux already ships it).
+  - The existing weekly CI cron (`0 0 * * 0`) already matches the desired refresh cadence; no extra scheduling needed.
+  - Compounds with entry 6: `yt-dlp-nightly` + the builder's Android `curl_cffi` wheel = impersonation-capable downloading (`--impersonate chrome`) on the phone.
+
+---
+
 ## 3. Additional Candidate Packages: Developer & AI Tools
 
 ### AI/ML
