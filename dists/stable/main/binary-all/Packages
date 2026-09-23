@@ -14,9 +14,29 @@ Description: Free AI coding router with smart fallback
  web dashboard at localhost:20128.
 Filename: pool/main/9router_0.5.85-1_all.deb
 Size: 1180
-MD5sum: 8637e5227fc0d08591aa785dc729c2fb
-SHA1: 0f3362f00143e119d1aa0f5518345743cf05e5dc
-SHA256: 50c2467b0340e1ff80d58d2c7f3a959b5070275aa71cb8b84632dd72298a3fc8
+MD5sum: d9ecd0f017f82c781c792f14f5f6b3c1
+SHA1: 696c099d0094b843bc9aebd52707805b9848c9cf
+SHA256: f55a4c59c18f17e50ff63d43d4c78090f55117c0d323c24d0268a14f6638f6c3
+
+Package: curl-cffi
+Version: 0.16.3-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 1
+Depends: python
+Section: python
+Priority: optional
+Homepage: https://github.com/Twilight0/curl-cffi-builder
+Description: Browser TLS fingerprint impersonation for Python
+ curl-impersonate binding (Chrome/Safari TLS fingerprints) built for
+ Android. Unlocks yt-dlp --impersonate and bot-aware scraping on Termux.
+ Wheels come from curl-cffi-builder releases; the cffi dependency is
+ built locally and needs: pkg install clang libffi.
+Filename: pool/main/curl-cffi_0.16.3-1_all.deb
+Size: 1504
+MD5sum: 349bad4eb297083d7ee07e58ca0adf54
+SHA1: ac950cf8a07ad3a125a277f0b9d4e1b6c819fd2d
+SHA256: 34be806213c076010e6129954dcfe95ddaa4dee6fd08df132cd1ac01dfefa0f4
 
 Package: wrangler
 Version: 4.123.0-2
@@ -33,6 +53,25 @@ Description: Cloudflare Workers CLI
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
 Size: 1556
-MD5sum: 0c202ad7a8a6af7a4e77b0db2fef6025
-SHA1: 9d9221875c952f58ca053a0bd0a5772277529319
-SHA256: 7b96b71b0e2e0e4fe6b433c948b5a7c1049eddee11f160cd0049b0ec49ed716b
+MD5sum: d09d6bb154c3f791d5cbdef779abd537
+SHA1: 2ec84ee6c2413fdddb0956aca7b01c3fe96eddc3
+SHA256: e3e1c013e3eda1c06d088e0ab95465b77a01e89799f6b1dfe8c1da5dc4db3d4c
+
+Package: yt-dlp-git
+Version: 2026.09.23-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 1
+Depends: python, git
+Section: video
+Priority: optional
+Homepage: https://github.com/yt-dlp/yt-dlp
+Description: Video/audio downloader, git master snapshot
+ yt-dlp installed straight from upstream master, so site extractors
+ are days (not months) old. Reinstall/upgrade the package to pull the
+ latest fixes. Pair with curl-cffi for --impersonate support.
+Filename: pool/main/yt-dlp-git_2026.09.23-1_all.deb
+Size: 1092
+MD5sum: 869e0994bd7019ca0264e1cd8a762395
+SHA1: 663e8bd76582560807793f5796865a42fc700a89
+SHA256: 38f429d9b2ed432e426b1c5eb2488adc5aa71ba9a07405d2089ca9821d6b55b4
