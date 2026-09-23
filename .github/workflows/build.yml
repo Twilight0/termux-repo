@@ -39,6 +39,14 @@ jobs:
       - name: Build 9router
         run: dpkg-deb -Zxz --build packages/9router debs/
 
+      # --- curl-cffi (pip wrapper, arch detected at install time) ---
+      - name: Build curl-cffi
+        run: dpkg-deb -Zxz --build packages/curl-cffi debs/
+
+      # --- yt-dlp-git (pip wrapper, tracks upstream master) ---
+      - name: Build yt-dlp-git
+        run: dpkg-deb -Zxz --build packages/yt-dlp-git debs/
+
       # --- muse-code (both architectures) ---
       - name: Build muse-code (aarch64)
         run: bash packages/muse-code/build.sh aarch64

@@ -154,13 +154,14 @@ This document details the architectural analysis, technical challenges, solution
 
 ### 7. `yt-dlp` (video/audio downloader, latest-git tracking)
 - **Feasibility:** **High (Recommended)**
-- **Upstream:** GitHub `yt-dlp/yt-dlp`; PyPI `yt-dlp` (stable) + `yt-dlp-nightly` (auto-built master snapshots).
+- **Upstream:** GitHub `yt-dlp/yt-dlp` master. Note: there is **no** `yt-dlp-nightly` on PyPI (verified 404) — git tracking means `pip install git+https://github.com/yt-dlp/yt-dlp.git`, which needs `git` at install time.
 - **Why Latest-Git:** Extractors break whenever sites redesign, so master is routinely weeks ahead of the last stable in working sites — users consistently ask for git-fresh builds, not release pins.
 - **Packaging Plan:**
-  - `arch=all` pure-Python package, same `postinst` pattern as `wrangler`/`9router`: `pip install yt-dlp-nightly` (tracks master with zero maintenance) — or pin stable `yt-dlp` if reproducibility is preferred.
-  - `Depends: python` (+ optional `ffmpeg` for merging; Termux already ships it).
+  - `arch=all` pure-Python package (`yt-dlp-git`), same `postinst` pattern as `wrangler`/`9router`: `pip install --upgrade git+https://github.com/yt-dlp/yt-dlp.git`.
+  - `Depends: python, git` (+ optional `ffmpeg` for merging; Termux already ships it). Zero pip dependencies otherwise.
+  - Date-based deb version (e.g. `2026.09.23-1`); reinstall/upgrade pulls master fresh.
   - The existing weekly CI cron (`0 0 * * 0`) already matches the desired refresh cadence; no extra scheduling needed.
-  - Compounds with entry 6: `yt-dlp-nightly` + the builder's Android `curl_cffi` wheel = impersonation-capable downloading (`--impersonate chrome`) on the phone.
+  - Compounds with entry 6: git master + the builder's Android `curl_cffi` wheel = impersonation-capable downloading (`--impersonate chrome`) on the phone.
 
 ---
 

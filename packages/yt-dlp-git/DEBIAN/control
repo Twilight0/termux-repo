@@ -1,0 +1,12 @@
+Package: yt-dlp-git
+Version: 2026.09.23-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Depends: python, git
+Section: video
+Priority: optional
+Homepage: https://github.com/yt-dlp/yt-dlp
+Description: Video/audio downloader, git master snapshot
+ yt-dlp installed straight from upstream master, so site extractors
+ are days (not months) old. Reinstall/upgrade the package to pull the
+ latest fixes. Pair with curl-cffi for --impersonate support.

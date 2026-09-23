@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+echo "Installing yt-dlp from upstream git master..."
+pip install --upgrade "git+https://github.com/yt-dlp/yt-dlp.git"
+
+echo ""
+echo "yt-dlp installed."
+echo "  Run 'yt-dlp --version' to check the build date"
+echo "  With curl-cffi installed: yt-dlp --impersonate chrome <url>"
