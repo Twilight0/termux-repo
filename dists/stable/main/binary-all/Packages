@@ -13,10 +13,10 @@ Description: Free AI coding router with smart fallback
  endpoint. Features smart auto-fallback, provider health checks, and a
  web dashboard at localhost:20128.
 Filename: pool/main/9router_0.5.85-1_all.deb
-Size: 1176
-MD5sum: 372f3d46647da3ae08fb359797b3ba14
-SHA1: 343beddb5729fdae932d33997126d36570489a90
-SHA256: ab28428e80350166e9663db7629f2f335c0395d73070c2bed4ac5ad429ddd5a3
+Size: 1180
+MD5sum: 8637e5227fc0d08591aa785dc729c2fb
+SHA1: 0f3362f00143e119d1aa0f5518345743cf05e5dc
+SHA256: 50c2467b0340e1ff80d58d2c7f3a959b5070275aa71cb8b84632dd72298a3fc8
 
 Package: wrangler
 Version: 4.123.0-2
@@ -32,7 +32,7 @@ Description: Cloudflare Workers CLI
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
-Size: 1552
-MD5sum: 8eda572d053b006f02665872340f080e
-SHA1: 47253c44cf6a546ff4521b950d5be75e3d76a7d0
-SHA256: 0a514c4f6eec88496d9db525a68a07697db02852506385e33539f5834162c357
+Size: 1556
+MD5sum: 0c202ad7a8a6af7a4e77b0db2fef6025
+SHA1: 9d9221875c952f58ca053a0bd0a5772277529319
+SHA256: 7b96b71b0e2e0e4fe6b433c948b5a7c1049eddee11f160cd0049b0ec49ed716b
