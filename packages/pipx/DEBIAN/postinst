@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+PIPX_VERSION="1.17.6"
+
+echo "Installing pipx ${PIPX_VERSION} via pip..."
+pip install --upgrade "pipx==${PIPX_VERSION}"
+
+echo "Ensuring ~/.local/bin is on PATH..."
+python3 -m pipx ensurepath || true
+
+echo ""
+echo "pipx installed."
+echo "  Run 'pipx --version' to verify"
+echo "  Example: pipx install yt-dlp"
+echo "  If 'pipx' is not found, restart Termux or run:"
+echo "    export PATH=\"\$HOME/.local/bin:\$PATH\""

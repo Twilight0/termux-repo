@@ -47,6 +47,10 @@ jobs:
       - name: Build yt-dlp-git
         run: dpkg-deb -Zxz --build packages/yt-dlp-git debs/
 
+      # --- pipx (pip wrapper, all arch) ---
+      - name: Build pipx
+        run: dpkg-deb -Zxz --build packages/pipx debs/
+
       # --- muse-code (both architectures) ---
       - name: Build muse-code (aarch64)
         run: bash packages/muse-code/build.sh aarch64
