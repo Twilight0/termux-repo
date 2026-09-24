@@ -17,6 +17,7 @@ curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
 | `curl-cffi` | Browser TLS impersonation for Python (yt-dlp --impersonate) | all |
 | `yt-dlp-git` | Video/audio downloader, git master snapshot | all |
 | `pipx` | Install/run Python apps in isolated venvs | all |
+| `yt-tui` | Curses TUI for yt-dlp (search, queue, history) | all |
 | `muse-code` | Meta's Muse Code AI agent with session/MCP tools | aarch64, x86_64 |
 | `opencode` | AI-powered coding assistant | aarch64, x86_64 |
 | `antigravity-cli` | Google Antigravity CLI | aarch64, x86_64 |

@@ -51,6 +51,10 @@ jobs:
       - name: Build pipx
         run: dpkg-deb -Zxz --build packages/pipx debs/
 
+      # --- yt-tui (pip wrapper, all arch) ---
+      - name: Build yt-tui
+        run: dpkg-deb -Zxz --build packages/yt-tui debs/
+
       # --- muse-code (both architectures) ---
       - name: Build muse-code (aarch64)
         run: bash packages/muse-code/build.sh aarch64

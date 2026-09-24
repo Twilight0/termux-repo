@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+echo "Installing yt-tui from Twilight0/yt-tui (main)..."
+pip install --upgrade "git+https://github.com/Twilight0/yt-tui.git"
+
+echo ""
+echo "yt-tui installed."
+echo "  Run 'yt-tui' to start the interface"
+echo "  Needs ffmpeg to merge video+audio (pulled in as a dependency)"
