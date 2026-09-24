@@ -14,9 +14,9 @@ Description: Free AI coding router with smart fallback
  web dashboard at localhost:20128.
 Filename: pool/main/9router_0.5.85-1_all.deb
 Size: 1180
-MD5sum: d9ecd0f017f82c781c792f14f5f6b3c1
-SHA1: 696c099d0094b843bc9aebd52707805b9848c9cf
-SHA256: f55a4c59c18f17e50ff63d43d4c78090f55117c0d323c24d0268a14f6638f6c3
+MD5sum: a6c7ec8a312d6d3f687800b700ad5cfa
+SHA1: 2a6a0ae1e11273fe1651bbad8b373636205b6273
+SHA256: f686dcad1768b533272d6bc16316795bfe1177854c5d99094dc79caae14ee41d
 
 Package: curl-cffi
 Version: 0.16.3-1
@@ -34,9 +34,28 @@ Description: Browser TLS fingerprint impersonation for Python
  built locally and needs: pkg install clang libffi.
 Filename: pool/main/curl-cffi_0.16.3-1_all.deb
 Size: 1504
-MD5sum: 349bad4eb297083d7ee07e58ca0adf54
-SHA1: ac950cf8a07ad3a125a277f0b9d4e1b6c819fd2d
-SHA256: 34be806213c076010e6129954dcfe95ddaa4dee6fd08df132cd1ac01dfefa0f4
+MD5sum: 257b42a638edb7a393e1c9239f2c793f
+SHA1: 04fdda9ebcaa34018b589ab47893f62b82904586
+SHA256: bc027abe89e42cdaa18fd70e788cccd2a5fe8b64f9802cc339a2704d74f90eea
+
+Package: pipx
+Version: 1.17.6-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 1
+Depends: python, python-pip
+Section: python
+Priority: optional
+Homepage: https://github.com/pypa/pipx
+Description: Install and run Python applications in isolated environments
+ pipx installs Python CLIs (yt-dlp, black, gallery-dl, ...) into
+ isolated venvs and exposes their binaries on PATH. Drop-in return
+ of the package removed from upstream Termux repos.
+Filename: pool/main/pipx_1.17.6-1_all.deb
+Size: 1184
+MD5sum: 0b4836d2be5ac8c72c145592b92ecb33
+SHA1: 514227fd6640abcb5529be007e17b4e4fecafe14
+SHA256: 5b7a30e83b1a8b8f710992acd535c27e07f50fe19bbd7aeba3467962676e7cfd
 
 Package: wrangler
 Version: 4.123.0-2
@@ -53,9 +72,9 @@ Description: Cloudflare Workers CLI
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
 Size: 1556
-MD5sum: d09d6bb154c3f791d5cbdef779abd537
-SHA1: 2ec84ee6c2413fdddb0956aca7b01c3fe96eddc3
-SHA256: e3e1c013e3eda1c06d088e0ab95465b77a01e89799f6b1dfe8c1da5dc4db3d4c
+MD5sum: 8bb1218e392ac240e33cfacb83097657
+SHA1: bf2cbecabfff8121d6bf414d39eb563445a6b8b0
+SHA256: 85a6e977cc938fc2747af32f3d7b5fdf3c44277bf3416668aec82203998a366a
 
 Package: yt-dlp-git
 Version: 2026.09.23-1
@@ -72,6 +91,6 @@ Description: Video/audio downloader, git master snapshot
  latest fixes. Pair with curl-cffi for --impersonate support.
 Filename: pool/main/yt-dlp-git_2026.09.23-1_all.deb
 Size: 1092
-MD5sum: 869e0994bd7019ca0264e1cd8a762395
-SHA1: 663e8bd76582560807793f5796865a42fc700a89
-SHA256: 38f429d9b2ed432e426b1c5eb2488adc5aa71ba9a07405d2089ca9821d6b55b4
+MD5sum: 180e8f8d39b874261d18d968a178c438
+SHA1: 04a93f999b72221c6a0ff2665a6845357710a675
+SHA256: e1e0271bdc296ff174ef24e42e3f0258c753f0e6f3f198e35c16059c09110d34
