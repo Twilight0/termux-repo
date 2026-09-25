@@ -10,15 +10,15 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 # Upstream version (update these when new releases drop)
-REALVER="${MUSE_REALVER:-1.3.0-R3401.1}"
-PKGVER="${MUSE_PKGVER:-1.3.0.r3401.1}"
+REALVER="${MUSE_REALVER:-1.4.0-R4161.1}"
+PKGVER="${MUSE_PKGVER:-1.4.0.r4161.1}"
 PKGREL="${MUSE_PKGREL:-1}"
 DEB_VERSION="${PKGVER}-${PKGREL}"
 PREFIX="data/data/com.termux/files/usr"
 
 # Checksums (update alongside version)
-SHA256_AARCH64="${MUSE_SHA256_AARCH64:-5e5ea2a3de3a3fabdff8982aec9423d20eaa7dad05df37efb4264356d0d2e223}"
-SHA256_X86_64="${MUSE_SHA256_X86_64:-71b089d055dfe6e4562092bc484896b61bd96fd6ef9fef9da54a14aa174e2a33}"
+SHA256_AARCH64="${MUSE_SHA256_AARCH64:-38a0e3b7f59825ffc60f7fae65ac9727cf9bbb47fe4e687cc29cede9deb8fabf}"
+SHA256_X86_64="${MUSE_SHA256_X86_64:-1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9}"
 
 build_muse_deb() {
     local ARCH="$1"
