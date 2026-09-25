@@ -39,6 +39,11 @@ for arch_dir in "dists/${DIST}/${COMP}"/binary-*; do
         priority=$(dpkg-deb -f "$deb" Priority)
         homepage=$(dpkg-deb -f "$deb" Homepage)
         size=$(stat -c%s "$deb")
+        # Installed-Size must come from the deb's own control data so it
+        # matches what dpkg records in status at install time. apt's version
+        # merge hash covers Installed-Size: a fabricated value means equal
+        # versions never merge, causing perpetual same-version "upgrades".
+        isize=$(dpkg-deb -f "$deb" Installed-Size 2>/dev/null || echo $((size/1024)))
         md5=$(md5sum "$deb" | cut -d' ' -f1)
         sha1=$(sha1sum "$deb" | cut -d' ' -f1)
         sha256=$(sha256sum "$deb" | cut -d' ' -f1)
@@ -46,7 +51,7 @@ for arch_dir in "dists/${DIST}/${COMP}"/binary-*; do
         [ "$first" -eq 1 ] && first=0 || printf '\n' >> "$PKG_FILE"
 
         printf 'Package: %s\nVersion: %s\nArchitecture: %s\nMaintainer: %s\nInstalled-Size: %s\nDepends: %s\nSection: %s\nPriority: %s\nHomepage: %s\nDescription: %s\nFilename: pool/%s/%s\nSize: %s\nMD5sum: %s\nSHA1: %s\nSHA256: %s\n' \
-            "$pkg" "$ver" "$arch" "$maint" "$((size/1024))" "$depends" "$section" "$priority" "$homepage" "$desc" "$COMP" "$deb_name" "$size" "$md5" "$sha1" "$sha256" \
+            "$pkg" "$ver" "$arch" "$maint" "$isize" "$depends" "$section" "$priority" "$homepage" "$desc" "$COMP" "$deb_name" "$size" "$md5" "$sha1" "$sha256" \
             >> "$PKG_FILE"
     done
     xz -9kf "$PKG_FILE"

@@ -60,14 +60,32 @@ TAR_OPTS=(--sort=name "--mtime=@${MTIME}" --owner=0 --group=0 --numeric-owner)
 
 echo "2.0" > "$TMPDIR/debian-binary"
 
-tar "${TAR_OPTS[@]}" -cf "$TMPDIR/control.tar" -C "$STAGE/DEBIAN" .
-xz -9 -c "$TMPDIR/control.tar" > "$TMPDIR/control.tar.xz"
-
+# data filelist first: needed both for the archive and for Installed-Size
 # data archive: everything except DEBIAN/ (leading ./ root entry like dpkg-deb)
 {
     echo ./;
     ( cd "$STAGE" && find . -mindepth 1 -not -path './DEBIAN' -not -path './DEBIAN/*' | LC_ALL=C sort )
 } > "$TMPDIR/filelist"
+
+# Installed-Size must be identical in control.tar (→ dpkg status) and the
+# Packages index (read via dpkg-deb -f by generate-repo.sh): apt's version
+# merge hash covers Installed-Size, and a mismatch means equal versions
+# never merge → perpetual same-version "upgrades". Computed as a pure
+# function of payload file sizes (dpkg-deb uses du block counts, but those
+# vary by filesystem; self-consistency is what matters).
+INSTALLED_SIZE="$(cd "$STAGE" && find . -mindepth 1 -not -path './DEBIAN' -not -path './DEBIAN/*' -type f -printf '%s\n' | awk '{s+=($1+1023)/1024} END {printf "%d", s+0}')"
+echo "Installed-Size: $INSTALLED_SIZE"
+
+# control.tar from a copy with Installed-Size injected (never mutates source)
+mkdir -p "$TMPDIR/ctrl"
+cp -a "$STAGE/DEBIAN/." "$TMPDIR/ctrl/"
+grep -v -i '^Installed-Size:' "$TMPDIR/ctrl/control" > "$TMPDIR/ctrl/control.new" || true
+mv "$TMPDIR/ctrl/control.new" "$TMPDIR/ctrl/control"
+printf 'Installed-Size: %s\n' "$INSTALLED_SIZE" >> "$TMPDIR/ctrl/control"
+
+tar "${TAR_OPTS[@]}" -cf "$TMPDIR/control.tar" -C "$TMPDIR/ctrl" .
+xz -9 -c "$TMPDIR/control.tar" > "$TMPDIR/control.tar.xz"
+
 tar "${TAR_OPTS[@]}" --no-recursion -cf "$TMPDIR/data.tar" -C "$STAGE" -T "$TMPDIR/filelist"
 xz -9 -c "$TMPDIR/data.tar" > "$TMPDIR/data.tar.xz"
 
