@@ -1,8 +1,8 @@
 Package: yt-tui
-Version: 1.2.0-1
+Version: 1.1.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Depends: python, ffmpeg, chafa, yt-dlp | yt-dlp-git
+Depends: python, ffmpeg, yt-dlp | yt-dlp-git
 Section: video
 Priority: optional
 Homepage: https://github.com/Twilight0/yt-tui
