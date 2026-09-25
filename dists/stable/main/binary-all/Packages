@@ -53,9 +53,9 @@ Description: Install and run Python applications in isolated environments
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.17.6-1_all.deb
 Size: 1180
-MD5sum: 92de1910d1a5c17cf13f3d4ff19d2342
-SHA1: c96f5c4e1556bc33c1f9e6de09676ce54d5a7d19
-SHA256: 4c88d8dd5956e9ae7c9712513164a82f4967ad7242f8f95cd90d9d766d39606f
+MD5sum: f9561f3050aa57b6f0cb01d99de3cfc3
+SHA1: 534a177b8322c1277aaa97a0d49e1df4d62f1d68
+SHA256: 694e745864c3f356c1141de98c55afeb967379c034b709725bd21283cd5fb1a7
 
 Package: wrangler
 Version: 4.123.0-2
@@ -96,11 +96,11 @@ SHA1: b54fc32eed39c5a65acde28e16e5907c27ffc7a2
 SHA256: 58064bf21e871050735c97124fc8f230504213c5274c1eb40c737b69f41b2886
 
 Package: yt-tui
-Version: 1.2.0-1
+Version: 1.1.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 1
-Depends: python, ffmpeg, chafa, yt-dlp | yt-dlp-git
+Depends: python, ffmpeg, yt-dlp | yt-dlp-git
 Section: video
 Priority: optional
 Homepage: https://github.com/Twilight0/yt-tui
@@ -108,8 +108,8 @@ Description: Curses TUI for yt-dlp with search and queueing
  Single-file Python curses interface for downloading video/audio
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
-Filename: pool/main/yt-tui_1.2.0-1_all.deb
-Size: 1112
-MD5sum: 093c268fb2ec34812efdb13f977ff9ae
-SHA1: 89290636bb65d277ea589c2db2f8ac4c1ed1f3f0
-SHA256: e53089bf54ca54a91428887d13e8fc7503f9fab2442a22a48c15c832235e181d
+Filename: pool/main/yt-tui_1.1.0-1_all.deb
+Size: 1104
+MD5sum: 6347cbd30eafcadcdf31998c6d1df121
+SHA1: d25f0c0f9b8e46e99225682e60b2e584df8f191b
+SHA256: 7a9244771a821b5a9584706eaa8230b29ae56b169df7b0f2bf5f0ffd8f369bf7
