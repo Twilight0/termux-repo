@@ -36,6 +36,20 @@ This document details the architectural analysis, technical challenges, solution
   - **Environment Sanitization:** Wrapper automatically clears `LD_PRELOAD` and `LD_LIBRARY_PATH` and ensures `libc.so.6` symlinks exist.
   - **Dependencies:** `glibc-repo`, `glibc`, `proot`, `ripgrep`, `jq`, `nodejs-lts`.
 
+#### `opencode` v2 (Node.js rewrite, beta — experimental, not currently packaged)
+- **Upstream:** The official `v2` branch and v2 installer; the update endpoint checked 2026-09-25 reports `2.0.16` (`@opencode/cli`). Older beta instructions used `@opencode-ai/cli@beta`, so package names and channels remain moving. The official installer writes a Linux glibc ARM64 binary and an `opencode2` shim under its own install directory.
+- **Why v1 tricks do not transfer:** v2 replaces the Bun runtime and introduces a client/server architecture. A normal Termux loader invocation can start the binary, but v2 re-executes `process.execPath` to launch its managed `serve` process. When `process.execPath` is the glibc loader, the child fails with `serve: error while loading shared libraries: serve: cannot open shared object file`. `--standalone` uses the same self-exec path and is not a loader workaround.
+- **Termux smoke test (2026-09-25, aarch64, glibc 2.44):** direct execution failed with `required file not found`; invoking the official v2.0.16 binary through `$PREFIX/glibc/lib/ld-linux-aarch64.so.1` reported `opencode v2.0.16`. The interactive TUI and provider requests were not independently exercised.
+- **Verified no-proot workaround:** start `serve` manually through the glibc loader, then run client commands against it with `--server http://127.0.0.1:<port>` and the same `OPENCODE_PASSWORD` on both sides. A v2.0.16 `api --server ... get /api/info` request succeeded. This is suitable for headless, API, and server-oriented use; it does not repair transparent managed-service spawning.
+- **Transparent managed mode:** an interpreter-only ELF patch on a copied binary may preserve `process.execPath` and allow normal self-exec, but this is an experimental community workaround, not validated by this repository. A plain shell wrapper cannot change what `/proc/self/exe` reports.
+- **Existing fallback:** `proot-distro` remains the conservative compatibility route because it presents a normal Linux userspace and avoids the Android loader/re-exec mismatch. The earlier DNS/`getaddrinfo ETIMEOUT` concern remains a separate provider-network risk for native Termux builds.
+- **Packaging implications:** If v2 is packaged later, keep it as a separate `opencode2` command, pin the beta version, disable auto-update, and isolate `HOME`, `XDG_*`, service registration, and database paths from v1. V1 and v2 read the same configuration locations by default, so sharing state during beta testing is unsafe.
+- **Options for this repo:**
+  1. Stay on v1 (current): still maintained upstream and packaged today. Zero additional support surface.
+  2. Experimental native v2 companion: ship the loader/manual-server wrapper for headless users, with explicit beta and compatibility warnings.
+  3. `proot-distro` companion: bootstrap a Linux userland for users who need the full v2 runtime; reliable but heavy and beta-churn-sensitive.
+- **Recommendation:** keep v1 as the supported package. Document the loader/manual-server experiment separately; do not present v2 as a drop-in native package until its self-exec, update, and Android runtime behavior stabilizes.
+
 ---
 
 ### `oh-my-pi` (`omp`)
