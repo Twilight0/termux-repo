@@ -13,10 +13,10 @@ Description: Free AI coding router with smart fallback
  endpoint. Features smart auto-fallback, provider health checks, and a
  web dashboard at localhost:20128.
 Filename: pool/main/9router_0.5.85-1_all.deb
-Size: 1180
-MD5sum: a09538daf3a4ea8aeb2c412ec38e5382
-SHA1: 048c51140845a65ad401f47c8d12089b09680147
-SHA256: 5e2997dcc9918ecf90c3be7764c2c21a0128769ad79d3d12f0b0583c5dac361a
+Size: 1140
+MD5sum: cb3e5285d6af02cf894f4c35098a4496
+SHA1: e8ed15598e46bc2c627b67de415e466fe3d87306
+SHA256: c084bbd4c5c6c40bba5acf8fe231cd536589e590871034c3fecf11b1b0e914d7
 
 Package: curl-cffi
 Version: 0.16.3-1
@@ -33,10 +33,10 @@ Description: Browser TLS fingerprint impersonation for Python
  Wheels come from curl-cffi-builder releases; the cffi dependency is
  built locally and needs: pkg install clang libffi.
 Filename: pool/main/curl-cffi_0.16.3-1_all.deb
-Size: 1504
-MD5sum: 88045de7dddea036f134bcadb18300a5
-SHA1: 09c820db6017614eaefc263ffe9661878d4a6bf3
-SHA256: 092cfc522544458f61dbaaf7d1e4d6087ec058a73380da2dab947fb83edf8ddc
+Size: 1464
+MD5sum: 553ac012f1417d3ff1d92b806f2aae74
+SHA1: c04aa02b4e3722fad44543913b3f9223ce97af94
+SHA256: 8cebdb7f585155debf8915ed11a4e9cd5244d93d835d5060f8b07783ef20f3ac
 
 Package: pipx
 Version: 1.17.6-1
@@ -52,10 +52,10 @@ Description: Install and run Python applications in isolated environments
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.17.6-1_all.deb
-Size: 1188
-MD5sum: ffbd338c0c5fa8c8519344681a9d009c
-SHA1: a33cbc3958d1f1f04f3240cf076c46995cc70796
-SHA256: 1e771afe420ac8869a43461ca4bb96d84d107dbdb367b96ede5004b9ef2957b4
+Size: 1184
+MD5sum: e33879544b044ce660a4960c3be3661a
+SHA1: c9dae46f675731150633c433d25de4375b296062
+SHA256: 8c19c50aae78c98047a0ab5c923ee7d4beea1e61b7523e8ed52bccbbafa65822
 
 Package: wrangler
 Version: 4.123.0-2
@@ -71,10 +71,10 @@ Description: Cloudflare Workers CLI
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
-Size: 1556
-MD5sum: 031e965fadb8ab666f786ae33a11fd17
-SHA1: f419ceafb730049b782097cd67b470876ff9092b
-SHA256: e521f536932253076e0fb5afe58fa7e8e36b33ba41c95f436257b5686f7ed007
+Size: 1516
+MD5sum: 3dda396b0527f6356ac96209db2bdc71
+SHA1: d0edcd0d3397997c003e339083beaf63d79d3616
+SHA256: 89a95db126c93a273477bdf14eb83d245d004976a2ee8b9d80584ccac46fbc64
 
 Package: yt-dlp-git
 Version: 2026.09.23-1
@@ -90,10 +90,10 @@ Description: Video/audio downloader, git master snapshot
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
 Filename: pool/main/yt-dlp-git_2026.09.23-1_all.deb
-Size: 1092
-MD5sum: 7c6e2f89b774dd00a9496cc99b28f2f5
-SHA1: 24311088d3877c3ef00ec8499ab3e10b3b45bcb1
-SHA256: 55937c35d65828054d9d4407df96d02736a3a537f7ef6e95d97b93878911eee9
+Size: 1052
+MD5sum: 2d11eead38dc0f213ba68b1d99731f74
+SHA1: b54fc32eed39c5a65acde28e16e5907c27ffc7a2
+SHA256: 58064bf21e871050735c97124fc8f230504213c5274c1eb40c737b69f41b2886
 
 Package: yt-tui
 Version: 1.1.0-1
@@ -109,7 +109,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1112
-MD5sum: 2e8ce270c97135db895fe7f1aa277b80
-SHA1: 20085383d10ff87485bb8df4537774139f53d599
-SHA256: b7f4f4b8cd53a8678e9b6b67163b99dfb2b1711715d03585a85458a47395ee9c
+Size: 1108
+MD5sum: 93a947e150f560925d8fb7be9ff24902
+SHA1: d21940f94f8881a49f377077f397907177c9db6d
+SHA256: c2f46824e4e3200939eb97c0edea4c96276b73727b7a695bfed042eaaf8c247c
