@@ -2,7 +2,7 @@ Package: 9router
 Version: 0.5.85-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 0
 Depends: nodejs-lts | nodejs
 Section: devel
 Priority: optional
@@ -13,16 +13,16 @@ Description: Free AI coding router with smart fallback
  endpoint. Features smart auto-fallback, provider health checks, and a
  web dashboard at localhost:20128.
 Filename: pool/main/9router_0.5.85-1_all.deb
-Size: 1140
-MD5sum: cb3e5285d6af02cf894f4c35098a4496
-SHA1: e8ed15598e46bc2c627b67de415e466fe3d87306
-SHA256: c084bbd4c5c6c40bba5acf8fe231cd536589e590871034c3fecf11b1b0e914d7
+Size: 1152
+MD5sum: c79383574680c94cd3ba5210697ac7ce
+SHA1: db52131fcb3d75de837cc99d001fb39a49cfc492
+SHA256: bcee233525e36852fe08deae0960fb7850c93e352ebd167de0a3bec9a4bac6a6
 
 Package: curl-cffi
 Version: 0.16.3-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 0
 Depends: python
 Section: python
 Priority: optional
@@ -33,16 +33,16 @@ Description: Browser TLS fingerprint impersonation for Python
  Wheels come from curl-cffi-builder releases; the cffi dependency is
  built locally and needs: pkg install clang libffi.
 Filename: pool/main/curl-cffi_0.16.3-1_all.deb
-Size: 1464
-MD5sum: 553ac012f1417d3ff1d92b806f2aae74
-SHA1: c04aa02b4e3722fad44543913b3f9223ce97af94
-SHA256: 8cebdb7f585155debf8915ed11a4e9cd5244d93d835d5060f8b07783ef20f3ac
+Size: 1480
+MD5sum: d66d1ea784abdbfc3b5eace9802ce5f4
+SHA1: 02fe41b0a4a82f22772a949004a39b47fbf9e817
+SHA256: efbe5a80d2b6c4d07eb1c027d9c335d1a54a56162632f5b29c4f063ce6f02a69
 
 Package: pipx
 Version: 1.17.6-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 
 Depends: python, python-pip
 Section: python
 Priority: optional
@@ -52,16 +52,16 @@ Description: Install and run Python applications in isolated environments
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.17.6-1_all.deb
-Size: 1180
-MD5sum: f9561f3050aa57b6f0cb01d99de3cfc3
-SHA1: 534a177b8322c1277aaa97a0d49e1df4d62f1d68
-SHA256: 694e745864c3f356c1141de98c55afeb967379c034b709725bd21283cd5fb1a7
+Size: 1188
+MD5sum: d09348628caa80316310cf770fc258e6
+SHA1: cd553927e11ab40b7e535e91c4f13f7eca58ee9c
+SHA256: e925dc6f29ed857710542e91a9fc84d76f6c6e5e7ebfab38585dcb3f3cdad120
 
 Package: wrangler
 Version: 4.123.0-2
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 0
 Depends: nodejs-lts | nodejs
 Section: devel
 Priority: optional
@@ -71,16 +71,16 @@ Description: Cloudflare Workers CLI
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
 Filename: pool/main/wrangler_4.123.0-2_all.deb
-Size: 1516
-MD5sum: 3dda396b0527f6356ac96209db2bdc71
-SHA1: d0edcd0d3397997c003e339083beaf63d79d3616
-SHA256: 89a95db126c93a273477bdf14eb83d245d004976a2ee8b9d80584ccac46fbc64
+Size: 1524
+MD5sum: 7abc3ddc024e068c5d0a20977cbf13f0
+SHA1: 382e1af5210a6420e94340d207532e750fd9d54b
+SHA256: cda88a553137ef0a4145052c807d95b82a73ace08507fbfd2cc58482b32e59fd
 
 Package: yt-dlp-git
 Version: 2026.09.23-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 0
 Depends: python, git
 Section: video
 Priority: optional
@@ -90,16 +90,16 @@ Description: Video/audio downloader, git master snapshot
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
 Filename: pool/main/yt-dlp-git_2026.09.23-1_all.deb
-Size: 1052
-MD5sum: 2d11eead38dc0f213ba68b1d99731f74
-SHA1: b54fc32eed39c5a65acde28e16e5907c27ffc7a2
-SHA256: 58064bf21e871050735c97124fc8f230504213c5274c1eb40c737b69f41b2886
+Size: 1056
+MD5sum: 6c8b2634338355906c7dcf738dc3a141
+SHA1: 20da4399ade9495d8873056f8248e9ef83cc05ea
+SHA256: bf662cff6c6fd6205ea463287216c861185092fa1f8ea2375ac5f46fc1fc1788
 
 Package: yt-tui
 Version: 1.1.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 1
+Installed-Size: 
 Depends: python, ffmpeg, yt-dlp | yt-dlp-git
 Section: video
 Priority: optional
@@ -109,7 +109,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1104
-MD5sum: 6347cbd30eafcadcdf31998c6d1df121
-SHA1: d25f0c0f9b8e46e99225682e60b2e584df8f191b
-SHA256: 7a9244771a821b5a9584706eaa8230b29ae56b169df7b0f2bf5f0ffd8f369bf7
+Size: 1112
+MD5sum: cb0461245d3f3e8e08800764828f509f
+SHA1: c6e3b694eb2879776b876909f01d7c2499ee4b42
+SHA256: a26e95b9895736e41b5e8c29e5b46027d847a13d9ad6280bdabc8be794cf9959
