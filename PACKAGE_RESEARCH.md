@@ -165,6 +165,13 @@ This document details the architectural analysis, technical challenges, solution
 
 ---
 
+### 8. `hermes-agent` (Nous Research AI agent) — DO NOT PACKAGE
+- **Upstream already ships an official, signed Termux APT repo:** `https://hermes-assets.nousresearch.com/releases/termux/<channel>` with suites `hermes-stable` / `hermes-canary`, signed by key fingerprint `C572 B5FD D1A2 9CCF A9A9 12B6 840B 0848 E139 156D`. Their `install.sh` refuses Termux outright and points at `pkg install hermes-agent`.
+- **Why not us:** a same-named deb would collide with theirs on any device with both repos — and theirs is the better build (native bionic, bundled Python 3.14 + Node + uv + ripgrep + ffmpeg, Android API-24 wheels; no proot/glibc wrapping needed). aarch64-only.
+- **Status (late Sept 2026):** upstream docs banner says the Termux package is **currently broken, fix in progress**. Revisit when the banner lifts; even then the right move is a docs pointer (or opt-in repo line), not a repackaged deb.
+
+---
+
 ## 3. Additional Candidate Packages: Developer & AI Tools
 
 ### AI/ML
