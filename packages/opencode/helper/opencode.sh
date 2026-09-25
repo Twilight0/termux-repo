@@ -14,6 +14,8 @@ fi
 
 export SSL_CERT_FILE="${SSL_CERT_FILE:-${PREFIX}/etc/tls/cert.pem}"
 export GODEBUG="netdns=cgo,asyncpreemptoff=1"
+# No TUI audio backend on Termux; silences stray audio escape sequences
+export OPENCODE_DISABLE_TUI_AUDIO=1
 
 # Ensure libc.so / libm.so are ELF symlinks rather than GNU ld scripts
 if [ -f "${PREFIX}/glibc/lib/libc.so.6" ] && [ ! -L "${PREFIX}/glibc/lib/libc.so" ]; then
