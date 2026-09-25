@@ -17,10 +17,10 @@ SHA1: 0d240a5a60c31c2afae3742df7fa78debbf64e44
 SHA256: 72bae2c8bb82b5b83c19d254c2e356982d96a92337f382a4c7c41bb3aa377754
 
 Package: muse-code
-Version: 1.3.0.r3401.1-1
+Version: 1.4.0.r4161.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 275398
+Installed-Size: 300678
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -28,11 +28,11 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  Packed with AVX2 legacy fallback, interactive curses TUI session picker,
  and multi-agent MCP configuration management.
-Filename: pool/main/muse-code_1.3.0.r3401.1-1_termux_aarch64.deb
-Size: 56689512
-MD5sum: 16e7f94dc9d8afca94be2e1f14baa43e
-SHA1: fdbb8a444d8376522c555bc737fce074265518d9
-SHA256: 5e47dfb04aa027c03ca4792e3ad9a8b29b7e28d6435e4503318f810b3b2f38a7
+Filename: pool/main/muse-code_1.4.0.r4161.1-1_termux_aarch64.deb
+Size: 60716620
+MD5sum: c948306fd2a575298638798464e175f2
+SHA1: 41c1cb15024b897b86d34103349a43c90fee919d
+SHA256: 0f7834a7d9abc98fd18afb586afe5e73bea80e1dd9ad95321266e8a86137aa2a
 
 Package: oh-my-pi
 Version: 18.1.7-1
