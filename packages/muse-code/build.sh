@@ -103,9 +103,11 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  and multi-agent MCP configuration management.
 EOF
 
-    # Build deb
+    # Build deb (deterministic: stable bytes for unchanged content)
     local DEB_FILE="${DEBS_DIR}/muse-code_${DEB_VERSION}_termux_${ARCH}.deb"
-    dpkg-deb -Zxz --build --root-owner-group "$PKG_DIR" "$DEB_FILE"
+    export REPRO_MTIME
+    REPRO_MTIME="$(git -C "$REPO_ROOT" log -1 --format=%ct -- packages/muse-code 2>/dev/null || git -C "$REPO_ROOT" log -1 --format=%ct)"
+    bash "$REPO_ROOT/scripts/build-deb.sh" "$PKG_DIR" "$DEB_FILE"
     echo "Built: $DEB_FILE"
     rm -rf "$BUILD_DIR"
 }

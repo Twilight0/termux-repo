@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so build-deb.sh can derive stable mtimes
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,19 +35,19 @@ jobs:
 
       # --- wrangler (architecture-independent) ---
       - name: Build wrangler
-        run: dpkg-deb -Zxz --build packages/wrangler debs/
+        run: bash scripts/build-deb.sh packages/wrangler debs/
 
       # --- 9router (architecture-independent) ---
       - name: Build 9router
-        run: dpkg-deb -Zxz --build packages/9router debs/
+        run: bash scripts/build-deb.sh packages/9router debs/
 
       # --- curl-cffi (pip wrapper, arch detected at install time) ---
       - name: Build curl-cffi
-        run: dpkg-deb -Zxz --build packages/curl-cffi debs/
+        run: bash scripts/build-deb.sh packages/curl-cffi debs/
 
       # --- yt-dlp-git (pip wrapper, tracks upstream master) ---
       - name: Build yt-dlp-git
-        run: dpkg-deb -Zxz --build packages/yt-dlp-git debs/
+        run: bash scripts/build-deb.sh packages/yt-dlp-git debs/
 
       # --- pipx (pip wrapper, all arch) ---
       - name: Build pipx

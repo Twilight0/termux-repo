@@ -9,8 +9,8 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
-VERSION="${OPENCODE_VERSION:-1.18.3}"
-DEB_VERSION="${VERSION}-2"
+VERSION="${OPENCODE_VERSION:-1.18.32}"
+DEB_VERSION="${VERSION}-1"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"
 
@@ -77,6 +77,8 @@ Description: AI-powered coding assistant for the terminal
 EOF
 
 DEB_FILE="${DEBS_DIR}/opencode_${DEB_VERSION}_termux_${ARCH}.deb"
-dpkg-deb -Zxz --build --root-owner-group "$PKG_DIR" "$DEB_FILE"
+export REPRO_MTIME
+REPRO_MTIME="$(git -C "$REPO_ROOT" log -1 --format=%ct -- packages/opencode 2>/dev/null || git -C "$REPO_ROOT" log -1 --format=%ct)"
+bash "$REPO_ROOT/scripts/build-deb.sh" "$PKG_DIR" "$DEB_FILE"
 echo "Built: $DEB_FILE"
 rm -rf "$BUILD_DIR"

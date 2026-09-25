@@ -73,6 +73,8 @@ POSTINST
 chmod 755 "${PKG_DIR}/DEBIAN/postinst"
 
 DEB_FILE="${DEBS_DIR}/oh-my-pi_${DEB_VERSION}_termux_${ARCH}.deb"
-dpkg-deb -Zxz --build --root-owner-group "$PKG_DIR" "$DEB_FILE"
+export REPRO_MTIME
+REPRO_MTIME="$(git -C "$REPO_ROOT" log -1 --format=%ct -- packages/oh-my-pi 2>/dev/null || git -C "$REPO_ROOT" log -1 --format=%ct)"
+bash "$REPO_ROOT/scripts/build-deb.sh" "$PKG_DIR" "$DEB_FILE"
 echo "Built: $DEB_FILE ($(du -h "$DEB_FILE" | cut -f1))"
 rm -rf "$BUILD_DIR"
