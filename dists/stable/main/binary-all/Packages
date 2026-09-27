@@ -53,9 +53,9 @@ Description: Install and run Python applications in isolated environments
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.17.6-1_all.deb
 Size: 1188
-MD5sum: 77aac0f0bcff64cfbfb5f32c2fbc9821
-SHA1: 3c6a6bf36a0b6e5739941476380746a27b816849
-SHA256: 843e5d390a63918276d360e684e02dc909c6d25d149e83790836752b04e95af5
+MD5sum: 738dfd8a946eaf554c744816d6e7ea8a
+SHA1: 7cacc8fa4150fa5248516fee62da142fe4d21d52
+SHA256: 69173d502e57b3352063af3c302ff193e83b8b0db365350e3ac4851915251872
 
 Package: wrangler
 Version: 4.123.0-2
@@ -110,6 +110,6 @@ Description: Curses TUI for yt-dlp with search and queueing
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
 Size: 1112
-MD5sum: d44efd0ea35f94d00ce006b252d04a96
-SHA1: aea05c116447559e98262925a516768369acc55b
-SHA256: 58466a0451863eac7b6f10505a8bc5f470aa31e6ac54e97d4eddbadc85b41ad5
+MD5sum: deaaa54d786ea72af5b07f9bece2bc40
+SHA1: 97aa79e9ef664505f00bcfcefe69bb25038dc6f1
+SHA256: 812bc2a6ed07d62d937e8cae04622c6580f59e87c43b95d204afd753dbee4d85

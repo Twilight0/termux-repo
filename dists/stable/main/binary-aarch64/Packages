@@ -1,8 +1,27 @@
-Package: antigravity-cli
-Version: 1.2.11-1
+Package: agentty
+Version: 0.9.12-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 203735
+Installed-Size: 16736
+Depends: openssl, libnghttp2, libc++
+Section: devel
+Priority: optional
+Homepage: https://github.com/1ay1/agentty
+Description: Blazing-fast AI pair programming in your terminal
+ Native Bionic C++ agent (no proot): one static-ish binary with local
+ RAG, any-model providers (including OpenAI-compatible endpoints),
+ MCP support and agent skills. Run 'agentty' then /connect.
+Filename: pool/main/agentty_0.9.12-1_termux_aarch64.deb
+Size: 3827544
+MD5sum: f6b365206e695e03420ffbab4f4f6441
+SHA1: 6dec85ba75b37efda5db0741243c768a4b7a1442
+SHA256: c9a1d1cc20d0cc30b7d0700fd8d6499d0078c96b4182b4c4d1f969f432324728
+
+Package: antigravity-cli
+Version: 1.2.12-1
+Architecture: aarch64
+Maintainer: Twilight <twilight@aliveos.org>
+Installed-Size: 204183
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -10,11 +29,11 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.2.11-1_termux_aarch64.deb
-Size: 38742992
-MD5sum: 078f61b5cc0981093b2217e1cbb86c97
-SHA1: 0d240a5a60c31c2afae3742df7fa78debbf64e44
-SHA256: 72bae2c8bb82b5b83c19d254c2e356982d96a92337f382a4c7c41bb3aa377754
+Filename: pool/main/antigravity-cli_1.2.12-1_termux_aarch64.deb
+Size: 38815896
+MD5sum: f44ce13b38ff2a70bb0250f797d67fd4
+SHA1: d9bac1610f39c2416e223cd5829435b3111c9760
+SHA256: 23f2808e17683d0c0e7b9e66187a1e5421c11949b8a0da225e711b0414f1522a
 
 Package: muse-code
 Version: 1.4.0.r4161.1-1
