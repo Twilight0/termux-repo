@@ -1,0 +1,226 @@
+name: Build and Deploy APT Repository
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so build-deb.sh can derive stable mtimes
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev gcc-aarch64-linux-gnu upx-ucl cmake ninja-build ccache git perl python3 pkg-config
+
+      - name: Create output directory
+        run: mkdir -p debs
+
+      # --- wrangler (architecture-independent) ---
+      - name: Build wrangler
+        run: bash scripts/build-deb.sh packages/wrangler debs/
+
+      # --- 9router (architecture-independent) ---
+      - name: Build 9router
+        run: bash scripts/build-deb.sh packages/9router debs/
+
+      # --- curl-cffi (pip wrapper, arch detected at install time) ---
+      - name: Build curl-cffi
+        run: bash scripts/build-deb.sh packages/curl-cffi debs/
+
+      # --- yt-dlp-git (pip wrapper, tracks upstream master) ---
+      - name: Build yt-dlp-git
+        run: bash scripts/build-deb.sh packages/yt-dlp-git debs/
+
+      # --- agentty: NDK cross-compile for Android (aarch64 + x86_64) ---
+      - name: Read agentty version
+        run: echo "AGENTTY_VERSION=$(cat packages/agentty/VERSION)" >> "$GITHUB_ENV"
+
+      - name: Set up NDK r30
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r30
+
+      - name: Restore ccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: agentty-ccache-r30-${{ hashFiles('packages/agentty/VERSION', 'packages/agentty/android-epoll.patch') }}
+          restore-keys: agentty-ccache-r30-
+
+      - name: Checkout agentty sources
+        uses: actions/checkout@v4
+        with:
+          repository: 1ay1/agentty
+          ref: v${{ env.AGENTTY_VERSION }}
+          submodules: recursive
+          path: agentty-src
+
+      - name: Apply Android patches
+        run: git -C agentty-src/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
+
+      - name: Restore Android dep builds
+        id: dep-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: agentty-deps
+          key: agentty-termux-deps-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
+
+      - name: Build OpenSSL + nghttp2 for Android
+        if: steps.dep-cache.outputs.cache-hit != 'true'
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        run: |
+          ANDROID_NDK_HOME="$ANDROID_NDK_HOME" \
+            bash packages/agentty/build-deps-android.sh arm64-v8a "$GITHUB_WORKSPACE/agentty-deps/arm64-v8a"
+
+      - name: Save Android dep builds
+        if: steps.dep-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: agentty-deps
+          key: agentty-termux-deps-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
+
+      - name: Configure and build agentty (arm64-v8a only; upstream targets aarch64-linux-android)
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        run: |
+          export CCACHE_DIR=~/.ccache
+          DEP="$GITHUB_WORKSPACE/agentty-deps/arm64-v8a"
+          export PKG_CONFIG_PATH="$DEP/lib/pkgconfig"
+          cmake -S agentty-src -B agentty-build-arm64-v8a -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake" \
+            -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-24 \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="$DEP" \
+            -DCMAKE_EXE_LINKER_FLAGS="-L$DEP/lib" \
+            -DOPENSSL_ROOT_DIR="$DEP" \
+            -DOPENSSL_SSL_LIBRARY="$DEP/lib/libssl.so" \
+            -DOPENSSL_CRYPTO_LIBRARY="$DEP/lib/libcrypto.so" \
+            -DOPENSSL_INCLUDE_DIR="$DEP/include" \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -DAGENTTY_AUTO_PULL_MAYA=OFF -DAGENTTY_STANDALONE=OFF -DAGENTTY_BUILD_TESTS=OFF \
+            -DMAYA_NATIVE_TUNING=OFF
+          cmake --build agentty-build-arm64-v8a --target agentty -j"$(nproc)"
+          ccache -s || true
+
+      # --- agentty deb from the NDK cross-compile above ---
+      - name: Build agentty (aarch64)
+        run: AGENTTY_BIN="$GITHUB_WORKSPACE/agentty-build-arm64-v8a/agentty" bash packages/agentty/build.sh aarch64
+
+      # --- pipx (pip wrapper, all arch) ---
+      - name: Build pipx
+        run: dpkg-deb -Zxz --build packages/pipx debs/
+
+      # --- yt-tui (pip wrapper, all arch) ---
+      - name: Build yt-tui
+        run: dpkg-deb -Zxz --build packages/yt-tui debs/
+
+      # --- muse-code (both architectures) ---
+      - name: Build muse-code (aarch64)
+        run: bash packages/muse-code/build.sh aarch64
+      - name: Build muse-code (x86_64)
+        run: bash packages/muse-code/build.sh x86_64
+
+      # --- opencode (glibc, both architectures) ---
+      - name: Build opencode (aarch64)
+        run: bash packages/opencode/build.sh aarch64
+      - name: Build opencode (x86_64)
+        run: bash packages/opencode/build.sh x86_64
+
+      # --- antigravity-cli (glibc, both architectures) ---
+      - name: Build antigravity-cli (aarch64)
+        run: bash packages/antigravity-cli/build.sh aarch64
+      - name: Build antigravity-cli (x86_64)
+        run: bash packages/antigravity-cli/build.sh x86_64
+
+      # --- oh-my-pi (glibc, both architectures) ---
+      - name: Build oh-my-pi (aarch64)
+        run: bash packages/oh-my-pi/build.sh aarch64
+      - name: Build oh-my-pi (x86_64)
+        run: bash packages/oh-my-pi/build.sh x86_64
+
+      - name: Compress large debs with upx if needed
+        run: |
+          for deb in debs/*.deb; do
+            size=$(stat -c%s "$deb")
+            if [ "$size" -gt 95000000 ]; then
+              echo "Compressing $(basename $deb) ($(( size / 1048576 ))MB) with upx..."
+              tmpdir=$(mktemp -d)
+              dpkg-deb -x "$deb" "$tmpdir"
+              find "$tmpdir" -type f -executable | while read bin; do
+                if file "$bin" | grep -q "ELF"; then
+                  upx --best --lzma "$bin" 2>/dev/null || true
+                fi
+              done
+              control_dir="$tmpdir/DEBIAN"
+              mkdir -p "$control_dir"
+              dpkg-deb -e "$deb" "$control_dir"
+              dpkg-deb -Zxz --build --root-owner-group "$tmpdir" "$deb"
+              new_size=$(stat -c%s "$deb")
+              echo "  Reduced to $(( new_size / 1048576 ))MB"
+              rm -rf "$tmpdir"
+            fi
+          done
+
+      - name: List built packages
+        run: ls -lh debs/
+
+      - name: Generate APT repository
+        run: bash scripts/generate-repo.sh
+
+      - name: Deploy to gh-pages
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Save scripts + new repo content
+          mkdir -p /tmp/deploy
+          cp install.sh uninstall.sh /tmp/deploy/
+          cp -r dists pool /tmp/deploy/
+          touch /tmp/deploy/.nojekyll
+
+          # Clean working tree before switching branches
+          git checkout -- . 2>/dev/null || true
+          git clean -fd 2>/dev/null || true
+
+          if git fetch origin gh-pages --depth=1 2>/dev/null; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . 2>/dev/null || true
+            touch .nojekyll
+            git add .nojekyll
+            git commit -m "Init gh-pages"
+            git push origin gh-pages
+          fi
+
+          git rm -rf . 2>/dev/null || true
+          cp -r /tmp/deploy/* .
+          cp /tmp/deploy/.nojekyll .
+
+          git add .nojekyll install.sh uninstall.sh dists/ pool/
+          git commit -m "Deploy $(date -u +%Y-%m-%d)" || true
+          git push origin gh-pages
+
+          echo "gh-pages deploy complete!"

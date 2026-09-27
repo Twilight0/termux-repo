@@ -1,0 +1,13 @@
+Package: 9router
+Version: 0.5.85-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Depends: nodejs-lts | nodejs
+Section: devel
+Priority: optional
+Homepage: https://github.com/decolua/9router
+Description: Free AI coding router with smart fallback
+ Local AI model router that connects coding agents (Claude Code, Codex,
+ Cline, Muse Code, etc.) to free and paid providers via an OpenAI-compatible
+ endpoint. Features smart auto-fallback, provider health checks, and a
+ web dashboard at localhost:20128.

@@ -1,0 +1,8 @@
+debs/
+*.deb
+build/
+dist/
+*.o
+*.tar.gz
+*.tar.xz
+__pycache__/

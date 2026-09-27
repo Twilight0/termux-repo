@@ -1,0 +1,13 @@
+Package: curl-cffi
+Version: 0.16.3-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Depends: python
+Section: python
+Priority: optional
+Homepage: https://github.com/Twilight0/curl-cffi-builder
+Description: Browser TLS fingerprint impersonation for Python
+ curl-impersonate binding (Chrome/Safari TLS fingerprints) built for
+ Android. Unlocks yt-dlp --impersonate and bot-aware scraping on Termux.
+ Wheels come from curl-cffi-builder releases; the cffi dependency is
+ built locally and needs: pkg install clang libffi.

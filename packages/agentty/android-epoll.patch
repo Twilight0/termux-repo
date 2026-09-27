@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e5fe7d2..745eb34 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -67,7 +67,7 @@ elseif(UNIX)
+          src/platform/posix/poll_reactor.cpp
+          src/platform/posix/signals.cpp
+          src/platform/posix/handle.cpp)
+-    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++    if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
+         list(APPEND JAAL_PLATFORM_SOURCES src/platform/linux/epoll_reactor.cpp)
+     elseif(APPLE OR CMAKE_SYSTEM_NAME MATCHES "BSD")
+         list(APPEND JAAL_PLATFORM_SOURCES src/platform/darwin/kqueue_reactor.cpp)

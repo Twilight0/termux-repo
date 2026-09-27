@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+
+BUILDER_VERSION="0.16.3"
+BUILDER_TAG="v0.16.3"
+
+if ! command -v cc >/dev/null 2>&1; then
+    echo "curl-cffi needs a C compiler to build its cffi dependency." >&2
+    echo "Run: pkg install clang libffi" >&2
+    exit 1
+fi
+
+PYTAG=$(python3 -c 'import sys; print(f"cp{sys.version_info.major}{sys.version_info.minor}")')
+
+case "$(uname -m)" in
+    aarch64|arm64) ABI="arm64_v8a" ;;
+    x86_64|amd64) ABI="x86_64" ;;
+    armv7l|armv8l|arm) ABI="armeabi_v7a" ;;
+    *)
+        echo "curl-cffi: unsupported architecture: $(uname -m)" >&2
+        exit 1
+        ;;
+esac
+
+WHEEL="curl_cffi-${BUILDER_VERSION}-${PYTAG}-${PYTAG}-android_21_${ABI}.whl"
+URL="https://github.com/Twilight0/curl-cffi-builder/releases/download/${BUILDER_TAG}/${WHEEL}"
+
+echo "Installing cffi dependency (built with clang)..."
+pip install "cffi"
+
+echo "Installing curl-cffi ${BUILDER_VERSION} (${PYTAG}, ${ABI})..."
+pip install "$URL"
+
+echo ""
+echo "curl-cffi installed. Verify with:"
+echo "  python3 -c 'from curl_cffi import requests; print(requests.get(\"https://tls.browserleaks.com/json\", impersonate=\"chrome\").json()[\"ja3_hash\"])'"

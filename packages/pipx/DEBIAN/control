@@ -1,0 +1,12 @@
+Package: pipx
+Version: 1.17.6-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Depends: python, python-pip
+Section: python
+Priority: optional
+Homepage: https://github.com/pypa/pipx
+Description: Install and run Python applications in isolated environments
+ pipx installs Python CLIs (yt-dlp, black, gallery-dl, ...) into
+ isolated venvs and exposes their binaries on PATH. Drop-in return
+ of the package removed from upstream Termux repos.
