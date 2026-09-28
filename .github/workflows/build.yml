@@ -146,6 +146,12 @@ jobs:
       - name: Build opencode (x86_64)
         run: bash packages/opencode/build.sh x86_64
 
+      # --- opencode-legacy v1 (glibc, both architectures) ---
+      - name: Build opencode-legacy (aarch64)
+        run: bash packages/opencode-legacy/build.sh aarch64
+      - name: Build opencode-legacy (x86_64)
+        run: bash packages/opencode-legacy/build.sh x86_64
+
       # --- antigravity-cli (glibc, both architectures) ---
       - name: Build antigravity-cli (aarch64)
         run: bash packages/antigravity-cli/build.sh aarch64
