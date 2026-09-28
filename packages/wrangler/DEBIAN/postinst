@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-WRANGLER_VERSION="4.123.0"
+WRANGLER_VERSION="4.143.0"
 
 echo "Installing wrangler@${WRANGLER_VERSION} via npm..."
 npm install -g --ignore-scripts "wrangler@${WRANGLER_VERSION}"

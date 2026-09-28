@@ -1,5 +1,5 @@
 Package: pipx
-Version: 1.17.6-1
+Version: 1.17.7-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Depends: python, python-pip

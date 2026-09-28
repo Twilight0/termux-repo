@@ -10,7 +10,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
-VERSION="${OMP_VERSION:-18.1.7}"
+VERSION="${OMP_VERSION:-18.4.2}"
 DEB_VERSION="${VERSION}-1"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"

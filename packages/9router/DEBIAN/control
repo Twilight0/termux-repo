@@ -1,5 +1,5 @@
 Package: 9router
-Version: 0.5.85-1
+Version: 0.5.91-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Depends: nodejs-lts | nodejs

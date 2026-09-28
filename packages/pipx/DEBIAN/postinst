@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-PIPX_VERSION="1.17.6"
+PIPX_VERSION="1.17.7"
 
 echo "Installing pipx ${PIPX_VERSION} via pip..."
 pip install --upgrade "pipx==${PIPX_VERSION}"
