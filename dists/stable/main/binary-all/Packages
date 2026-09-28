@@ -1,5 +1,5 @@
 Package: 9router
-Version: 0.5.85-1
+Version: 0.5.91-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -12,11 +12,11 @@ Description: Free AI coding router with smart fallback
  Cline, Muse Code, etc.) to free and paid providers via an OpenAI-compatible
  endpoint. Features smart auto-fallback, provider health checks, and a
  web dashboard at localhost:20128.
-Filename: pool/main/9router_0.5.85-1_all.deb
+Filename: pool/main/9router_0.5.91-1_all.deb
 Size: 1152
-MD5sum: c79383574680c94cd3ba5210697ac7ce
-SHA1: db52131fcb3d75de837cc99d001fb39a49cfc492
-SHA256: bcee233525e36852fe08deae0960fb7850c93e352ebd167de0a3bec9a4bac6a6
+MD5sum: bcd80434963b78a909bdfb65c0be1f76
+SHA1: 8784c124a78572c0950bdd8eee40c0eab1655715
+SHA256: 8716f517c78f203543f0204cafc6b730793127e606e0bd5b8178b73876021774
 
 Package: curl-cffi
 Version: 0.16.3-1
@@ -33,13 +33,13 @@ Description: Browser TLS fingerprint impersonation for Python
  Wheels come from curl-cffi-builder releases; the cffi dependency is
  built locally and needs: pkg install clang libffi.
 Filename: pool/main/curl-cffi_0.16.3-1_all.deb
-Size: 1480
-MD5sum: d66d1ea784abdbfc3b5eace9802ce5f4
-SHA1: 02fe41b0a4a82f22772a949004a39b47fbf9e817
-SHA256: efbe5a80d2b6c4d07eb1c027d9c335d1a54a56162632f5b29c4f063ce6f02a69
+Size: 1484
+MD5sum: a00b8f32beeb2087733d848cc24eb2f7
+SHA1: 3936770c293ee08e995eb7445e6764a9a3297562
+SHA256: 5fdc2ecd582df30e236a8914ada48d4e02531502d555ebc7c11e7a8779891f03
 
 Package: pipx
-Version: 1.17.6-1
+Version: 1.17.7-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 
@@ -51,14 +51,14 @@ Description: Install and run Python applications in isolated environments
  pipx installs Python CLIs (yt-dlp, black, gallery-dl, ...) into
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
-Filename: pool/main/pipx_1.17.6-1_all.deb
+Filename: pool/main/pipx_1.17.7-1_all.deb
 Size: 1184
-MD5sum: cb959fafc294101c92b98c3ca6f82986
-SHA1: b11455831ae55164c07e65da10d62959fef03175
-SHA256: 3b4bdeff86bc4c4aaa70b1ebb455110dd97273ca3321f29c95de5e20ac9b0805
+MD5sum: 407c9941064d16a94104814d1986d56e
+SHA1: ad26d6f2c967b68bf122da5ef116b282f1c51234
+SHA256: 6bab0cd2bb3fb539483c45d32b99d3252d0cf493af702ede65b3246721f1b314
 
 Package: wrangler
-Version: 4.123.0-2
+Version: 4.143.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -70,11 +70,11 @@ Description: Cloudflare Workers CLI
  Cloudflare Workers command-line tooling. Cloud API commands only
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
-Filename: pool/main/wrangler_4.123.0-2_all.deb
+Filename: pool/main/wrangler_4.143.0-1_all.deb
 Size: 1524
-MD5sum: 7abc3ddc024e068c5d0a20977cbf13f0
-SHA1: 382e1af5210a6420e94340d207532e750fd9d54b
-SHA256: cda88a553137ef0a4145052c807d95b82a73ace08507fbfd2cc58482b32e59fd
+MD5sum: 9f87f750ddbd7b125379663d7549825e
+SHA1: d8422e028dfa29a487ec8a2a6b867dbab8cad766
+SHA256: 42521edf787d99b0ce73f60c2ef070e12add56648b9de98ca3c2984af70d8012
 
 Package: yt-dlp-git
 Version: 2026.09.23-1
@@ -90,10 +90,10 @@ Description: Video/audio downloader, git master snapshot
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
 Filename: pool/main/yt-dlp-git_2026.09.23-1_all.deb
-Size: 1056
-MD5sum: 6c8b2634338355906c7dcf738dc3a141
-SHA1: 20da4399ade9495d8873056f8248e9ef83cc05ea
-SHA256: bf662cff6c6fd6205ea463287216c861185092fa1f8ea2375ac5f46fc1fc1788
+Size: 1064
+MD5sum: 438338fe3bf67f325fa1aef255a69362
+SHA1: 17da29bd1ea00f563f3696bfd61a7dbb3f9aa676
+SHA256: 72849a2f1b64a9f2e26f1cdac5baa2bbf2b43aa9af2df6c2337dc307e2d91fdc
 
 Package: yt-tui
 Version: 1.1.0-1
@@ -109,7 +109,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1104
-MD5sum: 1965b6252fa924af8db0636b5d10a23a
-SHA1: 31b80c79b3828f576437c172d3b0de62d23e3ee5
-SHA256: 5e60233fcb540b3addd326033c6c07a7b9959cd1dd18270c1ca28ecdffa6aa5c
+Size: 1112
+MD5sum: cda6ba78c2bbdedd8024902110ac8f8e
+SHA1: 75854125f39d342641c675ba021281e728c06484
+SHA256: f066b0d2692f95673115ca690d03ce2233258c708490ea85f26d834bcf43da1b
