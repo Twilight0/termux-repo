@@ -35,7 +35,7 @@ SHA1: d2661bce085b91864d3404675ec63829cf3912a9
 SHA256: 6f1cb9c7450a098ce2aa6f871e8a73057189a74d5833fd96bd87120e9e742130
 
 Package: oh-my-pi
-Version: 18.4.2-1
+Version: 18.4.2-2
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -47,11 +47,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.4.2-1_termux_x86_64.deb
-Size: 2048
-MD5sum: 7ea1dbfda0d314abbd9d98406f4f098e
-SHA1: 467fd6c0e95c868fa86f139a0c3dee9c21cf676f
-SHA256: 0fcf53f9156b3eb6f8e1dc0ae1170ca50fac2b5bac16269dfd3606351284b7a0
+Filename: pool/main/oh-my-pi_18.4.2-2_termux_x86_64.deb
+Size: 2112
+MD5sum: b84f66f3c49c0aed500024cf96eb94a0
+SHA1: 2f29f22394c8f1cdb45dc7ace248e1f6f84dd1a4
+SHA256: 9b79558401e15dc50d33116d1883e1ccf8517d481bc8b3087b5c4edbba4ca580
 
 Package: opencode-legacy
 Version: 1.18.33-1

@@ -1,8 +1,8 @@
 Package: agentty
-Version: 0.9.13-1
+Version: 0.9.13-2
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 17689
+Installed-Size: 17690
 Depends: openssl, libnghttp2, libc++
 Section: devel
 Priority: optional
@@ -11,11 +11,11 @@ Description: Blazing-fast AI pair programming in your terminal
  Native Bionic C++ agent (no proot): one static-ish binary with local
  RAG, any-model providers (including OpenAI-compatible endpoints),
  MCP support and agent skills. Run 'agentty' then /connect.
-Filename: pool/main/agentty_0.9.13-1_termux_aarch64.deb
-Size: 4082232
-MD5sum: 00ccf0a840931b0ad655e1267adb10d8
-SHA1: 2f3b90031c36e3d053edac84930f3d1617e00afa
-SHA256: 0d58b5dd3a11e25436b1dbb2d8c6c67f61bb24d31edfa1c97c26b658d4031870
+Filename: pool/main/agentty_0.9.13-2_termux_aarch64.deb
+Size: 4082700
+MD5sum: 5325ce1cf4994ab5720eb5071c9d2dd6
+SHA1: e0a329553290324aabf6c80642e098bb16196302
+SHA256: 8afa3d22673a88f5f0fbcc1663d243114dc3344dc6e48f40671623b829022c0d
 
 Package: antigravity-cli
 Version: 1.2.12-1
@@ -54,7 +54,7 @@ SHA1: 9b40e14f0cc7c444dbdb78a4d29cf6d0d2571bc1
 SHA256: f2f6232a0c6ba418d06a5e5c0046044d1362600dc8c2d7d640bafdbec9678fc3
 
 Package: oh-my-pi
-Version: 18.4.2-1
+Version: 18.4.2-2
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,11 +66,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.4.2-1_termux_aarch64.deb
-Size: 2044
-MD5sum: 511ec6eb4bb9472b48ec691298c55fd1
-SHA1: 25015e1e8b75148eedb8f607c478e7b7fe595d26
-SHA256: f29865e68ed0a2a2457f83bd4b08c581c32540efcf72b8bfa10d7c76f1f272ba
+Filename: pool/main/oh-my-pi_18.4.2-2_termux_aarch64.deb
+Size: 2108
+MD5sum: 79311cc362585d3ea582d4c9ab2e8041
+SHA1: b2ac7ffd06749535cd680b7662a781c52c5c3641
+SHA256: 558e5eed509fba125aefdb071540b66cda84c055efef4364e602b706a8316dec
 
 Package: opencode-legacy
 Version: 1.18.33-1
