@@ -22,33 +22,29 @@ This document details the architectural analysis, technical challenges, solution
 
 ---
 
-### `opencode`
-- **Description:** AnomalyCo's terminal-based AI coding assistant.
-- **Upstream:** GitHub releases (`anomalyco/opencode`).
-- **Binary Format:** Bun single-executable bundle (V8 / JavaScriptCore engine).
+### `opencode` (v2, current)
+- **Description:** AnomalyCo's terminal-based AI coding assistant, v2 line (client/service architecture, OpenTUI interface).
+- **Upstream:** Versioned glibc tarballs at `opencode.ai/files/bin/<ver>/` (2.0.18 packaged; also published as npm `@opencode/cli-<target>`). v2 is NOT on GitHub releases (latest there is the v1 line). Single `opencode` binary per platform — no separate `serve` binary exists anywhere upstream.
+- **Binary Format:** Bun single-executable bundle (JavaScriptCore). Despite aggregator claims of a "Node.js rewrite", binary forensics on 2.0.6/2.0.18 (arm64 + x64, glibc + musl) show `$bunfs` chunks, `uv_*@@BUN_1.2` symbol versioning, and embedded TypeScript compiler plus `@opentui/core`. NEEDED on the glibc arm64 build is only `libc`, `libpthread`, `libdl`, `libm`.
 - **Android / Termux Hurdles:**
-  1. **Binary Stripping Corruption:** Bun appends application bytecode and asset manifests to the end of the ELF executable. Running `strip` truncates this trailer, producing an unbootable binary.
-  2. **Syscall Restrictions (`SIGSYS` / Signal 31):** Bun and JavaScriptCore invoke advanced Linux syscalls (`userfaultfd`, `landlock_create_ruleset`, `clone3`, etc.) that are rejected by Android seccomp filters, killing the process with `SIGSYS` (exit code 159).
-  3. **Bionic / glibc Linker Collision:** If `LD_PRELOAD` contains Termux's Bionic `libtermux-exec.so`, glibc's dynamic loader crashes with `invalid ELF header`.
-- **Implemented Solutions:**
-  - **PRoot Syscall Trapping:** Wrapped execution inside `proot` in `helper/opencode.sh`. PRoot safely intercepts and emulates unhandled syscalls without triggering kernel seccomp faults.
-  - **Safe Packaging:** Preserved Bun binary without running `strip` or incompatible UPX compression.
-  - **Environment Sanitization:** Wrapper automatically clears `LD_PRELOAD` and `LD_LIBRARY_PATH` and ensures `libc.so.6` symlinks exist.
-  - **Dependencies:** `glibc-repo`, `glibc`, `proot`, `ripgrep`, `jq`, `nodejs-lts`.
+  1. **Binary Stripping / Restructuring Corruption:** Bun locates its embedded payload via internal offsets. `strip` truncates it — and `patchelf --set-interpreter/--set-rpath` breaks it too: the patched binary segfaults immediately while the untouched binary runs (verified on-device). Only byte-identical, in-place edits are safe.
+  2. **Service self-spawn via `process.execPath`:** every client mode (TUI, `--standalone`, `run`) starts the background service as `[execPath, "serve", ...]`. Under an explicit loader invocation `execPath` is the *loader*, so the child becomes `ld-linux "serve" ...` and dies with exit 127 (`serve: error while loading shared libraries`). Confirmed with `strace -f -e execve` on-device; `--standalone` spawns `[loader, "serve", "--stdio", "--port", "0"]` and fails the same way.
+  3. **Bionic / glibc Linker Collision:** Termux's `LD_PRELOAD=libtermux-exec-ld-preload.so` crashes any glibc process (`version 'LIBC' not found`); it must be unset before loader invocation — including for the glibc toolchain itself at build time.
+- **Implemented Solutions (`packages/opencode/`):**
+  - **Exec-spawn shim (`helper/execshim.c`):** glibc `LD_PRELOAD` library intercepting `execve`/`execvpe`/`posix_spawn`/`posix_spawnp`; rewrites only loader+`"serve"` spawns to `[loader, $OPENCODE_BIN, serve, ...]`. Child hygiene: a constructor unsets `LD_PRELOAD` before the runtime snapshots its environment, and rewritten spawns get an `LD_PRELOAD`-free envp (verified via `/proc/<serve-pid>/environ`), so bionic shell tools and MCP servers start cleanly.
+  - **Untouched binary, no proot:** ships the upstream binary as-is. v2 contains zero `faccessat2` references (opcode scan + `faccessat@GLIBC_2.17` in dynsym), so the v1 opcode patch and `proot` are both unnecessary.
+  - **Wrapper (`helper/opencode.sh`):** unsets Bionic preloads, sets `OPENCODE_BIN`, `LD_PRELOAD` (shim), `SSL_CERT_FILE`, `OPENCODE_DISABLE_AUTOUPDATE=1` (upstream self-update must never replace the packaged install), `OPENCODE_DISABLE_TUI_AUDIO=1`.
+  - **Shim build guard:** `build.sh` compiles the shim with a glibc-targeting compiler only (`gcc-glibc` on Termux, `gcc-aarch64-linux-gnu` on CI/build hosts) and aborts unless the output links `libc.so.6`.
+  - **Dependencies:** `glibc-repo`, `glibc`, `ripgrep`, `jq`, `nodejs-lts` (local MCP servers).
+- **On-device validation (2026-09-28, aarch64, Android 16):** `--version` / `--help` / `serve` / `session list --server` all exit 0 via the loader; the TUI runs under a pty with its managed service self-spawning from the installed binary; no seccomp/SIGSYS failures. The actual `.deb` was built on-device (`opencode_2.0.18-1_termux_aarch64.deb`), installed over v1, and the packaged flow re-verified. Agent execution (`run`) was not exercised (spends provider tokens).
+- **Notes:** the managed service shuts down with the TUI on normal quit; after a kill, use `opencode service stop`. V1 plugin implementations and `tui.json` do not carry over (v2 uses a new plugin API and global `cli.json`).
 
-#### `opencode` v2 (Node.js rewrite, beta — experimental, not currently packaged)
-- **Upstream:** The official `v2` branch and v2 installer; the update endpoint checked 2026-09-25 reports `2.0.16` (`@opencode/cli`). Older beta instructions used `@opencode-ai/cli@beta`, so package names and channels remain moving. The official installer writes a Linux glibc ARM64 binary and an `opencode2` shim under its own install directory.
-- **Why v1 tricks do not transfer:** v2 replaces the Bun runtime and introduces a client/server architecture. A normal Termux loader invocation can start the binary, but v2 re-executes `process.execPath` to launch its managed `serve` process. When `process.execPath` is the glibc loader, the child fails with `serve: error while loading shared libraries: serve: cannot open shared object file`. `--standalone` uses the same self-exec path and is not a loader workaround.
-- **Termux smoke test (2026-09-25, aarch64, glibc 2.44):** direct execution failed with `required file not found`; invoking the official v2.0.16 binary through `$PREFIX/glibc/lib/ld-linux-aarch64.so.1` reported `opencode v2.0.16`. The interactive TUI and provider requests were not independently exercised.
-- **Verified no-proot workaround:** start `serve` manually through the glibc loader, then run client commands against it with `--server http://127.0.0.1:<port>` and the same `OPENCODE_PASSWORD` on both sides. A v2.0.16 `api --server ... get /api/info` request succeeded. This is suitable for headless, API, and server-oriented use; it does not repair transparent managed-service spawning.
-- **Transparent managed mode:** an interpreter-only ELF patch on a copied binary may preserve `process.execPath` and allow normal self-exec, but this is an experimental community workaround, not validated by this repository. A plain shell wrapper cannot change what `/proc/self/exe` reports.
-- **Existing fallback:** `proot-distro` remains the conservative compatibility route because it presents a normal Linux userspace and avoids the Android loader/re-exec mismatch. The earlier DNS/`getaddrinfo ETIMEOUT` concern remains a separate provider-network risk for native Termux builds.
-- **Packaging implications:** If v2 is packaged later, keep it as a separate `opencode2` command, pin the beta version, disable auto-update, and isolate `HOME`, `XDG_*`, service registration, and database paths from v1. V1 and v2 read the same configuration locations by default, so sharing state during beta testing is unsafe.
-- **Options for this repo:**
-  1. Stay on v1 (current): still maintained upstream and packaged today. Zero additional support surface.
-  2. Experimental native v2 companion: ship the loader/manual-server wrapper for headless users, with explicit beta and compatibility warnings.
-  3. `proot-distro` companion: bootstrap a Linux userland for users who need the full v2 runtime; reliable but heavy and beta-churn-sensitive.
-- **Recommendation:** keep v1 as the supported package. Document the loader/manual-server experiment separately; do not present v2 as a drop-in native package until its self-exec, update, and Android runtime behavior stabilizes.
+#### `opencode-legacy` (frozen v1 line)
+- **Upstream:** GitHub releases (`anomalyco/opencode`), pinned at 1.18.x.
+- **Why it still exists:** v1 TUI/plugin API compatibility for users who do not want v2's client/service architecture.
+- **Packaging:** byte-identical to the previous `opencode` v1 package (upstream binary + `faccessat2`→`faccessat` opcode patch on aarch64 + `proot` wrapper, `helper/patch_opencode.py`), renamed to `opencode-legacy` with mutual `Conflicts: opencode`. Same on-device paths (`$PREFIX/bin/opencode`, `$PREFIX/lib/opencode/`), so apt can never co-install both.
+- **Dependencies:** `glibc-repo`, `glibc`, `proot`, `ripgrep`, `jq`, `nodejs-lts`.
+- **Superseded recommendation:** the earlier proposal (separate `opencode2` command, `proot-distro` companion, manual `--server` wrapper for headless use) is dropped — the shim repairs transparent managed-service spawning, so v2 ships as the plain `opencode` command with no proot involved. The manual `--server` + `OPENCODE_SERVER_PASSWORD` route remains valid for headless/API use.
 
 ---
 
