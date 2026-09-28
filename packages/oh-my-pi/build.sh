@@ -11,7 +11,8 @@ DEBS_DIR="$REPO_ROOT/debs"
 mkdir -p "$DEBS_DIR"
 
 VERSION="${OMP_VERSION:-18.4.2}"
-DEB_VERSION="${VERSION}-1"
+PKGREL="${OMP_PKGREL:-2}"
+DEB_VERSION="${VERSION}-${PKGREL}"
 PREFIX="data/data/com.termux/files/usr"
 ARCH="${1:-aarch64}"
 
@@ -54,20 +55,23 @@ set -e
 PREFIX="data/data/com.termux/files/usr"
 LIB_DIR="${PREFIX}/lib/oh-my-pi"
 BIN_FILE="${LIB_DIR}/omp.bin"
+STAMP_FILE="${LIB_DIR}/omp.version"
 
-if [ ! -f "$BIN_FILE" ]; then
+VERSION=$(dpkg -s oh-my-pi | grep '^Version:' | awk '{print $2}' | sed 's/-.*//')
+CACHED_VER="$(cat "$STAMP_FILE" 2>/dev/null || true)"
+if [ ! -f "$BIN_FILE" ] || [ "$CACHED_VER" != "$VERSION" ]; then
     ARCH=$(dpkg --print-architecture)
     case "$ARCH" in
         aarch64) OMP_ARCH="arm64" ;;
         amd64)   OMP_ARCH="x64" ;;
         *) echo "Unsupported architecture: $ARCH" >&2; exit 1 ;;
     esac
-    VERSION=$(dpkg -s oh-my-pi | grep '^Version:' | awk '{print $2}' | sed 's/-.*//')
     URL="https://github.com/can1357/oh-my-pi/releases/download/v${VERSION}/omp-linux-${OMP_ARCH}"
     echo "Downloading oh-my-pi binary..."
     mkdir -p "$(dirname "$BIN_FILE")"
     curl -fSL "$URL" -o "$BIN_FILE"
     chmod 755 "$BIN_FILE"
+    echo "$VERSION" > "$STAMP_FILE"
 fi
 POSTINST
 chmod 755 "${PKG_DIR}/DEBIAN/postinst"
