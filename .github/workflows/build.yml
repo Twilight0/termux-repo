@@ -10,6 +10,12 @@ on:
 permissions:
   contents: write
 
+# One build at a time: a new push cancels superseded runs so only the
+# latest commit gets built and deployed.
+concurrency:
+  group: apt-repo-build
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
