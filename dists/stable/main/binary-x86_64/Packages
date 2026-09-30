@@ -1,8 +1,8 @@
 Package: antigravity-cli
-Version: 1.2.12-1
+Version: 1.2.14-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 214807
+Installed-Size: 215487
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -10,11 +10,11 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.2.12-1_termux_x86_64.deb
-Size: 42726276
-MD5sum: 216aa6a4945306585d9975859f80e81f
-SHA1: 1d9a3a1c670d27f269becde3075f9f2a053cdd8d
-SHA256: 638aa01e4279eb32eff6abb0ff02991b8ddab336ef4254c91d1d74f3e33f2624
+Filename: pool/main/antigravity-cli_1.2.14-1_termux_x86_64.deb
+Size: 42912120
+MD5sum: 2dcea9eb2b5cc3c9b34bdb94864cfc27
+SHA1: 8959a93c15095fea910c41e14a412d40a0c85847
+SHA256: d66a63868b026d776fd01d23b4b0f3d24ba5ebc502f366d2fc555e7902456c16
 
 Package: muse-code
 Version: 1.4.0.r4302.1-1
