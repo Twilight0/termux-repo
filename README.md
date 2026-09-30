@@ -19,6 +19,7 @@ curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
 | `agentty` | Blazing-fast AI pair programmer, native Bionic build | aarch64 |
 | `pipx` | Install/run Python apps in isolated venvs | all |
 | `yt-tui` | Curses TUI for yt-dlp (search, queue, history) | all |
+| `termux-mcp` | Termux REST API daemon + native MCP server for AI agents | all |
 | `muse-code` | Meta's Muse Code AI agent with session/MCP tools | aarch64, x86_64 |
 | `opencode` | AI-powered coding assistant (v2, no proot) | aarch64, x86_64 |
 | `opencode-legacy` | AI-powered coding assistant (legacy v1, proot) | aarch64, x86_64 |

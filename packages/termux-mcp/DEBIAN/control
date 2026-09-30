@@ -1,0 +1,13 @@
+Package: termux-mcp
+Version: 0.14.0-1
+Architecture: all
+Maintainer: Twilight <twilight@aliveos.org>
+Depends: python, python-pip
+Section: devel
+Priority: optional
+Homepage: https://github.com/termuxgpt/termux-mcp
+Description: Termux REST API daemon + native MCP server for AI agents
+ Lightweight HTTP server running inside Termux, exposing shell
+ execution and device capabilities as a streaming API for AI agents
+ and LLM tool-calling. Ships both 'termux-mcp' (REST on :8080) and
+ 'termux-native-mcp' (Model Context Protocol on :8081 / stdio).

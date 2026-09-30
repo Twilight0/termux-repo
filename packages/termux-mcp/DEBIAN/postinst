@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+TERMUX_MCP_VERSION="0.14.0"
+
+echo "Installing termux-mcp ${TERMUX_MCP_VERSION} via pip..."
+pip install --upgrade "termux-mcp==${TERMUX_MCP_VERSION}"
+
+echo ""
+echo "termux-mcp installed."
+echo "  Run 'termux-mcp' for the REST API daemon on 127.0.0.1:8080"
+echo "  Run 'termux-native-mcp' for the native MCP server on 127.0.0.1:8081"

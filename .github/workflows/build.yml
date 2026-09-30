@@ -140,6 +140,10 @@ jobs:
       - name: Build yt-tui
         run: dpkg-deb -Zxz --build packages/yt-tui debs/
 
+      # --- termux-mcp (pip wrapper, all arch) ---
+      - name: Build termux-mcp
+        run: bash scripts/build-deb.sh packages/termux-mcp debs/
+
       # --- muse-code (both architectures) ---
       - name: Build muse-code (aarch64)
         run: bash packages/muse-code/build.sh aarch64
