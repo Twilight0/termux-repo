@@ -33,7 +33,7 @@ curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
 
 ## opencode v2 packaging notes
 
-`opencode` (currently 2.0.18) ships as an upstream glibc Linux binary plus a small
+`opencode` (currently 2.0.28) ships as an upstream glibc Linux binary plus a small
 preload shim. `opencode-legacy` keeps the v1 line (1.18.x) untouched for users who
 need the old TUI/plugin API. Both provide the `opencode` command and declare mutual
 `Conflicts`, so only one can be installed at a time.
