@@ -24,7 +24,7 @@ This document details the architectural analysis, technical challenges, solution
 
 ### `opencode` (v2, current)
 - **Description:** AnomalyCo's terminal-based AI coding assistant, v2 line (client/service architecture, OpenTUI interface).
-- **Upstream:** Versioned glibc tarballs at `opencode.ai/files/bin/<ver>/` (2.0.18 packaged; also published as npm `@opencode/cli-<target>`). v2 is NOT on GitHub releases (latest there is the v1 line). Single `opencode` binary per platform — no separate `serve` binary exists anywhere upstream.
+- **Upstream:** Versioned glibc tarballs at `opencode.ai/files/bin/<ver>/` (2.0.29 packaged; also published as npm `@opencode/cli-<target>`). v2 is NOT on GitHub releases (latest there is the v1 line). Single `opencode` binary per platform — no separate `serve` binary exists anywhere upstream.
 - **Binary Format:** Bun single-executable bundle (JavaScriptCore). Despite aggregator claims of a "Node.js rewrite", binary forensics on 2.0.6/2.0.18 (arm64 + x64, glibc + musl) show `$bunfs` chunks, `uv_*@@BUN_1.2` symbol versioning, and embedded TypeScript compiler plus `@opentui/core`. NEEDED on the glibc arm64 build is only `libc`, `libpthread`, `libdl`, `libm`.
 - **Android / Termux Hurdles:**
   1. **Binary Stripping / Restructuring Corruption:** Bun locates its embedded payload via internal offsets. `strip` truncates it — and `patchelf --set-interpreter/--set-rpath` breaks it too: the patched binary segfaults immediately while the untouched binary runs (verified on-device). Only byte-identical, in-place edits are safe.

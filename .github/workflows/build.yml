@@ -81,7 +81,9 @@ jobs:
           path: agentty-src
 
       - name: Apply Android patches
-        run: git -C agentty-src/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
+        run: |
+          git -C agentty-src/third_party/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
+          git -C agentty-src/third_party/claybin apply "$GITHUB_WORKSPACE/packages/agentty/android-claybin.patch"
 
       - name: Restore Android dep builds
         id: dep-cache
