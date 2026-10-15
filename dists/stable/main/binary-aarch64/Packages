@@ -1,8 +1,8 @@
 Package: agentty
-Version: 0.9.13-2
+Version: 0.9.22-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 17690
+Installed-Size: 20287
 Depends: openssl, libnghttp2, libc++
 Section: devel
 Priority: optional
@@ -11,17 +11,17 @@ Description: Blazing-fast AI pair programming in your terminal
  Native Bionic C++ agent (no proot): one static-ish binary with local
  RAG, any-model providers (including OpenAI-compatible endpoints),
  MCP support and agent skills. Run 'agentty' then /connect.
-Filename: pool/main/agentty_0.9.13-2_termux_aarch64.deb
-Size: 4082700
-MD5sum: 5325ce1cf4994ab5720eb5071c9d2dd6
-SHA1: e0a329553290324aabf6c80642e098bb16196302
-SHA256: 8afa3d22673a88f5f0fbcc1663d243114dc3344dc6e48f40671623b829022c0d
+Filename: pool/main/agentty_0.9.22-1_termux_aarch64.deb
+Size: 4744676
+MD5sum: 49b400214b27690f536e24f2cbd3ac9e
+SHA1: f20a61572e4392d527c88c5d845c9101d4886595
+SHA256: b799c25e86bbd6df67182f6430cc3cda814df4d348bfc6bc34ab5e06a0d3de2f
 
 Package: antigravity-cli
-Version: 1.3.3-1
+Version: 1.3.5-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 199255
+Installed-Size: 200023
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -29,17 +29,17 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.3.3-1_termux_aarch64.deb
-Size: 40120580
-MD5sum: b15447684c30833cdf0dd9ce0099215b
-SHA1: 3bf078e3ed710bfab9eea369b7c9b62c5fde3656
-SHA256: a9d33edf099563513a3c556256f7792a5ec17b1178fbe3b5fead6139b4e57e30
+Filename: pool/main/antigravity-cli_1.3.5-1_termux_aarch64.deb
+Size: 40382480
+MD5sum: 5ed7d02fbb41b3632ab1204f9f08e814
+SHA1: 9d2aa679cd6bea048a76f5823173dec774d94a3e
+SHA256: 17b7a2ef491c1c8dfa64f5660571c9ff33fd0b24d9be6e0ea4cb4a19f8c460ed
 
 Package: muse-code
-Version: 1.4.0.r4302.1-1
+Version: 1.4.8.r6256.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 310022
+Installed-Size: 321734
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -47,14 +47,14 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  Packed with AVX2 legacy fallback, interactive curses TUI session picker,
  and multi-agent MCP configuration management.
-Filename: pool/main/muse-code_1.4.0.r4302.1-1_termux_aarch64.deb
-Size: 61789192
-MD5sum: 9c831002dc7e360543f0f4fe8020c860
-SHA1: 9b40e14f0cc7c444dbdb78a4d29cf6d0d2571bc1
-SHA256: f2f6232a0c6ba418d06a5e5c0046044d1362600dc8c2d7d640bafdbec9678fc3
+Filename: pool/main/muse-code_1.4.8.r6256.1-1_termux_aarch64.deb
+Size: 68771796
+MD5sum: 17671486a26cca11e80314a02793ff8f
+SHA1: 3375e7c90731238d630bd1d83110f7725ff1df57
+SHA256: 3dd7de924a433b1050a980eec627c16f892973e80b4f828f2bacc37ee4d07db7
 
 Package: oh-my-pi
-Version: 18.4.2-2
+Version: 18.11.0-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,17 +66,17 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.4.2-2_termux_aarch64.deb
-Size: 2108
-MD5sum: 79311cc362585d3ea582d4c9ab2e8041
-SHA1: b2ac7ffd06749535cd680b7662a781c52c5c3641
-SHA256: 558e5eed509fba125aefdb071540b66cda84c055efef4364e602b706a8316dec
+Filename: pool/main/oh-my-pi_18.11.0-1_termux_aarch64.deb
+Size: 2116
+MD5sum: 2a9cb883df4ab1f370b7ebf505c6a67c
+SHA1: f104e9bb8b330f0001a0abf35f5cf6aa1a773616
+SHA256: fee12c879d8959bd4f34d1303d00246683ee2b1c4a1604a1863bd2389e5f24d2
 
 Package: opencode-legacy
-Version: 1.18.33-1
+Version: 1.19.0-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 180525
+Installed-Size: 180909
 Depends: glibc-repo, glibc, proot, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -84,17 +84,17 @@ Homepage: https://github.com/anomalyco/opencode
 Description: AI-powered coding assistant for the terminal (legacy v1)
  OpenCode v1 line for users who need the old TUI/plugin API.
  Conflicts with  (v2): install only one of them.
-Filename: pool/main/opencode-legacy_1.18.33-1_termux_aarch64.deb
-Size: 40359012
-MD5sum: 654d0952215a22b92359b28ce18235af
-SHA1: aa405e276898e9e722ad0aa1a9a0777f4564762b
-SHA256: cde14ba88dd09781eda68505cab0b7be7bf50e6a5520e279ecb810505130a707
+Filename: pool/main/opencode-legacy_1.19.0-1_termux_aarch64.deb
+Size: 40374280
+MD5sum: 261719063c5e27afdd7f19456bf4b760
+SHA1: 840396ae849e12bc1575c0dd5595e89874141494
+SHA256: 7821800948ae0024cf6436d93c63d332f1f75643845275ea7fbc1cd1a201c227
 
 Package: opencode
-Version: 2.0.18-1
+Version: 2.0.29-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 194235
+Installed-Size: 201915
 Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -103,8 +103,8 @@ Description: AI-powered coding assistant for the terminal (v2)
  OpenCode is an interactive AI coding assistant that runs in your terminal.
  Runs on the glibc bridge with an exec-spawn shim; no proot required.
  Conflicts with  (v1): install only one of them.
-Filename: pool/main/opencode_2.0.18-1_termux_aarch64.deb
-Size: 56902656
-MD5sum: 6ecb2f120839427972ad34c9283590ee
-SHA1: 621ac4c4361342c155ab5999fd9e5e0f4d707255
-SHA256: 589fc7ea8aa4fb0e5be57c0fce8660c744df0276776dc1c06acee2e06119b01d
+Filename: pool/main/opencode_2.0.29-1_termux_aarch64.deb
+Size: 73272560
+MD5sum: 2fc5af62037ad3160ec13e8fa66db1b4
+SHA1: e27daa40708a19c7fd142d63d8299ce296b4a209
+SHA256: b89afba4ff06f12e1e38d132ff24152320bf2d9c75ea0aa2cf1afd5cc3b6798e
