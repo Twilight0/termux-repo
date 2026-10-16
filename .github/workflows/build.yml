@@ -176,6 +176,12 @@ jobs:
       - name: Build oh-my-pi (x86_64)
         run: bash packages/oh-my-pi/build.sh x86_64
 
+      # --- copilot-cli (glibc wrapper, both architectures) ---
+      - name: Build copilot-cli (aarch64)
+        run: bash packages/copilot-cli/build.sh aarch64
+      - name: Build copilot-cli (x86_64)
+        run: bash packages/copilot-cli/build.sh x86_64
+
       - name: Compress large debs with upx if needed
         run: |
           for deb in debs/*.deb; do
