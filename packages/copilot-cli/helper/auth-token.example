@@ -1,0 +1,39 @@
+# GitHub Copilot CLI — token example (Termux)
+
+Copilot CLI reads a GitHub token from the environment, in this precedence
+order (highest first):
+
+    COPILOT_GITHUB_TOKEN  >  GH_TOKEN  >  GITHUB_TOKEN
+
+If none is set it falls back to the system keychain and finally to
+`gh auth token`. Termux has **no D-Bus Secret Service / gnome-keyring**, so the
+keychain path does not work — prefer an environment variable.
+
+## Recommended: a fine-grained personal access token
+
+Create one at <https://github.com/settings/personal-access-tokens/new>:
+
+- **Resource owner:** your **personal account** (organisation-owned tokens are
+  not supported here).
+- **Account permissions → Copilot Requests:** Allow.
+- Classic tokens (`ghp_…`) are **rejected**.
+
+An active **Copilot subscription/seat** is required regardless of the token.
+
+Store it with restrictive permissions and export it from your shell profile:
+
+    mkdir -p "$HOME/.config/copilot"
+    printf '%s' 'github_pat_XXXXXXXX' > "$HOME/.config/copilot/token"
+    chmod 600 "$HOME/.config/copilot/token"
+
+    # add to ~/.bashrc
+    [ -r "$HOME/.config/copilot/token" ] && \
+        export COPILOT_GITHUB_TOKEN="$(cat "$HOME/.config/copilot/token")"
+
+## Alternative: device-code login (no local browser needed)
+
+    copilot login --device-code
+
+Then open <https://github.com/login/device> (in any browser) and enter the
+shown code. The CLI will warn that no system keychain is available; you can
+allow plaintext storage in `~/.copilot/config.json` if you accept that tradeoff.

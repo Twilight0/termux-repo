@@ -25,6 +25,7 @@ curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
 | `opencode-legacy` | AI-powered coding assistant (legacy v1, proot) | aarch64, x86_64 |
 | `antigravity-cli` | Google Antigravity CLI | aarch64, x86_64 |
 | `oh-my-pi` | Oh-My-Pi plugin manager for Pi | aarch64, x86_64 |
+| `copilot-cli` | GitHub Copilot CLI (unofficial, glibc bridge, no proot) | aarch64, x86_64 |
 
 ## Documentation & Guides
 
@@ -80,6 +81,7 @@ with `opencode service stop` (or `pkill -f 'opencode.*serve'`).
 
 - **wrangler** is an npm wrapper. `wrangler dev` is not supported (no local workerd runtime). Use `wrangler deploy` instead.
 - **opencode** (v2), **antigravity-cli**, and **oh-my-pi** require `glibc-repo` and `glibc`. Install with `pkg install glibc-repo`.
+- **copilot-cli** (unofficial GitHub Copilot CLI port) also requires `glibc-repo`/`glibc`. It downloads the official ~180 MB glibc binary from GitHub releases and checksum-verifies it at install time (it is not redistributed). Self-update is disabled; authenticate with `COPILOT_GITHUB_TOKEN` or `copilot login --device-code`.
 - **opencode-legacy** (v1) additionally requires `proot` for syscall emulation. **muse-code** requires `proot` too. On x86_64 devices without AVX2, `qemu-user-x86-64` is suggested for muse-code.
 - **opencode** (v2) and **opencode-legacy** (v1) conflict: both provide the `opencode` command, so only one may be installed at a time. apt will offer to remove the other on switch.
 

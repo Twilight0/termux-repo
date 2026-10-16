@@ -60,6 +60,26 @@ This document details the architectural analysis, technical challenges, solution
 
 ---
 
+### `copilot-cli` (unofficial GitHub Copilot CLI)
+- **Description:** GitHub's agentic terminal assistant (`copilot`). Distinct from the deprecated `gh copilot` extension.
+- **Upstream:** GitHub Releases (`github/copilot-cli`); npm `@github/copilot`. Unofficial port; not affiliated with GitHub. Supported OS upstream is Linux/macOS/Windows only — Termux/Android is out of scope (open issues #1257, #3333; termux-packages closed it `wontfix`, #30004).
+- **Binary Format:** A **Node SEA** (Node 24, `v8_enable_sandbox=0`, `pointer_compression=0`), single glibc-linked executable per arch (~186 MB, `copilot-linux-<arch>.tar.gz`). Ships glibc **and** musl variants; **no android/bionic** variant, and no armv7.
+- **Android / Termux Hurdles:**
+  1. **glibc-only runtime:** the SEA (and its embedded Rust `runtime.node` addon, which needs up to `GLIBC_2.34`) cannot load on bionic. Plain `npm install -g @github/copilot` is a dead end — the npm package is a ~13 KB stub whose `os`-gated optional deps never match `android`.
+  2. **Self-update clobbers the install:** `autoUpdate` defaults on and `copilot update` rewrites the tree, bypassing any loader patching.
+  3. **Blocked syscalls (potential):** `faccessat2` (439) via glibc, `close_range` (436) via Rust `std::process::Command` in `runtime.node`. Node/libuv core is Android-safe.
+  4. **Redistribution:** the license restricts standalone redistribution, so the binary must not be bundled in the `.deb`.
+- **Implemented Solutions (`packages/copilot-cli/`):**
+  - **Download-at-install, never bundled:** a tiny `.deb` ships only the launcher + docs; `postinst` fetches `copilot-linux-<arch>.tar.gz` + `SHA256SUMS.txt`, **verifies the checksum**, then installs the binary to `$PREFIX/lib/copilot-cli/`.
+  - **`patchelf --set-interpreter` to the glibc loader** (`$PREFIX/glibc/lib/ld-linux-*.so.*`). Safe here (the SEA is `0x10000`-aligned and patchelf-clean, unlike Bun SEBs/Go), and it keeps `process.execPath` pointing at the real binary, avoiding self-spawn breakage. No 39-bit VA patch needed.
+  - **Launcher (`helper/copilot.sh`):** unsets bionic `LD_PRELOAD`, sets `LD_LIBRARY_PATH=$PREFIX/glibc/lib`, `SSL_CERT_FILE`/`NODE_EXTRA_CA_CERTS` to the Termux CA bundle, `TMPDIR`, and `COPILOT_AUTO_UPDATE=false`.
+  - **DNS works natively:** `glibc-repo` symlinks `resolv.conf`/`hosts` into `$PREFIX/glibc/etc`, so no DNS `LD_PRELOAD` shim is required (verified on-device: a glibc `getaddrinfo` resolves). The `postinst` adds `$PREFIX/glibc/etc/nsswitch.conf` if absent.
+  - **Auth without a keyring:** Termux has no D-Bus Secret Service; use `COPILOT_GITHUB_TOKEN` (fine-grained PAT with the *Copilot Requests* permission) or `copilot login --device-code`.
+  - **Dependencies:** `glibc-repo`, `glibc`, `gcc-libs-glibc` (libstdc++), `patchelf`, `ripgrep` (bundled `rg` has no Android build), `git`, `bash`, `curl`, `ca-certificates`. No `proot`.
+- **Notes:** version is pinned in `packages/copilot-cli/VERSION`. Upstream releases very frequently (~35–65/month), so APT is the update channel and self-update is disabled. Reference implementations: `Thr45hx/copilot-cli-termux-native` (patchelf + shims) and the glibc recipe in issue #3333. Rejected alternatives: a bionic-native port (`nishantn15/copilot-termux`, permanent re-patching treadmill) and `proot-distro` (ptrace latency + SIGKILL risk under MCP load).
+
+---
+
 ### `wrangler`
 - **Description:** Cloudflare Workers and Pages developer CLI.
 - **Upstream:** npm registry (`wrangler`).
