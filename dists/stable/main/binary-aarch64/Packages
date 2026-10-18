@@ -36,25 +36,25 @@ SHA1: a303a864eef9913b6de406402b6f9c84367683de
 SHA256: 2665df1f99a652d6259c1a666d7122c318197c65c1abd255b97ec4d6d1401cfe
 
 Package: muse-code
-Version: 1.4.8.r6256.1-1
+Version: 1.4.10.r6427.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 321734
+Installed-Size: 327499
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
 Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
- Packed with AVX2 legacy fallback, interactive curses TUI session picker,
- and multi-agent MCP configuration management.
-Filename: pool/main/muse-code_1.4.8.r6256.1-1_termux_aarch64.deb
-Size: 68771796
-MD5sum: 17671486a26cca11e80314a02793ff8f
-SHA1: 3375e7c90731238d630bd1d83110f7725ff1df57
-SHA256: 3dd7de924a433b1050a980eec627c16f892973e80b4f828f2bacc37ee4d07db7
+ With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
+ session picker, and multi-agent MCP configuration management.
+Filename: pool/main/muse-code_1.4.10.r6427.1-1_termux_aarch64.deb
+Size: 69644768
+MD5sum: 938b393a3541995c8cfcaca9f9de7ecd
+SHA1: 805d9fcec0b1331607547f21a062c62f7974363e
+SHA256: bc46060eb8877e131fa742e861ceeb11fe66f8cc257f2260e31acc1425872dcd
 
 Package: oh-my-pi
-Version: 18.11.0-1
+Version: 18.12.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,17 +66,17 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.11.0-1_termux_aarch64.deb
-Size: 2116
-MD5sum: 2a9cb883df4ab1f370b7ebf505c6a67c
-SHA1: f104e9bb8b330f0001a0abf35f5cf6aa1a773616
-SHA256: fee12c879d8959bd4f34d1303d00246683ee2b1c4a1604a1863bd2389e5f24d2
+Filename: pool/main/oh-my-pi_18.12.1-1_termux_aarch64.deb
+Size: 2112
+MD5sum: 2ed99d12303c1c1e54ffd4e416e82048
+SHA1: cc5afe707acbfd1341b22a3c43768927b09746a2
+SHA256: ef4de5eecda65ced2f70a9eff24fc54bc4e6a2271dd65d39589b4dd1db04d353
 
 Package: opencode-legacy
-Version: 1.19.0-1
+Version: 1.19.3-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 180909
+Installed-Size: 181165
 Depends: glibc-repo, glibc, proot, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -84,17 +84,17 @@ Homepage: https://github.com/anomalyco/opencode
 Description: AI-powered coding assistant for the terminal (legacy v1)
  OpenCode v1 line for users who need the old TUI/plugin API.
  Conflicts with  (v2): install only one of them.
-Filename: pool/main/opencode-legacy_1.19.0-1_termux_aarch64.deb
-Size: 40374280
-MD5sum: 261719063c5e27afdd7f19456bf4b760
-SHA1: 840396ae849e12bc1575c0dd5595e89874141494
-SHA256: 7821800948ae0024cf6436d93c63d332f1f75643845275ea7fbc1cd1a201c227
+Filename: pool/main/opencode-legacy_1.19.3-1_termux_aarch64.deb
+Size: 40383456
+MD5sum: d5bc9e1ed524d3dd2f3a7cca18ff397d
+SHA1: d1032ebdd89732dcb9c60beff92e2787ea438bd9
+SHA256: e14f538231feae2c9b640403e00999712b276552fb86663a7d8469ca10abffd6
 
 Package: opencode
-Version: 2.0.29-1
+Version: 2.0.32-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 201915
+Installed-Size: 202683
 Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -103,8 +103,8 @@ Description: AI-powered coding assistant for the terminal (v2)
  OpenCode is an interactive AI coding assistant that runs in your terminal.
  Runs on the glibc bridge with an exec-spawn shim; no proot required.
  Conflicts with  (v1): install only one of them.
-Filename: pool/main/opencode_2.0.29-1_termux_aarch64.deb
-Size: 73272560
-MD5sum: 2fc5af62037ad3160ec13e8fa66db1b4
-SHA1: e27daa40708a19c7fd142d63d8299ce296b4a209
-SHA256: b89afba4ff06f12e1e38d132ff24152320bf2d9c75ea0aa2cf1afd5cc3b6798e
+Filename: pool/main/opencode_2.0.32-1_termux_aarch64.deb
+Size: 73324296
+MD5sum: b5c7c15affad43f57f388f25ceb8fa63
+SHA1: 01aa41035313707fd275a0df4e9ee463268bf2c8
+SHA256: 54ce8152f5a33c73c06077069ba5c844aa3d9471933d9974742fd74b0819ccbb
