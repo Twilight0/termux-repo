@@ -1,8 +1,8 @@
-#!/data/data/com.termux/files/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
-
+# Detect Termux / Android environment
+PREFIX="${PREFIX:-/usr}"
 if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
   export SSL_CERT_FILE="${SSL_CERT_FILE:-/data/data/com.termux/files/usr/etc/tls/cert.pem}"
   export SSL_CERT_DIR="${SSL_CERT_DIR:-/data/data/com.termux/files/usr/etc/tls/certs}"
@@ -14,25 +14,50 @@ if [[ ! -x "${REAL_BIN}" ]]; then
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   if [[ -x "${SCRIPT_DIR}/../lib/muse/muse" ]]; then
     REAL_BIN="${SCRIPT_DIR}/../lib/muse/muse"
+  elif [[ -x "${SCRIPT_DIR}/muse" ]]; then
+    REAL_BIN="${SCRIPT_DIR}/muse"
   fi
 fi
 
-# Handle session/mcp subcommands
+# Handle session/mcp management extensions
 if [[ "${1:-}" == "session" || "${1:-}" == "sessions" ]]; then
   shift
-  exec "${PREFIX}/lib/muse/muse-session" "$@"
+  SESSION_HELPER="${PREFIX}/lib/muse/muse-session"
+  if [[ ! -x "${SESSION_HELPER}" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [[ -x "${SCRIPT_DIR}/../lib/muse/muse-session" ]]; then
+      SESSION_HELPER="${SCRIPT_DIR}/../lib/muse/muse-session"
+    elif [[ -x "${SCRIPT_DIR}/muse-session" ]]; then
+      SESSION_HELPER="${SCRIPT_DIR}/muse-session"
+    fi
+  fi
+  exec "${SESSION_HELPER}" "$@"
 fi
 
 if [[ "${1:-}" == "mcp" ]]; then
+  # Only our helper subcommands are intercepted; anything else (e.g. the
+  # native `mcp login/logout` for OAuth) falls through to the real binary
+  # below, preserving "$@" (including the leading "mcp").
   case "${2:-}" in
     ""|list|status|import|add|enable|disable|remove|export|help)
       shift
-      exec "${PREFIX}/lib/muse/muse-mcp" "$@"
+      MCP_HELPER="${PREFIX}/lib/muse/muse-mcp"
+      if [[ ! -x "${MCP_HELPER}" ]]; then
+        SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+        if [[ -x "${SCRIPT_DIR}/../lib/muse/muse-mcp" ]]; then
+          MCP_HELPER="${SCRIPT_DIR}/../lib/muse/muse-mcp"
+        elif [[ -x "${SCRIPT_DIR}/muse-mcp" ]]; then
+          MCP_HELPER="${SCRIPT_DIR}/muse-mcp"
+        fi
+      fi
+      exec "${MCP_HELPER}" "$@"
       ;;
   esac
 fi
 
-# Run under proot on Termux/Android
+# On Termux / Android, static Linux binaries (musl) trigger SIGSYS (signal 31)
+# due to Android zygote seccomp blocking newer syscalls (such as openat2).
+# We run under proot to virtualize syscalls and provide a standard Linux VFS hierarchy.
 if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
   if [[ -z "${PROOT_ACTIVE:-}" ]] && ! grep -q 'TracerPid:[[:space:]]*[1-9]' /proc/self/status 2>/dev/null; then
     if ! command -v proot >/dev/null 2>&1; then
@@ -57,27 +82,33 @@ if [[ -n "${TERMUX_VERSION:-}" || -d "/data/data/com.termux" ]]; then
       [[ -d "/${d}" ]] && PROOT_ARGS+=("-b" "/${d}:/${d}")
     done
 
-    PROOT_ROOT="$(cd "${PREFIX}/.." && pwd)"
-    PROOT_ARGS+=("-r" "${PROOT_ROOT}")
-    PROOT_ARGS+=("-b" "${HOME}:/home")
-    PROOT_CWD="${PWD#${PROOT_ROOT}}"
-    PROOT_ARGS+=("--cwd=${PROOT_CWD:-/home}")
+    PROOT_ARGS+=("-r" "${PREFIX}/..")
+    PROOT_ARGS+=("--cwd=.")
 
     export PROOT_ACTIVE=1
     export HOME="/home"
-    exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" --trust-workspace "$@"
+    exec proot "${PROOT_ARGS[@]}" "$REAL_BIN" "$@"
   fi
 fi
 
-# AVX2 fallback on x86_64
-if [[ "$(uname -m)" == "x86_64" ]] && ! grep -q -m1 "avx2" /proc/cpuinfo 2>/dev/null; then
+# Recent upstream binaries run natively on pre-AVX2 CPUs, so native
+# execution is the default. AVX2 emulation under qemu-x86_64 is strictly
+# opt-in: set MUSE_QEMU=1 in the environment or pass --qemu as the first
+# argument to route execution through qemu-x86_64 -cpu max.
+USE_QEMU="${MUSE_QEMU:-0}"
+if [[ "${1:-}" == "--qemu" ]]; then
+  USE_QEMU=1
+  shift
+fi
+
+if [[ "${USE_QEMU}" == "1" ]]; then
   if command -v qemu-x86_64 >/dev/null 2>&1; then
     exec qemu-x86_64 -cpu max "$REAL_BIN" "$@"
   else
-    printf 'Error: Your CPU does not support AVX2 instructions required by Muse.\n' >&2
-    printf 'Install qemu-user-x86-64: pkg install qemu-user-x86-64\n' >&2
+    printf 'Error: QEMU emulation was requested (MUSE_QEMU=1 / --qemu) but qemu-x86_64 was not found.\n' >&2
+    printf 'Install it with: sudo pacman -S qemu-user\n' >&2
     exit 1
   fi
-else
-  exec "$REAL_BIN" "$@"
 fi
+
+exec "$REAL_BIN" "$@"
