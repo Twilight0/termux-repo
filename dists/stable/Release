@@ -5,11 +5,11 @@ Architectures: aarch64 all x86_64
 Components: main
 Description: Twilight custom termux repository
 Suite: stable
-Date: Thu, 15 Oct 2026 16:08:51 +0000
+Date: Sun, 18 Oct 2026 03:13:46 +0000
 SHA256:
- 1358c10e6937566c9b31caa11dfd040a95245ba99c0c03339204b7fe1e92db46 4234 main/binary-aarch64/Packages
- f3149f0464069a2140f25cd8629774e892f7f901727ee941857d5a1452199ea5 1848 main/binary-aarch64/Packages.xz
- 0fbf682b75a3e572eb757c7d19738b26042bf42645139f6c56e921f5a77216ff 5109 main/binary-all/Packages
- a44df62916dc6855d3479ad8940c3b0dd451f2376d0ef9bd3fde38346391bdd4 2300 main/binary-all/Packages.xz
- ba0224c40344dd1f0aad83eeaeb340d2acd742b9b686c1857090a21b03132342 3496 main/binary-x86_64/Packages
- a3dc01a558490e5ec96663c627c921d2a8a57a720bc4fe44f3b7d9313520900b 1572 main/binary-x86_64/Packages.xz
+ c20e0b068e6c23521528bdeeb1cfe02644cb871ffdbcfa1d486b835fa33b4d0b 4234 main/binary-aarch64/Packages
+ c70696b9bc39fb5dc456ed9b90a4a2e09a778105ea453ecdf46c134efea627f6 1848 main/binary-aarch64/Packages.xz
+ 9ada3792ff562b437db8c78bde11a2ec4ef20b1bb7047359f8820d8230f81a82 5109 main/binary-all/Packages
+ df92078a1f88ecdeb4c0d907db98caf257430c3e96704b2219883aa576a618ba 2296 main/binary-all/Packages.xz
+ fba472c0c7e8d8b9797a68e603c82da1031eff9c9f2c55e697ae24e41ccf1641 3496 main/binary-x86_64/Packages
+ 125cbb657b0bec5bd4c8c5f2fd443cdb01099990c8b6fda74d9645b23f845783 1568 main/binary-x86_64/Packages.xz
