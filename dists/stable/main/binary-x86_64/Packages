@@ -29,10 +29,10 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, and multi-agent MCP configuration management.
 Filename: pool/main/muse-code_1.4.10.r6427.1-1_termux_x86_64.deb
-Size: 78848476
-MD5sum: 5bed8f353a6abd3e4a6bcb97102a46ed
-SHA1: 6704f648539902e2653ee9398dc417e9545ddb7e
-SHA256: 328787cfb53de3530750b3753b0f0324692617b87c0bfdec17fd747c4a292999
+Size: 78836880
+MD5sum: 0a3a7ba1c5bb6ec10144f2b966037755
+SHA1: fc672ba4e83df37f370016fa81afd1702093a494
+SHA256: a60208d3072d2fa41d2ad3e2a117b597fd5fe4f8ed3b55d5fc0a4ee4eb0eddcc
 
 Package: oh-my-pi
 Version: 18.12.1-1
