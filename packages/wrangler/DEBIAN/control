@@ -1,5 +1,5 @@
 Package: wrangler
-Version: 4.151.0-1
+Version: 4.151.2-1
 Architecture: all
 Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: nodejs-lts | nodejs

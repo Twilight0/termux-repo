@@ -1,5 +1,5 @@
 Package: 9router
-Version: 0.5.99-1
+Version: 0.5.104-1
 Architecture: all
 Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: nodejs-lts | nodejs

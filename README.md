@@ -95,6 +95,15 @@ Each package lives in `packages/<name>/` with either:
 
 GitHub Actions builds all packages weekly and deploys to GitHub Pages. Push to `main` to trigger a build.
 
+Every weekly run resolves the **latest upstream version** for each package
+before building (`scripts/resolve-versions.sh`): npm (wrangler, 9router),
+PyPI (pipx, termux-mcp, curl-cffi), GitHub releases (agentty, opencode v1,
+oh-my-pi, copilot-cli, yt-tui, curl-cffi wheels), the yt-dlp master commit
+date, Meta's Muse channel manifest (version + sha256), and an upward probe
+of the opencode.ai CDN (no version feed is published for opencode v2).
+The resolved versions are stamped into each package, so `apt upgrade`
+always picks up the newest corners of every tool.
+
 ## Uninstall
 
 ```bash
