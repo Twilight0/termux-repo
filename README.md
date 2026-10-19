@@ -27,7 +27,7 @@ curl -sL https://ticktessly.github.io/termux-repo/install.sh | bash
 
 ## opencode v2 packaging notes
 
-`opencode` (currently 2.0.29) ships as an upstream glibc Linux binary plus a small
+`opencode` ships as an upstream glibc Linux binary plus a small
 preload shim.
 
 Runtime dependencies (v2): `glibc-repo`, `glibc`, `ripgrep`, `jq`, `nodejs-lts`

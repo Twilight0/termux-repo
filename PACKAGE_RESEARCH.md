@@ -24,7 +24,7 @@ This document details the architectural analysis, technical challenges, solution
 
 ### `opencode` (v2, current)
 - **Description:** AnomalyCo's terminal-based AI coding assistant, v2 line (client/service architecture, OpenTUI interface).
-- **Upstream:** Versioned glibc tarballs at `opencode.ai/files/bin/<ver>/` (2.0.29 packaged; also published as npm `@opencode/cli-<target>`). v2 is NOT on GitHub releases (latest there is the v1 line). Single `opencode` binary per platform — no separate `serve` binary exists anywhere upstream.
+- **Upstream:** Versioned glibc tarballs at `opencode.ai/files/bin/<ver>/`, also published as npm `@opencode/cli-<target>`. v2 is NOT on GitHub releases (latest there is the v1 line). Single `opencode` binary per platform — no separate `serve` binary exists anywhere upstream.
 - **Binary Format:** Bun single-executable bundle (JavaScriptCore). Despite aggregator claims of a "Node.js rewrite", binary forensics on 2.0.6/2.0.18 (arm64 + x64, glibc + musl) show `$bunfs` chunks, `uv_*@@BUN_1.2` symbol versioning, and embedded TypeScript compiler plus `@opentui/core`. NEEDED on the glibc arm64 build is only `libc`, `libpthread`, `libdl`, `libm`.
 - **Android / Termux Hurdles:**
   1. **Binary Stripping / Restructuring Corruption:** Bun locates its embedded payload via internal offsets. `strip` truncates it — and `patchelf --set-interpreter/--set-rpath` breaks it too: the patched binary segfaults immediately while the untouched binary runs (verified on-device). Only byte-identical, in-place edits are safe.
@@ -36,7 +36,7 @@ This document details the architectural analysis, technical challenges, solution
   - **Wrapper (`helper/opencode.sh`):** unsets Bionic preloads, sets `OPENCODE_BIN`, `LD_PRELOAD` (shim), `SSL_CERT_FILE`, `OPENCODE_DISABLE_AUTOUPDATE=1` (upstream self-update must never replace the packaged install), `OPENCODE_DISABLE_TUI_AUDIO=1`.
   - **Shim build guard:** `build.sh` compiles the shim with a glibc-targeting compiler only (`gcc-glibc` on Termux, `gcc-aarch64-linux-gnu` on CI/build hosts) and aborts unless the output links `libc.so.6`.
   - **Dependencies:** `glibc-repo`, `glibc`, `ripgrep`, `jq`, `nodejs-lts` (local MCP servers).
-- **On-device validation (2026-09-28, aarch64, Android 16):** `--version` / `--help` / `serve` / `session list --server` all exit 0 via the loader; the TUI runs under a pty with its managed service self-spawning from the installed binary; no seccomp/SIGSYS failures. The actual `.deb` was built on-device (`opencode_2.0.18-1_termux_aarch64.deb`), installed over v1, and the packaged flow re-verified. Agent execution (`run`) was not exercised (spends provider tokens).
+- **On-device validation (2026-09-28, aarch64, Android 16):** `--version` / `--help` / `serve` / `session list --server` all exit 0 via the loader; the TUI runs under a pty with its managed service self-spawning from the installed binary; no seccomp/SIGSYS failures. The actual `.deb` was built on-device, installed over the v1 line's package, and the packaged flow re-verified. Agent execution (`run`) was not exercised (spends provider tokens).
 - **Notes:** the managed service shuts down with the TUI on normal quit; after a kill, use `opencode service stop`. V1 plugin implementations and `tui.json` do not carry over (v2 uses a new plugin API and global `cli.json`). The earlier `opencode-legacy` (frozen v1 line) packaging has been retired.
 
 ---
