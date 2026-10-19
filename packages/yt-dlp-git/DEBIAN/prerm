@@ -1,3 +1,0 @@
-#!/bin/sh
-set -e
-pip uninstall -y yt-dlp 2>/dev/null || true

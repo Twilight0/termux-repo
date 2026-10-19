@@ -12,17 +12,10 @@ curl -sL https://ticktessly.github.io/termux-repo/install.sh | bash
 
 | Package | Description | Arch |
 |---------|-------------|------|
-| `wrangler` | Cloudflare Workers CLI (cloud API only, no local dev) | all |
-| `9router` | Free AI coding router with smart fallback | all |
 | `curl-cffi` | Browser TLS impersonation for Python (yt-dlp --impersonate) | all |
-| `yt-dlp-git` | Video/audio downloader, git master snapshot | all |
 | `agentty` | Blazing-fast AI pair programmer, native Bionic build | aarch64 |
-| `pipx` | Install/run Python apps in isolated venvs | all |
-| `yt-tui` | Curses TUI for yt-dlp (search, queue, history) | all |
-| `termux-mcp` | Termux REST API daemon + native MCP server for AI agents | all |
 | `muse-code` | Meta's Muse Code AI agent with session/MCP tools | aarch64, x86_64 |
 | `opencode` | AI-powered coding assistant (v2, no proot) | aarch64, x86_64 |
-| `opencode-legacy` | AI-powered coding assistant (legacy v1, proot) | aarch64, x86_64 |
 | `antigravity-cli` | Google Antigravity CLI | aarch64, x86_64 |
 | `oh-my-pi` | Oh-My-Pi plugin manager for Pi | aarch64, x86_64 |
 | `copilot-cli` | GitHub Copilot CLI (unofficial, glibc bridge, no proot) | aarch64, x86_64 |
@@ -30,14 +23,12 @@ curl -sL https://ticktessly.github.io/termux-repo/install.sh | bash
 ## Documentation & Guides
 
 - [**DNS Forwarding & Caching Guide (DNS_FORWARDING.md)**](DNS_FORWARDING.md): Running AdGuard Home and dnsmasq on unrooted/rooted Android with client configuration for local and LAN devices.
-- [**Package Research & Architecture (PACKAGE_RESEARCH.md)**](PACKAGE_RESEARCH.md): Technical teardown of VA39 patching, Bun seccomp SIGSYS workarounds, workerd stubbing, and evaluations for future packages.
+- [**Package Research & Architecture (PACKAGE_RESEARCH.md)**](PACKAGE_RESEARCH.md): Technical teardown of VA39 patching, Bun seccomp SIGSYS workarounds, and evaluations for future packages.
 
 ## opencode v2 packaging notes
 
 `opencode` (currently 2.0.29) ships as an upstream glibc Linux binary plus a small
-preload shim. `opencode-legacy` keeps the v1 line (1.18.x) untouched for users who
-need the old TUI/plugin API. Both provide the `opencode` command and declare mutual
-`Conflicts`, so only one can be installed at a time.
+preload shim.
 
 Runtime dependencies (v2): `glibc-repo`, `glibc`, `ripgrep`, `jq`, `nodejs-lts`
 (for local MCP servers). No `proot`. Build-time dependency: a glibc-targeting C
@@ -79,11 +70,9 @@ with `opencode service stop` (or `pkill -f 'opencode.*serve'`).
 
 ## Notes
 
-- **wrangler** is an npm wrapper. `wrangler dev` is not supported (no local workerd runtime). Use `wrangler deploy` instead.
 - **opencode** (v2), **antigravity-cli**, and **oh-my-pi** require `glibc-repo` and `glibc`. Install with `pkg install glibc-repo`.
 - **copilot-cli** (unofficial GitHub Copilot CLI port) also requires `glibc-repo`/`glibc`. It downloads the official ~180 MB glibc binary from GitHub releases and checksum-verifies it at install time (it is not redistributed). Self-update is disabled; authenticate with `COPILOT_GITHUB_TOKEN` or `copilot login --device-code`.
-- **opencode-legacy** (v1) additionally requires `proot` for syscall emulation. **muse-code** requires `proot` too. On x86_64 devices without AVX2, `qemu-user-x86-64` is suggested for muse-code.
-- **opencode** (v2) and **opencode-legacy** (v1) conflict: both provide the `opencode` command, so only one may be installed at a time. apt will offer to remove the other on switch.
+- **muse-code** requires `proot` for syscall emulation. On x86_64 devices without AVX2, `qemu-user-x86-64` is suggested for muse-code.
 
 ## Adding Packages
 
@@ -96,10 +85,9 @@ Each package lives in `packages/<name>/` with either:
 GitHub Actions builds all packages weekly and deploys to GitHub Pages. Push to `main` to trigger a build.
 
 Every weekly run resolves the **latest upstream version** for each package
-before building (`scripts/resolve-versions.sh`): npm (wrangler, 9router),
-PyPI (pipx, termux-mcp, curl-cffi), GitHub releases (agentty, opencode v1,
-oh-my-pi, copilot-cli, yt-tui, curl-cffi wheels), the yt-dlp master commit
-date, Meta's Muse channel manifest (version + sha256), and an upward probe
+before building (`scripts/resolve-versions.sh`): PyPI (curl-cffi), GitHub
+releases (agentty, oh-my-pi, copilot-cli, curl-cffi wheels),
+Meta's Muse channel manifest (version + sha256), and an upward probe
 of the opencode.ai CDN (no version feed is published for opencode v2).
 The resolved versions are stamped into each package, so `apt upgrade`
 always picks up the newest corners of every tool.

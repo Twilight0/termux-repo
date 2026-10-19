@@ -1,4 +1,0 @@
-#!/bin/sh
-set -e
-npm uninstall -g wrangler 2>/dev/null || true
-rm -f "$PREFIX/bin/wrangler" "$PREFIX/bin/wrangler-wrapper"

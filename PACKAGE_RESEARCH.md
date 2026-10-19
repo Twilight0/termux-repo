@@ -37,14 +37,7 @@ This document details the architectural analysis, technical challenges, solution
   - **Shim build guard:** `build.sh` compiles the shim with a glibc-targeting compiler only (`gcc-glibc` on Termux, `gcc-aarch64-linux-gnu` on CI/build hosts) and aborts unless the output links `libc.so.6`.
   - **Dependencies:** `glibc-repo`, `glibc`, `ripgrep`, `jq`, `nodejs-lts` (local MCP servers).
 - **On-device validation (2026-09-28, aarch64, Android 16):** `--version` / `--help` / `serve` / `session list --server` all exit 0 via the loader; the TUI runs under a pty with its managed service self-spawning from the installed binary; no seccomp/SIGSYS failures. The actual `.deb` was built on-device (`opencode_2.0.18-1_termux_aarch64.deb`), installed over v1, and the packaged flow re-verified. Agent execution (`run`) was not exercised (spends provider tokens).
-- **Notes:** the managed service shuts down with the TUI on normal quit; after a kill, use `opencode service stop`. V1 plugin implementations and `tui.json` do not carry over (v2 uses a new plugin API and global `cli.json`).
-
-#### `opencode-legacy` (frozen v1 line)
-- **Upstream:** GitHub releases (`anomalyco/opencode`), pinned at 1.18.x.
-- **Why it still exists:** v1 TUI/plugin API compatibility for users who do not want v2's client/service architecture.
-- **Packaging:** byte-identical to the previous `opencode` v1 package (upstream binary + `faccessat2`→`faccessat` opcode patch on aarch64 + `proot` wrapper, `helper/patch_opencode.py`), renamed to `opencode-legacy` with mutual `Conflicts: opencode`. Same on-device paths (`$PREFIX/bin/opencode`, `$PREFIX/lib/opencode/`), so apt can never co-install both.
-- **Dependencies:** `glibc-repo`, `glibc`, `proot`, `ripgrep`, `jq`, `nodejs-lts`.
-- **Superseded recommendation:** the earlier proposal (separate `opencode2` command, `proot-distro` companion, manual `--server` wrapper for headless use) is dropped — the shim repairs transparent managed-service spawning, so v2 ships as the plain `opencode` command with no proot involved. The manual `--server` + `OPENCODE_SERVER_PASSWORD` route remains valid for headless/API use.
+- **Notes:** the managed service shuts down with the TUI on normal quit; after a kill, use `opencode service stop`. V1 plugin implementations and `tui.json` do not carry over (v2 uses a new plugin API and global `cli.json`). The earlier `opencode-legacy` (frozen v1 line) packaging has been retired.
 
 ---
 
@@ -77,21 +70,6 @@ This document details the architectural analysis, technical challenges, solution
   - **Auth without a keyring:** Termux has no D-Bus Secret Service; use `COPILOT_GITHUB_TOKEN` (fine-grained PAT with the *Copilot Requests* permission) or `copilot login --device-code`.
   - **Dependencies:** `glibc-repo`, `glibc`, `gcc-libs-glibc` (libstdc++), `patchelf`, `ripgrep` (bundled `rg` has no Android build), `git`, `bash`, `curl`, `ca-certificates`. No `proot`.
 - **Notes:** version is pinned in `packages/copilot-cli/VERSION`. Upstream releases very frequently (~35–65/month), so APT is the update channel and self-update is disabled. Reference implementations: `Thr45hx/copilot-cli-termux-native` (patchelf + shims) and the glibc recipe in issue #3333. Rejected alternatives: a bionic-native port (`nishantn15/copilot-termux`, permanent re-patching treadmill) and `proot-distro` (ptrace latency + SIGKILL risk under MCP load).
-
----
-
-### `wrangler`
-- **Description:** Cloudflare Workers and Pages developer CLI.
-- **Upstream:** npm registry (`wrangler`).
-- **Package Format:** Architecture-independent (`all`) Debian package wrapping npm.
-- **Android / Termux Hurdles:**
-  1. **`workerd` Incompatibility:** Cloudflare's local runtime `workerd` is compiled for standard glibc x86_64/arm64 and does not support `android-arm64-le`, failing with `Unsupported platform: android arm64 LE` upon import.
-  2. **npm Postinstall Failure:** `npm install -g wrangler` attempts to trigger build scripts that assume desktop Linux environments.
-  3. **Symlink Collision:** Creating `$PREFIX/bin/wrangler` as a symlink before installing wrapper overwritten the main module script.
-- **Implemented Solutions:**
-  - Installed via `npm install -g --ignore-scripts` during `postinst`.
-  - Stubbed `workerd/lib/main.js` with `exports.binPath = "/bin/true";` so remote API commands (`wrangler deploy`, `wrangler secret`, `wrangler tail`) work flawlessly without invoking the local emulator.
-  - Provided wrapper script pointing to Node.js.
 
 ---
 
@@ -182,20 +160,7 @@ This document details the architectural analysis, technical challenges, solution
 
 ---
 
-### 7. `yt-dlp` (video/audio downloader, latest-git tracking)
-- **Feasibility:** **High (Recommended)**
-- **Upstream:** GitHub `yt-dlp/yt-dlp` master. Note: there is **no** `yt-dlp-nightly` on PyPI (verified 404) — git tracking means `pip install git+https://github.com/yt-dlp/yt-dlp.git`, which needs `git` at install time.
-- **Why Latest-Git:** Extractors break whenever sites redesign, so master is routinely weeks ahead of the last stable in working sites — users consistently ask for git-fresh builds, not release pins.
-- **Packaging Plan:**
-  - `arch=all` pure-Python package (`yt-dlp-git`), same `postinst` pattern as `wrangler`/`9router`: `pip install --upgrade git+https://github.com/yt-dlp/yt-dlp.git`.
-  - `Depends: python, git` (+ optional `ffmpeg` for merging; Termux already ships it). Zero pip dependencies otherwise.
-  - Date-based deb version (e.g. `2026.09.23-1`); reinstall/upgrade pulls master fresh.
-  - The existing weekly CI cron (`0 0 * * 0`) already matches the desired refresh cadence; no extra scheduling needed.
-  - Compounds with entry 6: git master + the builder's Android `curl_cffi` wheel = impersonation-capable downloading (`--impersonate chrome`) on the phone.
-
----
-
-### 8. `hermes-agent` (Nous Research AI agent) — DO NOT PACKAGE
+### 7. `hermes-agent` (Nous Research AI agent) — DO NOT PACKAGE
 - **Upstream already ships an official, signed Termux APT repo:** `https://hermes-assets.nousresearch.com/releases/termux/<channel>` with suites `hermes-stable` / `hermes-canary`, signed by key fingerprint `C572 B5FD D1A2 9CCF A9A9 12B6 840B 0848 E139 156D`. Their `install.sh` refuses Termux outright and points at `pkg install hermes-agent`.
 - **Why not us:** a same-named deb would collide with theirs on any device with both repos — and theirs is the better build (native bionic, bundled Python 3.14 + Node + uv + ripgrep + ffmpeg, Android API-24 wheels; no proot/glibc wrapping needed). aarch64-only.
 - **Status (late Sept 2026):** upstream docs banner says the Termux package is **currently broken, fix in progress**. Revisit when the banner lifts; even then the right move is a docs pointer (or opt-in repo line), not a repackaged deb.

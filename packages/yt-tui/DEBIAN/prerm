@@ -1,3 +1,0 @@
-#!/bin/sh
-set -e
-pip uninstall -y yt-tui 2>/dev/null || true

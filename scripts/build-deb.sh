@@ -15,7 +15,7 @@
 #                first arg is inside a git repo, derived from
 #                `git log -1 --format=%ct -- <dir>` (CI checks out full
 #                history, so this only changes when the package changes).
-#   <PKG>_VERSION e.g. WRANGLER_VERSION / TERMUX_MCP_VERSION: the latest
+#   <PKG>_VERSION e.g. CURL_CFFI_VERSION: the latest
 #                upstream version, resolved by scripts/resolve-versions.sh
 #                at build time. Stamps the control Version (as X-1) and
 #                any version literal pinned in DEBIAN/postinst, so each
@@ -49,7 +49,6 @@ if [ -d "$SRC/DEBIAN" ]; then
         curl-cffi)  NEW_UP_VERSION="${CURL_CFFI_VERSION:-}"
                     NEW_TAG="${CURL_CFFI_TAG:-}" ;;
         *)          VAR="$(printf '%s' "$PKG" | tr 'a-z-' 'A-Z_')_VERSION"
-                    [ "$PKG" = 9router ] && VAR=NINE_ROUTER_VERSION
                     NEW_UP_VERSION="${!VAR:-}" ;;
     esac
 
@@ -72,17 +71,12 @@ if [ -d "$SRC/DEBIAN" ]; then
         if [ -f "$POSTINST" ]; then
             stamp_var() { sed -i -E "s/^($1)=\".*\"/\1=\"$2\"/" "$POSTINST"; }
             case "$PKG" in
-                wrangler)   stamp_var WRANGLER_VERSION "$NEW_UP_VERSION" ;;
-                9router)    stamp_var NINE_ROUTER_VERSION "$NEW_UP_VERSION" ;;
-                termux-mcp) stamp_var TERMUX_MCP_VERSION "$NEW_UP_VERSION" ;;
-                yt-tui)     stamp_var YT_TUI_VERSION "$NEW_UP_VERSION" ;;
-                pipx)       stamp_var PIPX_VERSION "$NEW_UP_VERSION" ;;
                 curl-cffi)  stamp_var BUILDER_VERSION "$NEW_UP_VERSION"
                             case "$NEW_TAG" in
                                 v*) stamp_var BUILDER_TAG "$NEW_TAG" ;;
                                 *)  stamp_var BUILDER_TAG "v$NEW_TAG" ;;
                             esac ;;
-                *)          ;;  # yt-dlp-git installs master; pipx has no pin
+                *)          ;;
             esac
         fi
         SRC="$STAMPDIR/staged"

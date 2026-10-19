@@ -22,12 +22,8 @@ pkg update -y 2>/dev/null || apt update -y
 
 echo ""
 echo "Done! Available packages:"
-echo "  pkg install wrangler           # Cloudflare Workers CLI"
-echo "  pkg install 9router            # Free AI coding router"
 echo "  pkg install curl-cffi          # TLS impersonation for Python"
-echo "  pkg install yt-dlp-git         # Video downloader (git master)"
 echo "  pkg install agentty            # AI pair programmer (native)"
-echo "  pkg install termux-mcp         # REST API + MCP server for AI agents"
 echo "  pkg install muse-code          # Meta's Muse Code agent"
 echo "  pkg install opencode           # AI coding assistant"
 echo "  pkg install antigravity-cli    # Google Antigravity CLI"

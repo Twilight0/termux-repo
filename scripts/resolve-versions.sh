@@ -56,30 +56,6 @@ t=d.get("tag_name","") if isinstance(d,dict) else ""
 print(t.lstrip("v") if t else "")' || true
 }
 
-# Latest release tag matching a regex from a repo's releases list
-# (used for release lines where newest release has a different major).
-latest_release_matching() {
-    http_get -m 120 "https://api.github.com/repos/$1/releases?per_page=30" \
-        | python3 -c '
-import json,sys,re
-pat=re.compile(sys.argv[1])
-try: rels=json.load(sys.stdin)
-except Exception: rels=[]
-tags=[r.get("tag_name","") for r in rels if isinstance(r,dict)]
-tags=[t for t in tags if pat.match(t)]
-print(tags[0].lstrip("v") if tags else "")' "$2" || true
-}
-
-# Latest npm version from the registry ('latest' dist-tag).
-npm_latest() {
-    http_get "https://registry.npmjs.org/$1/latest" \
-        | python3 -c '
-import json,sys
-try: d=json.load(sys.stdin)
-except Exception: d={}
-print(d.get("version","") if isinstance(d,dict) else "")' || true
-}
-
 # Latest PyPI version.
 pypi_latest() {
     http_get "https://pypi.org/pypi/$1/json" \
@@ -91,28 +67,7 @@ try: print(d["info"].get("version",""))
 except Exception: print("")' || true
 }
 
-# First (highest) tag in a repo's tag list.
-latest_tag() {
-    http_get "https://api.github.com/repos/$1/tags?per_page=50" \
-        | python3 -c '
-import json,sys
-try: tags=json.load(sys.stdin)
-except Exception: tags=[]
-names=[t.get("name","") for t in tags if isinstance(t,dict)]
-print(names[0].lstrip("v") if names else "")' || true
-}
-
 echo "=== Resolving upstream versions ==="
-
-# --- wrangler / 9router: npm registry ---
-export_var WRANGLER_VERSION   "$(npm_latest wrangler)"
-
-# 9router is npm-native even though the deb bundles only metadata.
-export_var NINE_ROUTER_VERSION "$(npm_latest 9router)"
-
-# --- pipx / termux-mcp: PyPI ---
-export_var PIPX_VERSION      "$(pypi_latest pipx)"
-export_var TERMUX_MCP_VERSION "$(pypi_latest termux-mcp)"
 
 # --- curl-cffi: Android wheels come from Twilight0/curl-cffi-builder
 #     release tags (v0.16.3). Prefer PyPI's stable version when the
@@ -146,21 +101,6 @@ print(cc)' "$CCVER")" = "1" ]; then
     fi
     export_var CURL_CFFI_VERSION "${CCWB%%b*}"
     export_var CURL_CFFI_TAG     "$CC_TAG"
-fi
-
-# --- yt-tui: latest git tag of Twilight0/yt-tui ---
-export_var YT_TUI_VERSION "$(latest_tag Twilight0/yt-tui)"
-
-# --- yt-dlp-git: tracks master; version snapshot = latest commit date ---
-YTDLP_DATE="$(http_get https://api.github.com/repos/yt-dlp/yt-dlp/commits/master \
-    | python3 -c '
-import json,sys
-try: d=json.load(sys.stdin)
-except Exception: d={}
-print(d.get("commit",{}).get("committer",{}).get("date","")[:10] if isinstance(d,dict) else "")' \
-    | tr -d '-')"   # 2026-10-16 -> 20261016
-if [ -n "$YTDLP_DATE" ]; then
-    export_var YT_DLP_GIT_VERSION "${YTDLP_DATE:0:4}.${YTDLP_DATE:4:2}.${YTDLP_DATE:6:2}"
 fi
 
 # --- agentty: latest release of 1ay1/agentty (also drives the source checkout ref) ---
@@ -223,9 +163,6 @@ for _major in $((OC_MAJOR+1)) $((OC_MAJOR+2)); do
     done
 done
 export_var OPENCODE_VERSION "$OC_BEST"
-
-# --- opencode-legacy (v1 line): latest v1.x release of anomalyco/opencode ---
-export_var OPENCODE_LEGACY_VERSION "$(latest_release_matching anomalyco/opencode '^v1\.')"
 
 # --- oh-my-pi ---
 export_var OMP_VERSION "$(latest_release can1357/oh-my-pi)"
