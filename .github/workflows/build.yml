@@ -77,6 +77,9 @@ jobs:
 
       - name: Apply Android patches
         run: |
+          set -euo pipefail
+          git -C agentty-src/third_party/maya/third_party/jaal apply --check "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
+          git -C agentty-src/third_party/claybin apply --check "$GITHUB_WORKSPACE/packages/agentty/android-claybin.patch"
           git -C agentty-src/third_party/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
           git -C agentty-src/third_party/claybin apply "$GITHUB_WORKSPACE/packages/agentty/android-claybin.patch"
 

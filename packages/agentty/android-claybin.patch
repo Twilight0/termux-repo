@@ -1,15 +1,13 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -58,7 +58,10 @@
+@@ -63,7 +63,7 @@
  # Grouped with the linux/ sources rather than given their own guard: the
  # question "does this file need a POSIX host" has one answer and should have
  # one list.
--if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-+# Termux reports "Android", not "Linux" — but Bionic is POSIX here, and
-+# agentty's sandbox backend (sandbox_claybin.cpp) links these symbols on
-+# every POSIX host, so leaving them out fails the link.
-+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
+-# Android reports CMAKE_SYSTEM_NAME "Android" but runs the same kernel API.
++# Android (including Termux) reports CMAKE_SYSTEM_NAME "Android" but runs the same kernel API.
+ if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
    target_sources(claybin PRIVATE
      src/broker/notify.cpp
      src/core/fd.cpp
