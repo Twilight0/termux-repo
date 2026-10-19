@@ -15,6 +15,11 @@
 #                first arg is inside a git repo, derived from
 #                `git log -1 --format=%ct -- <dir>` (CI checks out full
 #                history, so this only changes when the package changes).
+#   <PKG>_VERSION e.g. WRANGLER_VERSION / TERMUX_MCP_VERSION: the latest
+#                upstream version, resolved by scripts/resolve-versions.sh
+#                at build time. Stamps the control Version (as X-1) and
+#                any version literal pinned in DEBIAN/postinst, so each
+#                CI run packages the newest upstream release.
 set -euo pipefail
 
 SRC="$1"
@@ -35,8 +40,57 @@ resolve_mtime() {
 }
 
 if [ -d "$SRC/DEBIAN" ]; then
+    ORIG_SRC="$SRC"
+
+    # --- CI version tracking: stamp resolved upstream version ---
+    PKG="$(grep -m1 '^Package:' "$SRC/DEBIAN/control" | awk '{print $2}')"
+    NEW_UP_VERSION=""
+    case "$PKG" in
+        curl-cffi)  NEW_UP_VERSION="${CURL_CFFI_VERSION:-}"
+                    NEW_TAG="${CURL_CFFI_TAG:-}" ;;
+        *)          VAR="$(printf '%s' "$PKG" | tr 'a-z-' 'A-Z_')_VERSION"
+                    [ "$PKG" = 9router ] && VAR=NINE_ROUTER_VERSION
+                    NEW_UP_VERSION="${!VAR:-}" ;;
+    esac
+
+    if [ -n "${NEW_UP_VERSION:-}" ]; then
+        # Never downgrade: keep the existing version if the resolved
+        # upstream version is not actually newer (e.g. a transient API
+        # answer behind a manual bump).
+        CUR="$(grep -m1 '^Version:' "$ORIG_SRC/DEBIAN/control" | awk '{print $2}')"
+        if dpkg --compare-versions "$CUR" gt "${NEW_UP_VERSION}-1" 2>/dev/null; then
+            echo "build-deb: ${PKG}: resolved $NEW_UP_VERSION is not newer than pinned $CUR; keeping $CUR" >&2
+            NEW_UP_VERSION=""
+        fi
+    fi
+
+    if [ -n "${NEW_UP_VERSION:-}" ]; then
+        STAMPDIR="$(mktemp -d)"
+        cp -a "$ORIG_SRC" "$STAMPDIR/staged"
+        sed -i -E "s/^Version:.*/Version: ${NEW_UP_VERSION}-1/" "$STAMPDIR/staged/DEBIAN/control"
+        POSTINST="$STAMPDIR/staged/DEBIAN/postinst"
+        if [ -f "$POSTINST" ]; then
+            stamp_var() { sed -i -E "s/^($1)=\".*\"/\1=\"$2\"/" "$POSTINST"; }
+            case "$PKG" in
+                wrangler)   stamp_var WRANGLER_VERSION "$NEW_UP_VERSION" ;;
+                9router)    stamp_var NINE_ROUTER_VERSION "$NEW_UP_VERSION" ;;
+                termux-mcp) stamp_var TERMUX_MCP_VERSION "$NEW_UP_VERSION" ;;
+                yt-tui)     stamp_var YT_TUI_VERSION "$NEW_UP_VERSION" ;;
+                pipx)       stamp_var PIPX_VERSION "$NEW_UP_VERSION" ;;
+                curl-cffi)  stamp_var BUILDER_VERSION "$NEW_UP_VERSION"
+                            case "$NEW_TAG" in
+                                v*) stamp_var BUILDER_TAG "$NEW_TAG" ;;
+                                *)  stamp_var BUILDER_TAG "v$NEW_TAG" ;;
+                            esac ;;
+                *)          ;;  # yt-dlp-git installs master; pipx has no pin
+            esac
+        fi
+        SRC="$STAMPDIR/staged"
+        echo "build-deb: stamped ${PKG} to $NEW_UP_VERSION (CI version tracking)"
+    fi
+
+    MTIME="$(resolve_mtime "$ORIG_SRC")"
     STAGE="$SRC"
-    MTIME="$(resolve_mtime "$SRC")"
     OUT="$DEST"
     if [ -d "$OUT" ]; then
         PKG="$(grep -m1 '^Package:' "$STAGE/DEBIAN/control" | awk '{print $2}')"
@@ -54,7 +108,7 @@ for tool in tar xz ar; do
 done
 
 TMPDIR="$(mktemp -d)"
-trap 'rm -rf "$TMPDIR"' EXIT
+trap 'rm -rf "$TMPDIR" ${STAMPDIR:+$STAMPDIR}' EXIT
 
 TAR_OPTS=(--sort=name "--mtime=@${MTIME}" --owner=0 --group=0 --numeric-owner)
 

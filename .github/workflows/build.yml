@@ -39,6 +39,14 @@ jobs:
       - name: Create output directory
         run: mkdir -p debs
 
+      # --- Resolve upstream versions for every package ---
+      # Queries each package's source (npm/PyPI/GitHub releases/Meta's
+      # channel manifest) for its latest version and exports env vars the
+      # build steps consume, so every CI run tracks the newest release
+      # instead of the versions pinned in the package definitions.
+      - name: Resolve upstream versions
+        run: bash scripts/resolve-versions.sh "$GITHUB_ENV"
+
       # --- wrangler (architecture-independent) ---
       - name: Build wrangler
         run: bash scripts/build-deb.sh packages/wrangler debs/
@@ -56,8 +64,7 @@ jobs:
         run: bash scripts/build-deb.sh packages/yt-dlp-git debs/
 
       # --- agentty: NDK cross-compile for Android (aarch64 + x86_64) ---
-      - name: Read agentty version
-        run: echo "AGENTTY_VERSION=$(cat packages/agentty/VERSION)" >> "$GITHUB_ENV"
+      # AGENTTY_VERSION is the latest release, resolved in the step above.
 
       - name: Set up NDK r30
         id: setup-ndk
@@ -69,8 +76,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ccache
-          key: agentty-ccache-r30-${{ hashFiles('packages/agentty/VERSION', 'packages/agentty/android-epoll.patch') }}
-          restore-keys: agentty-ccache-r30-
+          key: agentty-ccache-r30-${{ env.AGENTTY_VERSION }}-${{ hashFiles('packages/agentty/android-epoll.patch', 'packages/agentty/android-claybin.patch') }}
+          restore-keys: agentty-ccache-r30-${{ env.AGENTTY_VERSION }}-
 
       - name: Checkout agentty sources
         uses: actions/checkout@v4
@@ -90,7 +97,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: agentty-deps
-          key: agentty-termux-deps-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
+          key: agentty-termux-deps-${{ env.AGENTTY_VERSION }}-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
 
       - name: Build OpenSSL + nghttp2 for Android
         if: steps.dep-cache.outputs.cache-hit != 'true'
@@ -105,7 +112,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: agentty-deps
-          key: agentty-termux-deps-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
+          key: agentty-termux-deps-${{ env.AGENTTY_VERSION }}-${{ hashFiles('packages/agentty/build-deps-android.sh') }}
 
       - name: Configure and build agentty (arm64-v8a only; upstream targets aarch64-linux-android)
         env:
