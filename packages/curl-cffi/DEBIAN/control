@@ -1,7 +1,7 @@
 Package: curl-cffi
 Version: 0.16.3-1
 Architecture: all
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: python
 Section: python
 Priority: optional

@@ -92,7 +92,7 @@ Suggests: qemu-user-x86-64"
 Package: muse-code
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Installed-Size: ${INSTALLED_SIZE}
 Depends: python, ca-certificates, proot${OPT_DEPENDS}
 Section: devel

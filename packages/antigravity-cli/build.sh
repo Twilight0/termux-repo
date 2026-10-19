@@ -98,7 +98,7 @@ build_antigravity_deb() {
 Package: antigravity-cli
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Installed-Size: ${INSTALLED_SIZE}
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel

@@ -60,7 +60,7 @@ cat > "${PKG_DIR}/DEBIAN/control" << EOF
 Package: agentty
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Installed-Size: ${INSTALLED_SIZE}
 Depends: openssl, libnghttp2, libc++
 Section: devel

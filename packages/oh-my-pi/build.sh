@@ -37,7 +37,7 @@ cat > "${PKG_DIR}/DEBIAN/control" << EOF
 Package: oh-my-pi
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Installed-Size: ${INSTALLED_SIZE}
 Depends: glibc-repo, glibc, proot, curl
 Section: devel

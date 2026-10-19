@@ -47,7 +47,7 @@ cat > "${PKG_DIR}/DEBIAN/control" << EOF
 Package: copilot-cli
 Version: ${DEB_VERSION}
 Architecture: ${ARCH}
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Installed-Size: ${INSTALLED_SIZE}
 Depends: glibc-repo, glibc, gcc-libs-glibc, patchelf, ripgrep, git, bash, curl, ca-certificates
 Section: devel

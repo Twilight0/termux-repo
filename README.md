@@ -1,11 +1,11 @@
-# Twilight0's Termux Repository
+# ticktessly's Termux Repository
 
 Custom APT repository for Termux with packages not available in the official repos.
 
 ## Quick Install
 
 ```bash
-curl -sL https://twilight0.github.io/termux-repo/install.sh | bash
+curl -sL https://ticktessly.github.io/termux-repo/install.sh | bash
 ```
 
 ## Packages
@@ -98,5 +98,5 @@ GitHub Actions builds all packages weekly and deploys to GitHub Pages. Push to `
 ## Uninstall
 
 ```bash
-curl -sL https://twilight0.github.io/termux-repo/uninstall.sh | bash
+curl -sL https://ticktessly.github.io/termux-repo/uninstall.sh | bash
 ```

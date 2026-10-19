@@ -60,12 +60,12 @@ done
 # Generate Release
 ARCHS=$(ls -d "dists/${DIST}/${COMP}"/binary-* | xargs -I{} basename {} | sed 's/binary-//' | sort | tr '\n' ' ')
 {
-    echo "Origin: Twilight"
+    echo "Origin: ticktessly"
     echo "Label: termux-repo"
     echo "Codename: ${DIST}"
     echo "Architectures: ${ARCHS}"
     echo "Components: ${COMP}"
-    echo "Description: Twilight custom termux repository"
+    echo "Description: ticktessly custom termux repository"
     echo "Suite: ${DIST}"
     echo "Date: $(date -Ru)"
     echo "SHA256:"

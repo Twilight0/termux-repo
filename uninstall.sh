@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-SOURCES_FILE="$PREFIX/etc/apt/sources.list.d/twilight0-repo.list"
+SOURCES_FILE="$PREFIX/etc/apt/sources.list.d/ticktessly-repo.list"
 
-echo "Removing Twilight0 custom repository..."
+echo "Removing ticktessly's custom repository..."
 
 rm -f "$SOURCES_FILE"
 

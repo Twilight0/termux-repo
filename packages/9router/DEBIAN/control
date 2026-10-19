@@ -1,7 +1,7 @@
 Package: 9router
 Version: 0.5.99-1
 Architecture: all
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: nodejs-lts | nodejs
 Section: devel
 Priority: optional

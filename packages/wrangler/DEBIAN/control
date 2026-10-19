@@ -1,7 +1,7 @@
 Package: wrangler
 Version: 4.151.0-1
 Architecture: all
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: nodejs-lts | nodejs
 Section: devel
 Priority: optional

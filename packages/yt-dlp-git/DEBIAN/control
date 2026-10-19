@@ -1,7 +1,7 @@
 Package: yt-dlp-git
 Version: 2026.10.15-1
 Architecture: all
-Maintainer: Twilight <twilight@aliveos.org>
+Maintainer: ticktessly <246650556+ticktessly@users.noreply.github.com>
 Depends: python, git
 Section: video
 Priority: optional
