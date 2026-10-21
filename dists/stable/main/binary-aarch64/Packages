@@ -18,10 +18,10 @@ SHA1: f20a61572e4392d527c88c5d845c9101d4886595
 SHA256: b799c25e86bbd6df67182f6430cc3cda814df4d348bfc6bc34ab5e06a0d3de2f
 
 Package: antigravity-cli
-Version: 1.4.2-1
+Version: 1.4.4-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 206039
+Installed-Size: 208151
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -29,17 +29,17 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.4.2-1_termux_aarch64.deb
-Size: 41071472
-MD5sum: ab3b0d9def3d5c7b53136ef46f963761
-SHA1: a303a864eef9913b6de406402b6f9c84367683de
-SHA256: 2665df1f99a652d6259c1a666d7122c318197c65c1abd255b97ec4d6d1401cfe
+Filename: pool/main/antigravity-cli_1.4.4-1_termux_aarch64.deb
+Size: 41608524
+MD5sum: dc6504cde1430b62e366119ec18a5565
+SHA1: 0580e1fd5e9b0fe5a4fee561a0ac96b43cd406c2
+SHA256: d21904d68e1f0c10854aef398ba400cddb55877b637a61e6a47c86b4e1ccf52f
 
 Package: muse-code
-Version: 1.4.10.r6427.1-1
+Version: 1.4.11.r6667.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 327499
+Installed-Size: 337931
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -47,11 +47,11 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, and multi-agent MCP configuration management.
-Filename: pool/main/muse-code_1.4.10.r6427.1-1_termux_aarch64.deb
-Size: 69644060
-MD5sum: 5ba9474de04fc9456df7bf35f5bc15a9
-SHA1: d7a754a6000c23ca34095a1d9a89c5e69fe8615b
-SHA256: 93bd584686619b604027bf84781a1a763c3b1b95106e4a0b70fcbb4a409cc004
+Filename: pool/main/muse-code_1.4.11.r6667.1-1_termux_aarch64.deb
+Size: 70819632
+MD5sum: f0d7c91b4c602a86bfb3c00550a9e7f7
+SHA1: cb0aa52c191c7eb4f2e1180ed7923a4ba45f4e28
+SHA256: 9015b564d094cb8e29167158f6507222a8e17c3c7c93ca915c579c32655079ac
 
 Package: oh-my-pi
 Version: 18.12.1-1
