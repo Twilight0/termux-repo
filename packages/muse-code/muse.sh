@@ -39,7 +39,7 @@ if [[ "${1:-}" == "mcp" ]]; then
   # native `mcp login/logout` for OAuth) falls through to the real binary
   # below, preserving "$@" (including the leading "mcp").
   case "${2:-}" in
-    ""|list|status|import|add|enable|disable|remove|export|help)
+    ""|list|status|import|add|enable|disable|remove|check|export|help)
       shift
       MCP_HELPER="${PREFIX}/lib/muse/muse-mcp"
       if [[ ! -x "${MCP_HELPER}" ]]; then
@@ -53,6 +53,45 @@ if [[ "${1:-}" == "mcp" ]]; then
       exec "${MCP_HELPER}" "$@"
       ;;
   esac
+fi
+
+if [[ "${1:-}" == "stats" ]]; then
+  # No native `stats` subcommand exists; intercept only our helper's own
+  # flags and pass anything else through, so a future native `stats`
+  # keeps working by default.
+  case "${2:-}" in
+    ""|--json|--since|--since=*|--top|--top=*|--days|--days=*|--no-allowance|-h|--help)
+      shift
+      STATS_HELPER="${PREFIX}/lib/muse/muse-stats"
+      if [[ ! -x "${STATS_HELPER}" ]]; then
+        SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+        if [[ -x "${SCRIPT_DIR}/../lib/muse/muse-stats" ]]; then
+          STATS_HELPER="${SCRIPT_DIR}/../lib/muse/muse-stats"
+        elif [[ -x "${SCRIPT_DIR}/muse-stats" ]]; then
+          STATS_HELPER="${SCRIPT_DIR}/muse-stats"
+        fi
+      fi
+      exec "${STATS_HELPER}" "$@"
+      ;;
+  esac
+fi
+
+if [[ "${1:-}" == "import" ]]; then
+  # No native `import` CLI subcommand exists (import is a TUI skill and the
+  # native Claude/Codex continuation lives in skills, not argv), so every
+  # `muse import ...` form belongs to the helper. If Meta ever ships a
+  # native `import` verb, this block needs revisiting.
+  shift
+  IMPORT_HELPER="${PREFIX}/lib/muse/muse-import"
+  if [[ ! -x "${IMPORT_HELPER}" ]]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [[ -x "${SCRIPT_DIR}/../lib/muse/muse-import" ]]; then
+      IMPORT_HELPER="${SCRIPT_DIR}/../lib/muse/muse-import"
+    elif [[ -x "${SCRIPT_DIR}/muse-import" ]]; then
+      IMPORT_HELPER="${SCRIPT_DIR}/muse-import"
+    fi
+  fi
+  exec "${IMPORT_HELPER}" "$@"
 fi
 
 # On Termux / Android, static Linux binaries (musl) trigger SIGSYS (signal 31)
