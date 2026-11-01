@@ -53,9 +53,9 @@ Description: Install and run Python applications in isolated environments
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.18.4-1_all.deb
 Size: 1188
-MD5sum: 9743c494357d05f67400711ded4eaf44
-SHA1: b1e9dd3ef63156ce3c0ab45516cdf5a7dca9c63d
-SHA256: 823e85b0ce4ce432f402a0ff5d16d2a327cf5ac56e01199cbb71c351df1d1819
+MD5sum: a0fa23f07a253660049dc0ef2b897e23
+SHA1: 8305e75047ca776fa75a1e2f9e41955d51a60f23
+SHA256: 6f90485419fb5d816c5e7ae16d1fb6424913696566f5e9c29ae3164ee7145da3
 
 Package: termux-mcp
 Version: 0.15.0-1
@@ -129,7 +129,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1120
-MD5sum: 923a9abd8513ee1ef9670f8869209eca
-SHA1: c7ccc8804e2a8f5d2d4f95690dde4b2ec6535d97
-SHA256: d2d208aa4dc0cf892a17ea8f0184f52ec765c5a4caa7e732d34be776667779da
+Size: 1116
+MD5sum: d4ca77b2f228072ecada676fda588f64
+SHA1: 78a43cee3f67408b76a47636dc19bc403233bf0a
+SHA256: 38ab6c0f8fa4582655906d661efed13cd6e7de67862a602facd550a2f569367c
