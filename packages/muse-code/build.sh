@@ -12,7 +12,7 @@ mkdir -p "$DEBS_DIR"
 # Upstream version (update these when new releases drop)
 REALVER="${MUSE_REALVER:-1.4.14-R7309.1}"
 PKGVER="${MUSE_PKGVER:-1.4.14.r7309.1}"
-PKGREL="${MUSE_PKGREL:-1}"
+PKGREL="${MUSE_PKGREL:-5}"
 DEB_VERSION="${PKGVER}-${PKGREL}"
 PREFIX="data/data/com.termux/files/usr"
 
@@ -71,14 +71,12 @@ build_muse_deb() {
     install -Dm755 "$SCRIPT_DIR/muse-session" "${PKG_DIR}/${PREFIX}/lib/muse/muse-session"
     install -Dm755 "$SCRIPT_DIR/muse-mcp" "${PKG_DIR}/${PREFIX}/lib/muse/muse-mcp"
     install -Dm755 "$SCRIPT_DIR/muse-stats" "${PKG_DIR}/${PREFIX}/lib/muse/muse-stats"
-    install -Dm755 "$SCRIPT_DIR/muse-import" "${PKG_DIR}/${PREFIX}/lib/muse/muse-import"
 
     # Symlinks
     ln -sf muse "${PKG_DIR}/${PREFIX}/bin/muse-code"
     ln -sf "/${PREFIX}/lib/muse/muse-session" "${PKG_DIR}/${PREFIX}/bin/muse-session"
     ln -sf "/${PREFIX}/lib/muse/muse-mcp" "${PKG_DIR}/${PREFIX}/bin/muse-mcp"
     ln -sf "/${PREFIX}/lib/muse/muse-stats" "${PKG_DIR}/${PREFIX}/bin/muse-stats"
-    ln -sf "/${PREFIX}/lib/muse/muse-import" "${PKG_DIR}/${PREFIX}/bin/muse-import"
 
     # Calculate installed size
     local INSTALLED_SIZE
@@ -104,8 +102,7 @@ Priority: optional
 Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
- session picker, multi-agent MCP manager, token usage dashboard, and
- multi-source session importer (omp, agy, opencode).
+ session picker, multi-agent MCP manager, and token usage dashboard.
 EOF
 
     # Build deb (deterministic: stable bytes for unchanged content)

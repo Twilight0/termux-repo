@@ -83,7 +83,7 @@ This document details the architectural analysis, technical challenges, solution
   - Relies on glibc and specific syscall behavior.
 - **Implemented Solutions:**
   - Wrapped with `proot` for universal syscall compatibility across Android kernels.
-  - Bundled interactive curses session picker (`muse-session`), MCP manager (`muse-mcp`), token usage dashboard (`muse-stats`), and foreign session importer (`muse-import`).
+  - Bundled interactive curses session picker (`muse-session`), MCP manager (`muse-mcp`), token usage dashboard (`muse-stats`).
 
 ---
 
