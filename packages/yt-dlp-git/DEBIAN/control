@@ -1,5 +1,5 @@
 Package: yt-dlp-git
-Version: 2026.11.02-1
+Version: 2026.11.04-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Depends: python, git

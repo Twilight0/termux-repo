@@ -82,8 +82,20 @@ jobs:
 
       - name: Apply Android patches
         run: |
-          git -C agentty-src/third_party/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
-          git -C agentty-src/third_party/claybin apply "$GITHUB_WORKSPACE/packages/agentty/android-claybin.patch"
+          # Upstream (1ay1/agentty) has merged both Android fixes under
+          # different comments, so the patches no longer apply on new tags.
+          # Apply only when the Android guard is missing, to stay green on
+          # both old and new upstreams.
+          if grep -q 'STREQUAL "Android"' agentty-src/third_party/maya/third_party/jaal/CMakeLists.txt; then
+            echo "jaal already handles Android, skipping android-epoll.patch"
+          else
+            git -C agentty-src/third_party/maya/third_party/jaal apply "$GITHUB_WORKSPACE/packages/agentty/android-epoll.patch"
+          fi
+          if grep -q 'STREQUAL "Android"' agentty-src/third_party/claybin/CMakeLists.txt; then
+            echo "claybin already handles Android, skipping android-claybin.patch"
+          else
+            git -C agentty-src/third_party/claybin apply "$GITHUB_WORKSPACE/packages/agentty/android-claybin.patch"
+          fi
 
       - name: Restore Android dep builds
         id: dep-cache
