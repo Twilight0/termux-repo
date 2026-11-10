@@ -13,4 +13,4 @@ pkg update -y 2>/dev/null || apt update -y
 echo ""
 echo "Repository removed."
 echo "Installed packages were NOT removed. To remove them:"
-echo "  pkg uninstall wrangler muse-code opencode antigravity-cli oh-my-pi"
+echo "  pkg uninstall wrangler 9router curl-cffi yt-dlp-git agentty pipx yt-tui termux-mcp muse-code opencode opencode-legacy antigravity-cli oh-my-pi"
