@@ -1,8 +1,8 @@
 Package: agentty
-Version: 0.9.51-1
+Version: 0.9.56-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 17300
+Installed-Size: 17368
 Depends: openssl, libnghttp2, libc++
 Section: devel
 Priority: optional
@@ -11,11 +11,11 @@ Description: Blazing-fast AI pair programming in your terminal
  Native Bionic C++ agent (no proot): one static-ish binary with local
  RAG, any-model providers (including OpenAI-compatible endpoints),
  MCP support and agent skills. Run 'agentty' then /connect.
-Filename: pool/main/agentty_0.9.51-1_termux_aarch64.deb
-Size: 4323724
-MD5sum: b7d4d9d7563e5a6f52d5306fce7567d4
-SHA1: a77f1a2ada6e73fc5ac6f4162a87ccae0b70df88
-SHA256: 25c92b9b5c13f732b953d43f4a7b698b785ede48c76efac781f1afd767308b98
+Filename: pool/main/agentty_0.9.56-1_termux_aarch64.deb
+Size: 4346164
+MD5sum: 4ed20099bef67b59ae6f48b82af8cc31
+SHA1: 7b9e5e79b0966505ff15493526f9c27cbddafca0
+SHA256: 3e0bb38a0214cbbedd3a809cab280c33dcc17dce666bc1c98cdde69c3e8a43cb
 
 Package: antigravity-cli
 Version: 1.5.9-1
@@ -36,10 +36,10 @@ SHA1: c8ffc07c29aef9dbb2538894a3085e3e742bc4de
 SHA256: ccdc0a8c10113661ca441077420c68da5b0e16ea23cf81e60b9e1fce5e0d87bb
 
 Package: muse-code
-Version: 1.4.14.r7309.1-5
+Version: 1.4.20.r8619.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 362921
+Installed-Size: 419369
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -47,14 +47,14 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
-Filename: pool/main/muse-code_1.4.14.r7309.1-5_termux_aarch64.deb
-Size: 76929196
-MD5sum: d904a11544cac6464b2ab49401c80fd4
-SHA1: 46c2283c26b1065163a97bb40607ded9a3f47069
-SHA256: 8518f55720174a219331260a69e72bd14a979fc65ce6b09c11d1b80d44627f2a
+Filename: pool/main/muse-code_1.4.20.r8619.1-1_termux_aarch64.deb
+Size: 90301144
+MD5sum: 88c7776d29cd86f4e8d94510e987a99a
+SHA1: 0497cd14fa569c83f90aff26740da0a45ccba222
+SHA256: 1349fd8d3c0950b8d8ea057ab02da28fe3620642a19aa41ae3904a2f565cabb6
 
 Package: oh-my-pi
-Version: 18.18.1-1
+Version: 18.20.2-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,11 +66,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.18.1-1_termux_aarch64.deb
-Size: 2132
-MD5sum: 0fdb602eb38e6cba64af0a57c17c8cdb
-SHA1: 1f41913fc5404f8152ca4b5628105206a14ad66d
-SHA256: 6b36b56e5cccb748fe13faac5cbad6c1b3ca36ea787b5ce3fc8c0684d7cddaf5
+Filename: pool/main/oh-my-pi_18.20.2-1_termux_aarch64.deb
+Size: 2128
+MD5sum: bb391640c6b1c3f9515e6c94efb7d787
+SHA1: 5ca48d76d4897386f6548794b0c0b74b77885cdc
+SHA256: e7051466eaad0752f388ad28f824c37d3c996e57a59424095599beaeebaa58c9
 
 Package: opencode-legacy
 Version: 1.19.5-1
@@ -91,10 +91,10 @@ SHA1: 500ff8021a36cb6cd3adcd8ddb2b18409d86be71
 SHA256: f2dd9c3c4853be126130f5b8d7c181d5eafad650888739b664e920dfc5c048c0
 
 Package: opencode
-Version: 2.2.6-1
+Version: 2.3.0-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 247996
+Installed-Size: 239996
 Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -103,8 +103,8 @@ Description: AI-powered coding assistant for the terminal (v2)
  OpenCode is an interactive AI coding assistant that runs in your terminal.
  Runs on the glibc bridge with an exec-spawn shim; no proot required.
  Conflicts with  (v1): install only one of them.
-Filename: pool/main/opencode_2.2.6-1_termux_aarch64.deb
-Size: 88920304
-MD5sum: d76bd0896b59717905110dc6e1c226ac
-SHA1: 174d42a7decd56896b773d9ede8353f7a560efaa
-SHA256: d946500784565ad640b534648d35f2e4b35877dfcb50734048494124df80192f
+Filename: pool/main/opencode_2.3.0-1_termux_aarch64.deb
+Size: 88907132
+MD5sum: bb6367ac996646710ef90df45dbfb8e7
+SHA1: 6b294eb79047d09e1af69aab15cee34a84e21d8e
+SHA256: ab979f4c384cbc08bdfa2018aa744c3f14a1393b550325767400fc72820850e8

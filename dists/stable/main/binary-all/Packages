@@ -1,5 +1,5 @@
 Package: 9router
-Version: 0.5.112-1
+Version: 0.5.119-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -12,11 +12,11 @@ Description: Free AI coding router with smart fallback
  Cline, Muse Code, etc.) to free and paid providers via an OpenAI-compatible
  endpoint. Features smart auto-fallback, provider health checks, and a
  web dashboard at localhost:20128.
-Filename: pool/main/9router_0.5.112-1_all.deb
+Filename: pool/main/9router_0.5.119-1_all.deb
 Size: 1164
-MD5sum: feff9c9d897ad176dade54555591f252
-SHA1: 2b965ede5b5f72381132b1dbed5b8404bac46262
-SHA256: dc11cb36b4c7652db8c698bcd0565f7614e899e306946f5a1ce6091cac7128e9
+MD5sum: 48cdcb24a018eaae97a69773eb273b4b
+SHA1: 0f329782acff4eba4b383e3443e822f18821a12b
+SHA256: f5771339b94aade3555ed03989f6e97d0ce0ac9f5cfb1f03b36e6ac529077556
 
 Package: curl-cffi
 Version: 0.16.3-1
@@ -52,10 +52,10 @@ Description: Install and run Python applications in isolated environments
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.18.16-1_all.deb
-Size: 1184
-MD5sum: 31f5244706221eda6e468d08bc31f0cf
-SHA1: 5dd883f1f0b8d1cc387c678926b2353cba529092
-SHA256: ccc6ff862fe4d3e945a52510d15c962a8218a92130dd03b25e766c8ae3ef07bf
+Size: 1188
+MD5sum: f6b2f85694a016ff98791d83517d24c0
+SHA1: f9018d889f3a6a614684bb198584dab9b7e8c59c
+SHA256: 4763c879f1ac46d7b2619cabd763a0b20fc96e58b530f5d05215d172e159e7a7
 
 Package: termux-mcp
 Version: 0.15.0-1
@@ -78,7 +78,7 @@ SHA1: a7c4e3e5e40b9800d2e48f0024792da3376b4dee
 SHA256: ceb32a82011fa257c9fbd4145c9d3b59cac9c7fb9c1f1063a005cf1b1447718e
 
 Package: wrangler
-Version: 4.158.0-1
+Version: 4.162.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -90,14 +90,14 @@ Description: Cloudflare Workers CLI
  Cloudflare Workers command-line tooling. Cloud API commands only
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
-Filename: pool/main/wrangler_4.158.0-1_all.deb
-Size: 1544
-MD5sum: 647721483aaaee36a1496e9a737bda12
-SHA1: c9c57e367d751d8ca13c98d865debeb2ed64b56c
-SHA256: 625e4dd1aaa2468dcd661e300742b4bd28d5258c8b4f5a1746b73167fce59319
+Filename: pool/main/wrangler_4.162.0-1_all.deb
+Size: 1540
+MD5sum: 925f0d62831783537a47ef67c23c3e8c
+SHA1: 2a47d22f10c3866afcc648bbbd48282af3e38c6b
+SHA256: beda99c54f5dbd80acc64a10312a19aba55bf99252b19cd7b8323bfd8fd75b90
 
 Package: yt-dlp-git
-Version: 2026.11.04-1
+Version: 2026.11.15-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -109,11 +109,11 @@ Description: Video/audio downloader, git master snapshot
  yt-dlp installed straight from upstream master, so site extractors
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
-Filename: pool/main/yt-dlp-git_2026.11.04-1_all.deb
+Filename: pool/main/yt-dlp-git_2026.11.15-1_all.deb
 Size: 1072
-MD5sum: e99d8b24db728ce5deed3747cb2dee55
-SHA1: caca3cddaec58e5e8a1b29ba2e010140ae326c80
-SHA256: 48eba645fc0d865fa18e498c9f1a8e1bd4a548aca7955fac14f68635b3dc3b1c
+MD5sum: 21f4a896fb96592d42487a4ddbf023dd
+SHA1: 89b26b73cecfebe3e8e9d495e7b50e0833c8bacc
+SHA256: 45507791176bb9df06f61dc76ec33abacf89234a86b42bc387f1dd8aa8744d1f
 
 Package: yt-tui
 Version: 1.1.0-1
@@ -129,7 +129,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1116
-MD5sum: 6e269b50a3ac173413a215364acd99a3
-SHA1: dfbbd4f6660f4d108e607b7d5093d1201c0b5360
-SHA256: 0541c4f369f0bbb2b25f81a17a2d6ff78d665a96fb22e0e9fd06eb5fb9224080
+Size: 1124
+MD5sum: 5e32f3e64f0995b244c5435b25a58750
+SHA1: 58e2ae056cce8d7672c5a98428dffe1be0adbaa9
+SHA256: b1286df17e8e5bbddbcd47f2562fb839e07912c0685d45ff74539f16503ca6b4

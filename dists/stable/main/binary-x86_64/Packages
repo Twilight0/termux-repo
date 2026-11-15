@@ -17,10 +17,10 @@ SHA1: 41bfead2bba2448c21b6c05230609e99fa31d451
 SHA256: aa2bff84c814fb35299091e549c84df504f7c9b6ce979c23dcea5ec8f8b228f4
 
 Package: muse-code
-Version: 1.4.14.r7309.1-5
+Version: 1.4.20.r8619.1-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 405301
+Installed-Size: 469401
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -28,14 +28,14 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
-Filename: pool/main/muse-code_1.4.14.r7309.1-5_termux_x86_64.deb
-Size: 87903028
-MD5sum: 276de8ee27dbba3fd1f8a16ab69edce8
-SHA1: 4abb6bf03783cff6e695a8dcf1825ef51fa40a13
-SHA256: a901eef82235c191c51f53a7264274bdfe8961dc5d860f1afe94ce2e000387ec
+Filename: pool/main/muse-code_1.4.20.r8619.1-1_termux_x86_64.deb
+Size: 91637348
+MD5sum: 9d33224495dbf788d5fa7b8e0e71d6a2
+SHA1: 4ec503f9c862a6a84087ca83c5d6a71700e29761
+SHA256: b411e18266cbaf59b4e721035cf79ff55404726685bee6a9a684a80bbb0da745
 
 Package: oh-my-pi
-Version: 18.18.1-1
+Version: 18.20.2-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -47,11 +47,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_18.18.1-1_termux_x86_64.deb
-Size: 2132
-MD5sum: bc429e5989706d62564bef13f0eaeb04
-SHA1: e4bc59104bd61f1375a7235500e3d61fe6897d5b
-SHA256: 98f05ee0461a9ea132b8a1efbabaf173475a7cbf17f4a8c1e61a85d2ed369d36
+Filename: pool/main/oh-my-pi_18.20.2-1_termux_x86_64.deb
+Size: 2128
+MD5sum: 0b48b7e7b308c8b2590f8a5390949f8e
+SHA1: eb2a74a9e0b731599e77d7450dffb4d003bcf648
+SHA256: 8e07dd9be077c32f1eedb4edb4173ede1873dc269df14e0847e7bf7e9e461454
 
 Package: opencode-legacy
 Version: 1.19.5-1
@@ -72,10 +72,10 @@ SHA1: 73bb5199a39537b9d485c8b208721f1e313134a5
 SHA256: a369313fd634c29d3344f357bd4c8127ddabd86012f93e65e5727900a7d529db
 
 Package: opencode
-Version: 2.2.6-1
+Version: 2.3.0-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 252778
+Installed-Size: 244830
 Depends: glibc-repo, glibc, ripgrep, jq, nodejs-lts
 Section: devel
 Priority: optional
@@ -84,8 +84,8 @@ Description: AI-powered coding assistant for the terminal (v2)
  OpenCode is an interactive AI coding assistant that runs in your terminal.
  Runs on the glibc bridge with an exec-spawn shim; no proot required.
  Conflicts with  (v1): install only one of them.
-Filename: pool/main/opencode_2.2.6-1_termux_x86_64.deb
-Size: 93193292
-MD5sum: 970bfc02fa38d674fbe7aa2d519efff7
-SHA1: 240c68df2cacaa2eb767aaa99501eede575fe428
-SHA256: 503f9c27c0b03935f906adbe49b4c2708a5c3ed3fb36f18dfb22d44c2e08b2b0
+Filename: pool/main/opencode_2.3.0-1_termux_x86_64.deb
+Size: 93210948
+MD5sum: 133f6015bbf8f09cb49ab9c2a0d8a7aa
+SHA1: 8d8e659bac009e2626b1d2254d10f02f1016eb7c
+SHA256: 04867d713b081a5c48d33dbc2d095f77e07c17fcdb45cee49dcfa03c976907d9
