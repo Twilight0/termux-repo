@@ -1,8 +1,8 @@
 Package: antigravity-cli
-Version: 1.5.9-1
+Version: 1.5.10-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 259476
+Installed-Size: 261060
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -10,17 +10,17 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.5.9-1_termux_x86_64.deb
-Size: 80448012
-MD5sum: 111eaa81e0ec987af70634f9485a9c43
-SHA1: 41bfead2bba2448c21b6c05230609e99fa31d451
-SHA256: aa2bff84c814fb35299091e549c84df504f7c9b6ce979c23dcea5ec8f8b228f4
+Filename: pool/main/antigravity-cli_1.5.10-1_termux_x86_64.deb
+Size: 80783180
+MD5sum: 1b7d9c61ffc3b49d0a9068793a11eb03
+SHA1: 4683e5283e4314852335a750b6122b9cc1df01b1
+SHA256: 7b3ba92fc5fb6f5e30a41270a314e994f2aba58b12a998460e720809d1122ac0
 
 Package: muse-code
-Version: 1.4.20.r8619.1-1
+Version: 1.4.23.r8977.1-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 469401
+Installed-Size: 456153
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -28,11 +28,11 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
-Filename: pool/main/muse-code_1.4.20.r8619.1-1_termux_x86_64.deb
-Size: 91637348
-MD5sum: 9d33224495dbf788d5fa7b8e0e71d6a2
-SHA1: 4ec503f9c862a6a84087ca83c5d6a71700e29761
-SHA256: b411e18266cbaf59b4e721035cf79ff55404726685bee6a9a684a80bbb0da745
+Filename: pool/main/muse-code_1.4.23.r8977.1-1_termux_x86_64.deb
+Size: 92632132
+MD5sum: f03e02b02692527fa6760274ae43d228
+SHA1: 8cce6ac0621235825c9987ece65aecd311306555
+SHA256: e037a493b934febe3a1851bbceca87cb0ba819cfa51891e9130daab08ed76340
 
 Package: oh-my-pi
 Version: 18.20.2-1
