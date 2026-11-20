@@ -39,7 +39,7 @@ SHA1: a888f40a62523839935a981480aa5485d13bf30e
 SHA256: 923654e12a7daa92f49bee209fe7d14b1d93ec2453a0b851e6e95a1348898fc2
 
 Package: pipx
-Version: 1.18.16-1
+Version: 1.18.19-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 
@@ -51,11 +51,11 @@ Description: Install and run Python applications in isolated environments
  pipx installs Python CLIs (yt-dlp, black, gallery-dl, ...) into
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
-Filename: pool/main/pipx_1.18.16-1_all.deb
-Size: 1180
-MD5sum: cccf1833a669b2b0cec9f0661b9c7b70
-SHA1: b8ad755b98e1da32613f0188b77525a911755ae5
-SHA256: 8d571efec0ccfa0eb19aa3a67ad48dd13fdf6dd029bce316beb308ae8f4e3f80
+Filename: pool/main/pipx_1.18.19-1_all.deb
+Size: 1184
+MD5sum: e6072966acde8c222da4d99b20954715
+SHA1: 4e3b0dcc1cf3cd88fc1fc77778fd9d1fce63b95c
+SHA256: a6c1c354c6757f50577b1c941a8a1e0334fd11b631d6c5c5c4376ba2d82e7d76
 
 Package: termux-mcp
 Version: 0.15.0-1
@@ -78,7 +78,7 @@ SHA1: a7c4e3e5e40b9800d2e48f0024792da3376b4dee
 SHA256: ceb32a82011fa257c9fbd4145c9d3b59cac9c7fb9c1f1063a005cf1b1447718e
 
 Package: wrangler
-Version: 4.162.0-1
+Version: 4.165.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -90,14 +90,14 @@ Description: Cloudflare Workers CLI
  Cloudflare Workers command-line tooling. Cloud API commands only
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
-Filename: pool/main/wrangler_4.162.0-1_all.deb
+Filename: pool/main/wrangler_4.165.0-1_all.deb
 Size: 1540
-MD5sum: 925f0d62831783537a47ef67c23c3e8c
-SHA1: 2a47d22f10c3866afcc648bbbd48282af3e38c6b
-SHA256: beda99c54f5dbd80acc64a10312a19aba55bf99252b19cd7b8323bfd8fd75b90
+MD5sum: 2813f4877f4467fc6feaf69aeb6305ee
+SHA1: 9fdd2a9171f98118766f9e7b898fd01df5a2589e
+SHA256: bf567f722f56692afccf73a4d8b2a2aab1e2dae5f2e94967950c23f874016e68
 
 Package: yt-dlp-git
-Version: 2026.11.15-1
+Version: 2026.11.20-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -109,11 +109,11 @@ Description: Video/audio downloader, git master snapshot
  yt-dlp installed straight from upstream master, so site extractors
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
-Filename: pool/main/yt-dlp-git_2026.11.15-1_all.deb
+Filename: pool/main/yt-dlp-git_2026.11.20-1_all.deb
 Size: 1072
-MD5sum: 21f4a896fb96592d42487a4ddbf023dd
-SHA1: 89b26b73cecfebe3e8e9d495e7b50e0833c8bacc
-SHA256: 45507791176bb9df06f61dc76ec33abacf89234a86b42bc387f1dd8aa8744d1f
+MD5sum: f346c97a7ee1d91880e0824a7a0bfcb1
+SHA1: dda2b7fda887c27db6de479c901d6e382382b747
+SHA256: d895f36bfda619fb20d9e6360cd8189628105b6701f6f218d8ed4352835fefcb
 
 Package: yt-tui
 Version: 1.1.0-1
@@ -129,7 +129,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.1.0-1_all.deb
-Size: 1112
-MD5sum: f9d4d3839275f0d5ac073520dd69819a
-SHA1: 141d3b55f8aa94293a47d2adfa671e14066ae52b
-SHA256: c3a9f411e4865089354bada0021e073f3224e2cb152892173f705a24b7045c7a
+Size: 1116
+MD5sum: 7de5f33da052d8d6b96fc8198dbc48ae
+SHA1: 5545d0e1798aead4a2dda546d998e83a32600a8d
+SHA256: 30435a076c6cc0feec33d32ca23897dad0b1ed66e41e41db847143920a7903d9
