@@ -30,9 +30,9 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  session picker, multi-agent MCP manager, and token usage dashboard.
 Filename: pool/main/muse-code_1.4.24.r9131.1-1_termux_x86_64.deb
 Size: 93292828
-MD5sum: d783b0cb5d4804a73a9872cd84653e79
-SHA1: a9b1ebf0817348a229759cca8623d9e8ed3a2c34
-SHA256: b4499d60bc29e4d527c38c90fc15b26cdcb281ef53cab5cd24d548eaf5f4d36b
+MD5sum: 5f31c786963d9f34e1e829a84eff6d38
+SHA1: 5b2216b92e26e1be54f4d30229fd864c0cf28c74
+SHA256: db3eead4c02d163c8b0abc307d4ac77c3302527ee1f528c7f7df0c6481259d90
 
 Package: oh-my-pi
 Version: 19.0.1-1

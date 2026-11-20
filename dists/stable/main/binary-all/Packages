@@ -53,9 +53,9 @@ Description: Install and run Python applications in isolated environments
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.18.19-1_all.deb
 Size: 1184
-MD5sum: e6072966acde8c222da4d99b20954715
-SHA1: 4e3b0dcc1cf3cd88fc1fc77778fd9d1fce63b95c
-SHA256: a6c1c354c6757f50577b1c941a8a1e0334fd11b631d6c5c5c4376ba2d82e7d76
+MD5sum: fa3de1f545017ab534bcd034107ca80a
+SHA1: 04bcf02f800ae2c92ae456b0ca9249ba4972e803
+SHA256: 3ea0716e886b8d3e9e5aa4dcdf608a59dd22f3670c1e4846458dfdf7b9c207a7
 
 Package: termux-mcp
 Version: 0.15.0-1
@@ -116,7 +116,7 @@ SHA1: dda2b7fda887c27db6de479c901d6e382382b747
 SHA256: d895f36bfda619fb20d9e6360cd8189628105b6701f6f218d8ed4352835fefcb
 
 Package: yt-tui
-Version: 1.1.0-1
+Version: 1.2.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 
@@ -128,8 +128,8 @@ Description: Curses TUI for yt-dlp with search and queueing
  Single-file Python curses interface for downloading video/audio
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
-Filename: pool/main/yt-tui_1.1.0-1_all.deb
+Filename: pool/main/yt-tui_1.2.0-1_all.deb
 Size: 1116
-MD5sum: 7de5f33da052d8d6b96fc8198dbc48ae
-SHA1: 5545d0e1798aead4a2dda546d998e83a32600a8d
-SHA256: 30435a076c6cc0feec33d32ca23897dad0b1ed66e41e41db847143920a7903d9
+MD5sum: 46ab2108e50fd3c0d99f59763f2f4d61
+SHA1: 50a67bf53e107009ca5dbd88b5dcad172a9eefd6
+SHA256: a448468c37073b28909bb6c94e3684efabb3aafcab969152d1e615930cae57cb
