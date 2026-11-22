@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-echo "Installing yt-tui 1.2.0 from Twilight0/yt-tui..."
-pip install --upgrade "git+https://github.com/Twilight0/yt-tui.git@v1.2.0"
+echo "Installing yt-tui 1.2.1 from Twilight0/yt-tui..."
+pip install --upgrade "git+https://github.com/Twilight0/yt-tui.git@v1.2.1"
 
 echo ""
 echo "yt-tui installed."

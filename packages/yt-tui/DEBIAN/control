@@ -1,5 +1,5 @@
 Package: yt-tui
-Version: 1.2.0-1
+Version: 1.2.1-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Depends: python, ffmpeg, git, yt-dlp | yt-dlp-git
