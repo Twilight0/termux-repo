@@ -1,8 +1,8 @@
 Package: agentty
-Version: 0.9.60-1
+Version: 0.9.62-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 18381
+Installed-Size: 18536
 Depends: openssl, libnghttp2, libc++
 Section: devel
 Priority: optional
@@ -11,11 +11,11 @@ Description: Blazing-fast AI pair programming in your terminal
  Native Bionic C++ agent (no proot): one static-ish binary with local
  RAG, any-model providers (including OpenAI-compatible endpoints),
  MCP support and agent skills. Run 'agentty' then /connect.
-Filename: pool/main/agentty_0.9.60-1_termux_aarch64.deb
-Size: 4615468
-MD5sum: 44985f93679c3c54663cb493686112db
-SHA1: 9b2cae771915eaa8aa7a65487b8e7f6af719d953
-SHA256: 15d8f5416877fc0db13a00fc8929e92f9b773e1a8f988585c1778ef1066196bd
+Filename: pool/main/agentty_0.9.62-1_termux_aarch64.deb
+Size: 4658560
+MD5sum: d51e54f1748d2f6a89b6afd62445297b
+SHA1: 918dfa40e229f73159e65c0c767da09a81593782
+SHA256: 40ecef7b7ddb6f4ee9d44187e998bef862365f45c682432eddea2d008b90a298
 
 Package: antigravity-cli
 Version: 1.5.14-1
@@ -36,10 +36,10 @@ SHA1: d58c75754d99c81bbf7c23db5b265ed9cd89fb05
 SHA256: 1d8afd9ac8cb978197235f3f4bbc855051c88aeca67eea70eca3344d4e25294d
 
 Package: muse-code
-Version: 1.4.24.r9131.1-1
+Version: 1.4.25.r9361.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 407785
+Installed-Size: 406249
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -47,14 +47,14 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
-Filename: pool/main/muse-code_1.4.24.r9131.1-1_termux_aarch64.deb
-Size: 92202520
-MD5sum: ecc6074a25ff35f766526fa3f0ef7ed5
-SHA1: 2b001c5a94c401bce99179ef58725dd299a7d1a9
-SHA256: 965eff5e7fce619644309034d2dd2fc52a2a185a6883fbcd63e3c7e1a9db2582
+Filename: pool/main/muse-code_1.4.25.r9361.1-1_termux_aarch64.deb
+Size: 92065648
+MD5sum: 478f38f1ea19759364f62818d49bf298
+SHA1: 807a5565c49907b6dd500f5eac9d159f8bd066b0
+SHA256: 39312d3952cb4f1e16b81d5c6d04738fd5c076e255ecc1330a125611734879b3
 
 Package: oh-my-pi
-Version: 19.0.1-1
+Version: 19.1.0-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,11 +66,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_19.0.1-1_termux_aarch64.deb
-Size: 2124
-MD5sum: ecda0f9543de8b04981cf626c67912de
-SHA1: 834bce42515d2efc55050ee0666122af2d3dc0a4
-SHA256: 6fac46f638c074ec3c885bcda4ba8bc6bf6a6a2f1c9c811476278345904fca8c
+Filename: pool/main/oh-my-pi_19.1.0-1_termux_aarch64.deb
+Size: 2132
+MD5sum: 0b6dacb346584a29c7f50822a1c3850e
+SHA1: 4467f10b56c6aefbd87b4338033470f585235162
+SHA256: 2ec5783cf7ff3f88841b6480bf490e41e02efe3470306f260c13e086742ebfe9
 
 Package: opencode-legacy
 Version: 1.19.6-1

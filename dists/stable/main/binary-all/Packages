@@ -52,10 +52,10 @@ Description: Install and run Python applications in isolated environments
  isolated venvs and exposes their binaries on PATH. Drop-in return
  of the package removed from upstream Termux repos.
 Filename: pool/main/pipx_1.18.19-1_all.deb
-Size: 1184
-MD5sum: 91ec9ce2734e1c73be973a615efa8b5d
-SHA1: 96acac3ccc683c132ef4fe33305eb7b5fde158d1
-SHA256: b4f7cdacf73f2ac9f42b8e7a52e16ecd79ca839d45223087481c3c80eec963a3
+Size: 1188
+MD5sum: b8a575b252b7288caa427a2f0f91b517
+SHA1: a5e063df49aec0854cfebeca6c5901954406a2ae
+SHA256: 1f59bd991494a6d328342cc3111228a6e21e44cd1474f05436659438ae38f0bc
 
 Package: termux-mcp
 Version: 0.15.0-1
@@ -78,7 +78,7 @@ SHA1: a7c4e3e5e40b9800d2e48f0024792da3376b4dee
 SHA256: ceb32a82011fa257c9fbd4145c9d3b59cac9c7fb9c1f1063a005cf1b1447718e
 
 Package: wrangler
-Version: 4.165.0-1
+Version: 4.166.0-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -90,14 +90,14 @@ Description: Cloudflare Workers CLI
  Cloudflare Workers command-line tooling. Cloud API commands only
  (deploy, tail, pages, r2, kv, etc). Local dev server (wrangler dev)
  is not supported on Termux as workerd does not ship Android binaries.
-Filename: pool/main/wrangler_4.165.0-1_all.deb
-Size: 1540
-MD5sum: 2813f4877f4467fc6feaf69aeb6305ee
-SHA1: 9fdd2a9171f98118766f9e7b898fd01df5a2589e
-SHA256: bf567f722f56692afccf73a4d8b2a2aab1e2dae5f2e94967950c23f874016e68
+Filename: pool/main/wrangler_4.166.0-1_all.deb
+Size: 1544
+MD5sum: 0f1e14921b16ea97b451db0e5398282a
+SHA1: 3a34d3564e7884e51fc39a2212df42c7b9b69259
+SHA256: bc0ccea0b503e2075ad7d3a902a663cddc727446152b9b3c2dab6fbee9235de5
 
 Package: yt-dlp-git
-Version: 2026.11.20-1
+Version: 2026.11.22-1
 Architecture: all
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 0
@@ -109,11 +109,11 @@ Description: Video/audio downloader, git master snapshot
  yt-dlp installed straight from upstream master, so site extractors
  are days (not months) old. Reinstall/upgrade the package to pull the
  latest fixes. Pair with curl-cffi for --impersonate support.
-Filename: pool/main/yt-dlp-git_2026.11.20-1_all.deb
+Filename: pool/main/yt-dlp-git_2026.11.22-1_all.deb
 Size: 1072
-MD5sum: f346c97a7ee1d91880e0824a7a0bfcb1
-SHA1: dda2b7fda887c27db6de479c901d6e382382b747
-SHA256: d895f36bfda619fb20d9e6360cd8189628105b6701f6f218d8ed4352835fefcb
+MD5sum: 4221423e6e3f31ddfc8d31af86cd8117
+SHA1: 5b6710f42cb060aad15af88235cf38e125e30fe4
+SHA256: fe19b774352e449b3a6d925d752d4dcea66a0587ac442138e0153ab7c852c7d3
 
 Package: yt-tui
 Version: 1.3.0-1
@@ -129,7 +129,7 @@ Description: Curses TUI for yt-dlp with search and queueing
  with yt-dlp: YouTube search (videos + playlists), format picker,
  queue progress, history and mpv-style playback via termux-open.
 Filename: pool/main/yt-tui_1.3.0-1_all.deb
-Size: 1112
-MD5sum: 34af520516468f4dabc27de9df0b610b
-SHA1: fa691a9507f4b66068cf49d28372cecce0234ec7
-SHA256: 8fd9531bba96f9e8ec7adb820b6c09f080c7f1e9698db8890f9636e6d11f2f6d
+Size: 1116
+MD5sum: de261a5da57bfead3f47d23583042aa3
+SHA1: ed564471de6dbaaca8013570abac3fd223ec7bc1
+SHA256: 045adfbf129ae34cfc717708b0c07b32e158e906460ca53544bee8abd8f00c10

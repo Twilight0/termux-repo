@@ -17,10 +17,10 @@ SHA1: 0394ece9051ffff7b6e45ccb58caf0231272601c
 SHA256: 1326acf2cfbde609f82aaf10a4c212c91a94e375e9c07208e168ede225094aca
 
 Package: muse-code
-Version: 1.4.24.r9131.1-1
+Version: 1.4.25.r9361.1-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 460421
+Installed-Size: 457837
 Depends: python, ca-certificates, proot
 Section: devel
 Priority: optional
@@ -28,14 +28,14 @@ Homepage: https://dev.meta.ai
 Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
-Filename: pool/main/muse-code_1.4.24.r9131.1-1_termux_x86_64.deb
-Size: 93292824
-MD5sum: 6f7d41af136c347c6046c805319dcd98
-SHA1: 616b2da56d3a70868077d3cf65cfe505109733d6
-SHA256: 4b2290dd5abf404eb4994662bbd8f580fc2da2620249fc9c81835c070919ebbc
+Filename: pool/main/muse-code_1.4.25.r9361.1-1_termux_x86_64.deb
+Size: 92820820
+MD5sum: 5b86f5e349225c7c6eb3cb288550c8e8
+SHA1: af42cbcee49af030ef86314c1e32a7f745960d84
+SHA256: ffe676a3be2156bc8cd01fa402322b45e20936d373fc3877fbef94b4fd365d6d
 
 Package: oh-my-pi
-Version: 19.0.1-1
+Version: 19.1.0-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -47,11 +47,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_19.0.1-1_termux_x86_64.deb
-Size: 2128
-MD5sum: 7a1012c98571fa7616294a110b9534a3
-SHA1: 8128c96f2fbc8b44d656e266daf58f59456c5daa
-SHA256: dfea0e98d9e56a2a0e0d442b8404f331f0cd5526302d9fe10d778d4f69932e73
+Filename: pool/main/oh-my-pi_19.1.0-1_termux_x86_64.deb
+Size: 2132
+MD5sum: 36971a272430fd405f57f2611568e160
+SHA1: e3ba9aec4ec7ceeeec0641440bd92fdcaed19d84
+SHA256: 7acf91eeaf264946e7dbc4612e2ee250cc641e8b7e118bac2158142a7020ab2c
 
 Package: opencode-legacy
 Version: 1.19.6-1
