@@ -1,8 +1,8 @@
 Package: antigravity-cli
-Version: 1.5.13-1
+Version: 1.5.14-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 263776
+Installed-Size: 266840
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -10,11 +10,11 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.5.13-1_termux_x86_64.deb
-Size: 81358184
-MD5sum: 19322419d9a92ef3301f097193903a57
-SHA1: 3e271e164aea0123b0990c8fde07067598890577
-SHA256: 65bc0d7d85d6abf20cf05b8c09c09c26fdd22e6c667c895a70c31de90343a15a
+Filename: pool/main/antigravity-cli_1.5.14-1_termux_x86_64.deb
+Size: 81709288
+MD5sum: e96a824a5bce4dab4b0286eb38c82804
+SHA1: 0394ece9051ffff7b6e45ccb58caf0231272601c
+SHA256: 1326acf2cfbde609f82aaf10a4c212c91a94e375e9c07208e168ede225094aca
 
 Package: muse-code
 Version: 1.4.24.r9131.1-1
@@ -30,9 +30,9 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  session picker, multi-agent MCP manager, and token usage dashboard.
 Filename: pool/main/muse-code_1.4.24.r9131.1-1_termux_x86_64.deb
 Size: 93292828
-MD5sum: 5f31c786963d9f34e1e829a84eff6d38
-SHA1: 5b2216b92e26e1be54f4d30229fd864c0cf28c74
-SHA256: db3eead4c02d163c8b0abc307d4ac77c3302527ee1f528c7f7df0c6481259d90
+MD5sum: 6361d2f54c2cbc5a6ec57eddc6f1be4e
+SHA1: e9b58d074cf58224f0951672d23bb8b074aceb08
+SHA256: b7efd1bdf19d29f6a86d2c14e99ebc6b5da79b71bb3e497ba21f021c068128fe
 
 Package: oh-my-pi
 Version: 19.0.1-1
