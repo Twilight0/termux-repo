@@ -1,8 +1,8 @@
 Package: antigravity-cli
-Version: 1.5.14-1
+Version: 1.5.16-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 266840
+Installed-Size: 268624
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -10,11 +10,11 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.5.14-1_termux_x86_64.deb
-Size: 81709288
-MD5sum: e96a824a5bce4dab4b0286eb38c82804
-SHA1: 0394ece9051ffff7b6e45ccb58caf0231272601c
-SHA256: 1326acf2cfbde609f82aaf10a4c212c91a94e375e9c07208e168ede225094aca
+Filename: pool/main/antigravity-cli_1.5.16-1_termux_x86_64.deb
+Size: 82138852
+MD5sum: e8ae493f351c2ab9e8a01a892417f06f
+SHA1: d23a482ca771fc814dbaf1749e3b3b2687e9cec5
+SHA256: fdfa3b4ec64656c162c216ea19b891a9c3f40fb05fd0c9dac9b30e6a85d30cbe
 
 Package: muse-code
 Version: 1.4.25.r9361.1-1
@@ -29,13 +29,13 @@ Description: Terminal-based AI coding agent powered by Meta's Muse Spark
  With opt-in AVX2 legacy fallback (MUSE_QEMU=1), interactive curses TUI
  session picker, multi-agent MCP manager, and token usage dashboard.
 Filename: pool/main/muse-code_1.4.25.r9361.1-1_termux_x86_64.deb
-Size: 92820820
-MD5sum: 5b86f5e349225c7c6eb3cb288550c8e8
-SHA1: af42cbcee49af030ef86314c1e32a7f745960d84
-SHA256: ffe676a3be2156bc8cd01fa402322b45e20936d373fc3877fbef94b4fd365d6d
+Size: 92820816
+MD5sum: ce937d8f038f36f00310b2dd41805dcf
+SHA1: 49e60f46833cfa8dc42dc5f3d9c038ecac76539c
+SHA256: 37f0ae6f821cbdac3c9fca80bdde73772f276981f713d54c68a54de86991d097
 
 Package: oh-my-pi
-Version: 19.1.0-1
+Version: 19.1.1-1
 Architecture: x86_64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -47,11 +47,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_19.1.0-1_termux_x86_64.deb
+Filename: pool/main/oh-my-pi_19.1.1-1_termux_x86_64.deb
 Size: 2132
-MD5sum: 36971a272430fd405f57f2611568e160
-SHA1: e3ba9aec4ec7ceeeec0641440bd92fdcaed19d84
-SHA256: 7acf91eeaf264946e7dbc4612e2ee250cc641e8b7e118bac2158142a7020ab2c
+MD5sum: 78bcd9f5f506a3c6a8f150f139d6bfdb
+SHA1: 14123ca18ae81d5b860159a0d0652b7bd13ecee9
+SHA256: d85bff6b9ccb152c002f6203f56a18064eb2cd68da31feffa13e26b0d827ece5
 
 Package: opencode-legacy
 Version: 1.19.6-1

@@ -18,10 +18,10 @@ SHA1: 918dfa40e229f73159e65c0c767da09a81593782
 SHA256: 40ecef7b7ddb6f4ee9d44187e998bef862365f45c682432eddea2d008b90a298
 
 Package: antigravity-cli
-Version: 1.5.14-1
+Version: 1.5.16-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
-Installed-Size: 250072
+Installed-Size: 251736
 Depends: glibc-repo, glibc, resolv-conf, ca-certificates
 Section: devel
 Priority: optional
@@ -29,11 +29,11 @@ Homepage: https://antigravity.google/cli
 Description: Google Antigravity CLI - AI coding agent
  Antigravity CLI brings multi-step reasoning, multi-file editing, tool
  calling, and persistent history to your terminal.
-Filename: pool/main/antigravity-cli_1.5.14-1_termux_aarch64.deb
-Size: 71862988
-MD5sum: 52def5db41ed6990f504db8d5266d646
-SHA1: d58c75754d99c81bbf7c23db5b265ed9cd89fb05
-SHA256: 1d8afd9ac8cb978197235f3f4bbc855051c88aeca67eea70eca3344d4e25294d
+Filename: pool/main/antigravity-cli_1.5.16-1_termux_aarch64.deb
+Size: 72334024
+MD5sum: 9dec42a8e2e3338261e31f0551e8c457
+SHA1: affdd00c875e77774b9c121a6397b348cc0c2dab
+SHA256: e3540528653c1547f5aa393bd76c6c42b4b05531ff9ee4dbabcbd6689c290091
 
 Package: muse-code
 Version: 1.4.25.r9361.1-1
@@ -54,7 +54,7 @@ SHA1: 807a5565c49907b6dd500f5eac9d159f8bd066b0
 SHA256: 39312d3952cb4f1e16b81d5c6d04738fd5c076e255ecc1330a125611734879b3
 
 Package: oh-my-pi
-Version: 19.1.0-1
+Version: 19.1.1-1
 Architecture: aarch64
 Maintainer: Twilight <twilight@aliveos.org>
 Installed-Size: 2
@@ -66,11 +66,11 @@ Description: Oh-My-Pi - a coding agent with the IDE wired in
  Plugin manager for Pi - think oh-my-zsh but for Pi. Install themes,
  agents, commands, and tools with a single command. Uses glibc bridge
  for Termux compatibility. Binary downloaded on first run.
-Filename: pool/main/oh-my-pi_19.1.0-1_termux_aarch64.deb
-Size: 2132
-MD5sum: 0b6dacb346584a29c7f50822a1c3850e
-SHA1: 4467f10b56c6aefbd87b4338033470f585235162
-SHA256: 2ec5783cf7ff3f88841b6480bf490e41e02efe3470306f260c13e086742ebfe9
+Filename: pool/main/oh-my-pi_19.1.1-1_termux_aarch64.deb
+Size: 2128
+MD5sum: 9b0d4aed1bc9b5101a70f94e6bdaf4c2
+SHA1: 1182c2bcb3e1f6b77922048a9546766f1a392c2c
+SHA256: e6a84014b3efb7ec5de7e83a4d6621a1afbb2f6ff551e2a87c01ff33e445b82d
 
 Package: opencode-legacy
 Version: 1.19.6-1
